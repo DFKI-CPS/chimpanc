@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated cpp -->
+      <package
+            uri="http://www.dfki.de/SPECifIC/emf/2015/cpp"
+            class="specific.emf.cpp.CppPackage"
+            genModel="model/cpp.genmodel"/>
+   </extension>
+
+</plugin>

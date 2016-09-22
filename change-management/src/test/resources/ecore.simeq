@@ -1,0 +1,15 @@
+equivspec ecore {
+  element <TEXT> {
+    constituents {
+      mandatory {
+        <TEXT>
+      }
+    }
+  } 
+
+  :default {
+    annotations {
+      _
+    }
+  }
+}

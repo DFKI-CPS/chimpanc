@@ -1,0 +1,18 @@
+package acs;
+
+class Building {	
+  ref Building[*]#building gate;
+  ref Building[*]#gate building;
+  ref Door[*] #org org_dom;
+}
+
+class Person {
+  ref Building[*] aut;
+  ref Building[1] sit;
+}
+
+class Door {
+  op void enter(Person p);
+  ref Building[1] #org_dom org;
+  ref Building[1] dest;
+}

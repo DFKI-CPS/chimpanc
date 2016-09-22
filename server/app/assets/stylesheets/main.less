@@ -1,0 +1,476 @@
+@include "prefixr.less";
+
+html {
+  font-size: 12px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+
+#main {
+  transition: filter 0.3s ease;
+  -webkit-transition: -webkit-filter 0.3s ease;
+  &.transition {
+    transition: transform 0.3s ease;
+    -webkit-transition: -webkit-transform 0.3s ease;
+  }
+  -webkit-filter: none;
+  filter: none;
+}
+
+body.overlay #main {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+}
+
+
+@keyframes fade {
+    from {background-color: #ddd;}
+    to {background-color: transparent;}
+}
+
+@-webkit-keyframes fade {
+  from {background-color: #ddd;}
+  to {background-color: transparent;}
+}
+
+.navbar-fixed nav {
+  height: 48px;
+  ul li {
+    cursor: pointer;
+  }
+  ul li:hover {
+    background-color: transparent;
+  }
+}
+
+.navbar-fixed {
+  transition: filter 0.3s ease;
+  -webkit-transition: -webkit-filter 0.3s ease;
+  filter: none;
+  -webkit-filter: none;
+}
+
+body.overlay .navbar-fixed {
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+}
+
+.nl {
+  .CodeMirror {
+    font-family: Roboto;
+    .failure {
+      border-left: 4px solid #E82C0C;
+    }
+    .success {
+      border-left: 4px solid #3EB22E;
+    }
+    .unknown {
+      border-left: 4px solid #FFBB00;
+    }
+  }
+
+  .guidelineCheck {
+    margin: 8px;
+    background: #eee;
+  }
+}
+
+.double-view {
+  .layers {
+    .layer {
+      .content {
+        width: ~"calc(100vw / 2)";
+      }
+      width: ~"calc(100vw / 2)";
+    }
+  }
+}
+
+.triple-view {
+  .layers {
+    .layer {
+      width: ~"calc(100vw / 3)";
+    }
+  }
+}
+
+a {
+  cursor: pointer;
+}
+
+@keyframes appear-layer {
+  from { width: 0; }
+  to { width: ~"calc(100vw / 3)"; }
+}
+
+@keyframes appear-content {
+  from { filter: blur(10px); -webkit-filter: blur(10px); opacity: 0;  }
+  to { filter: none; -webkit-filter: none; opacity: 1; }
+}
+
+@keyframes blur-in {
+  from { -webkit-filter: blur(5px); filter: blur(5px); opacity: 0; }
+  to { -webkit-filter: none; filter: none; opacity: 1; }
+}
+
+@keyframes appear-task {
+  from { -webkit-filter: blur(5px); filter: blur(5px); opacity: 0; max-height: 0; }
+  to { -webkit-filter: none; filter: none; opacity: 1; max-height: 1000px; }
+}
+
+@-webkit-keyframes appear-task {
+  from { -webkit-filter: blur(5px); filter: blur(5px); opacity: 0; max-height: 0; }
+  to { -webkit-filter: none; filter: none; opacity: 1; max-height: 1000px; }
+}
+
+@-webkit-keyframes blur-in {
+  from { -webkit-filter: blur(10px); filter: blur(10px); opacity: 0; }
+  to { -webkit-filter: none; filter: none; opacity: 1; }
+}
+
+@-webkit-keyframes appear-content {
+  from { filter: blur(10px); -webkit-filter: blur(10px); opacity: 0;  }
+  to { filter: none; -webkit-filter: none; opacity: 1; }
+}
+
+@-webkit-keyframes appear-layer {
+  from { width: 0; }
+  to { width: ~"calc(100vw / 3)"; }
+}
+
+@-webkit-keyframes appear-task {
+  from { -webkit-filter: blur(5px); filter: blur(5px); opacity: 0; max-height: 0; }
+  to { -webkit-filter: none; filter: none; opacity: 1; max-height: 1000px; }
+}
+
+.layers {
+  display: inline-flex;
+  display: -webkit-inline-flex;
+  padding-left: 0;
+
+  .layer {
+    box-shadow: 0 0 0 lightgray;
+    &.locked {
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+    }
+    margin-top: -24px;
+    .CodeMirror {
+      height: ~"calc(100vh - 196px)";
+      .CodeMirror-gutters {
+        background: transparent;
+        border: none;
+        .issues {
+          width: 0px;
+        }
+      }
+    }
+    .card {
+      background: transparent;
+      .card-content, .card-action {
+        padding: 16px;
+      }
+      box-shadow: none;
+    }
+    .content {
+      width: ~"calc(100vw / 3)";
+      transform-origin: 0 0 0;
+      -webkit-transform-origin: 0 0 0;
+      animation-name: appear-content;
+      animation-duration: 1s;
+      animation-iteration-count: 1;
+      -webkit-animation-name: appear-content;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: 1;
+      padding-right: 0;
+    }
+    overflow: visible;
+    animation-name: appear-layer;
+    animation-duration: 0.3s;
+    animation-iteration-count: 1;
+    -webkit-animation-name: appear-layer;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-iteration-count: 1;
+    width: ~"calc(100vw / 3)";
+    .card-title {
+      color: #757575;
+      transition: color 0.3s ease;
+      -webkit-transition: color 0.3s ease;
+    }
+    &.nl {
+      background: white;
+      z-index: 1000;
+    }
+    &.active {
+      .card-title {
+        color: #039BE5;
+      }
+      //box-shadow: bl;
+    }
+  }
+}
+
+#main.transition .layer {
+  transition: width 0.3s ease;
+  -webkit-transition: width 0.3s ease;
+  &.nl {
+    transition: width 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-transition: width 0.3s ease, -webkit-transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .content {
+    transition: width 0.3s ease;
+    -webkit-transition: width 0.3s ease;
+  }
+}
+
+.fsl {
+  .btn-flat {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+
+.esl {
+}
+
+@keyframes appear-statechart {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 200px;
+  }
+}
+
+@-webkit-keyframes appear-statechart {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 200px;
+  }
+}
+
+.CodeMirror {
+  .entity:focus {
+    outline: none;
+  }
+
+  .proofObligations {
+    cursor: pointer;
+    font-family: Roboto;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 0 4px gray;
+    .new {
+      border-radius: 4px 0 0 4px ;
+      padding: 2px 4px;
+      margin: -2px 0;
+      border-right: 1px solid white;
+      &:last-child {
+        border-radius: 4px;
+        border-right: none;
+      }
+    }
+    .done {
+      border-radius: 0 4px 4px 0;
+      padding: 2px 4px;
+      margin: -2px 0;
+      &:first-child {
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .stateChart, .proofObligationList {
+    animation-name: appear-statechart;
+    animation-duration: 0.3s;
+    -webkit-animation-name: appear-statechart;
+    -webkit-animation-duration: 0.3s;
+  }
+
+  .proofObligationList {
+    font-family: "Roboto", sans-serif;
+    font-size: 80%;
+  }
+
+  .entity i {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .entity > .name {
+    margin: -2px -4px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    -webkit-transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .error > .name {
+    position: relative;
+    &:after {
+      content: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+      font-family: "Roboto";
+      color: #f44336;
+      position: absolute;
+      letter-spacing: -4.5px;
+      left: 4px;
+      top: 0.5em;
+      right: 4px;
+      height: 1em;
+      overflow: hidden;
+    }
+  }
+
+  .warning > .name {
+    position: relative;
+    &:after {
+      content: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+      font-family: "Roboto";
+      color: orange;
+      position: absolute;
+      letter-spacing: -4.5px;
+      left: 4px;
+      top: 0.5em;
+      right: 4px;
+      height: 1em;
+      overflow: hidden;
+    }
+  }
+
+  .receiverParam {
+    opacity: 0.4;
+    font-style: italic;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 1.0;
+    }
+    &.hoverMatch  {
+      opacity: 1.0;
+    }
+  }
+
+  .inlineOption {
+    color: gray;
+    font-family: "Roboto", sans-serif;
+    margin-left: 10px;
+  }
+
+  .hoverMatch > .name {
+    background: #1ba1e2;
+    color: white !important;
+    box-shadow: 0 0 4px gray;
+  }
+
+  .match > .name {
+    font-weight: bold;
+    color: darkgreen;
+    &:hover,  {
+      background: #1ba1e2;
+      color: white;
+      box-shadow: 0 0 4px gray;
+    }
+  }
+
+  .unimplemented > .name {
+    cursor: pointer;
+    border-bottom: 2px dashed #f44336;
+  }
+
+  .ignored > .name, .removedModel > .name, .removedImpl > .name {
+    color: #ff9800;
+  }
+}
+
+.add-mapping {
+  border: 3px dashed #1ba1e2;
+  box-shadow: 0 0 8px gray;
+  .entity .name {
+    &:hover {
+      text-decoration: underline;
+    }
+    cursor: pointer;
+  }
+}
+
+.navbar-fixed {
+  animation: blur-in;
+  animation-duration: 0.3s;
+  -webkit-animation: blur-in;
+  -webkit-animation-duration: 0.3s;
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255.0,255.0,255.0,0.0);
+  color: black;
+  padding-top: 64px;
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  z-index: 100000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  -webkit-transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translate(0,0);
+  .task {
+    animation-name: blur-in;
+    animation-duration: 0.3s;
+    -webkit-animation-name: blur-in;
+    -webkit-animation-duration: 0.3s;
+    transition: opacity 0.3s ease, transform 0.3s ease, max-height 0.3s ease-out;
+    -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease, max-height 0.3s ease-out;
+    max-height: 1000px;
+    .secondary-content {
+      transition: opacity 0.1s ease;
+      -webkit-transition: opacity 0.1s ease;
+      opacity: 1;
+    }
+    .info:last-child {
+      .secondary-content {
+        opacity: 0;
+      }
+    }
+    .error {
+      color: #f44336;
+      font-weight: bold;
+      .collapsible-body {
+        font-family: monospace;
+        white-space: pre;
+      }
+    }
+    &.done {
+      .progress {
+        display: none;
+      }
+      max-height: 0;
+      opacity: 0;
+    }
+    &.failed {
+      .header {
+        color: #f44336;
+      }
+      .progress {
+        display: none;
+      }
+    }
+  }
+}
+
+.material-tooltip {
+  transform: translate(-0.7em,-2.3em);
+}
+
+
+body.overlay #overlay {
+  transition: opacity 0.1s ease;
+  -webkit-transition: opacity 0.1s ease;
+  pointer-events: initial;
+  opacity: 1;
+}

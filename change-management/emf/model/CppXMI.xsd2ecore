@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd2ecore:XSD2EcoreMappingRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsd2ecore="http://www.eclipse.org/emf/2002/XSD2Ecore" inputs="cpp.ecore#/" outputs="CppXMI.xsd#/">
+  <nested inputs="cpp.ecore#/" outputs="CppXMI.xsd#/">
+    <nested inputs="cpp.ecore#//CppVisibility" outputs="CppXMI.xsd#//CPPVisibility;XSDSimpleTypeDefinition">
+      <nested inputs="cpp.ecore#//CppVisibility/default" outputs="CppXMI.xsd#//CPPVisibility;XSDSimpleTypeDefinition/XSDEnumerationFacet"/>
+      <nested inputs="cpp.ecore#//CppVisibility/private" outputs="CppXMI.xsd#//CPPVisibility;XSDSimpleTypeDefinition/XSDEnumerationFacet=1"/>
+      <nested inputs="cpp.ecore#//CppVisibility/public" outputs="CppXMI.xsd#//CPPVisibility;XSDSimpleTypeDefinition/XSDEnumerationFacet=2"/>
+    </nested>
+    <nested inputs="cpp.ecore#//CppNamespace" outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition">
+      <nested inputs="cpp.ecore#//CppNamespace/typedefs" outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDAttributeUse"/>
+      <nested inputs="cpp.ecore#//CppNamespace/typedefs" outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle"/>
+      <nested outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDAttributeUse=1"/>
+      <nested outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=1"/>
+      <nested inputs="cpp.ecore#//CppNamespace/operations" outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDAttributeUse=2"/>
+      <nested inputs="cpp.ecore#//CppNamespace/operations" outputs="CppXMI.xsd#//CPPNamespace;XSDComplexTypeDefinition/XSDParticle/XSDModelGroup/XSDParticle=2"/>
+    </nested>
+    <nested inputs="cpp.ecore#//CppNamespace" outputs="CppXMI.xsd#//CPPNamespace;XSDElementDeclaration"/>
+    <nested inputs="cpp.ecore#//CppClass" outputs="CppXMI.xsd#//CPPClass;XSDComplexTypeDefinition=1">
+      <nested inputs="cpp.ecore#//CppClass/typedefs" outputs="CppXMI.xsd#//CPPClass;XSDComplexTypeDefinition=1/XSDAttributeUse"/>
+      <nested inputs="cpp.ecore#//CppClass/typedefs" outputs="CppXMI.xsd#//CPPClass;XSDComplexTypeDefinition=1/XSDParticle/XSDModelGroup/XSDParticle"/>
+      <nested outputs="CppXMI.xsd#//CPPClass;XSDComplexTypeDefinition=1/XSDAttributeUse=1"/>
+      <nested outputs="CppXMI.xsd#//CPPClass;XSDComplexTypeDefinition=1/XSDParticle/XSDModelGroup/XSDParticle=1"/>
+    </nested>
+    <nested inputs="cpp.ecore#//CppClass" outputs="CppXMI.xsd#//CPPClass;XSDElementDeclaration=1"/>
+    <nested outputs="CppXMI.xsd#//CPPClassMember;XSDComplexTypeDefinition=2">
+      <nested inputs="cpp.ecore#//CppAttribute/visibility" outputs="CppXMI.xsd#//CPPClassMember;XSDComplexTypeDefinition=2/XSDAttributeUse=1"/>
+      <nested inputs="cpp.ecore#//CppAttribute/static" outputs="CppXMI.xsd#//CPPClassMember;XSDComplexTypeDefinition=2/XSDAttributeUse=2"/>
+    </nested>
+    <nested outputs="CppXMI.xsd#//CPPClassMember;XSDElementDeclaration=2"/>
+    <nested inputs="cpp.ecore#//CppAttribute" outputs="CppXMI.xsd#//CPPAttribute;XSDComplexTypeDefinition=3"/>
+    <nested inputs="cpp.ecore#//CppAttribute/visibility" outputs="CppXMI.xsd#//CPPAttribute;XSDComplexTypeDefinition=3/XSDAttributeUse"/>
+    <nested inputs="cpp.ecore#//CppAttribute/static" outputs="CppXMI.xsd#//CPPAttribute;XSDComplexTypeDefinition=3/XSDAttributeUse=1"/>
+    <nested inputs="cpp.ecore#//CppAttribute" outputs="CppXMI.xsd#//CPPAttribute;XSDElementDeclaration=3"/>
+    <nested inputs="cpp.ecore#//CppOperation" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4"/>
+    <nested inputs="cpp.ecore#//CppOperation" outputs="CppXMI.xsd#//CPPOperation;XSDElementDeclaration=4"/>
+    <nested inputs="cpp.ecore#//CppTypedef" outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5"/>
+    <nested inputs="cpp.ecore#//CppTypedef" outputs="CppXMI.xsd#//CPPTypedef;XSDElementDeclaration=5"/>
+  </nested>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EModelElement/eAnnotations"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/ordered" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=1"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=2"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/lowerBound"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=3"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=4"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=5"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eType" outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=1"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/eGenericType"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=2"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eTypeParameters"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=3"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eParameters"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=4"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eExceptions"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDAttributeUse=6"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eExceptions"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=5"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eGenericExceptions"
+      outputs="CppXMI.xsd#//CPPOperation;XSDComplexTypeDefinition=4/XSDParticle/XSDModelGroup/XSDParticle=6"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eUpperBound"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeArguments"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=1"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eLowerBound"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=2"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDAttributeUse"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eTypeParameter"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=3"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDAttributeUse=1"/>
+  <nested inputs="http://www.eclipse.org/emf/2002/Ecore#//EGenericType/eClassifier"
+      outputs="CppXMI.xsd#//CPPTypedef;XSDComplexTypeDefinition=5/XSDParticle/XSDModelGroup/XSDParticle=4"/>
+</xsd2ecore:XSD2EcoreMappingRoot>

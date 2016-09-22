@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:ocl.ecore="http://www.eclipse.org/ocl/1.1.0/Ecore">
+  <ecore:EPackage name="acs">
+    <eClassifiers xsi:type="ecore:EClass" name="Building">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="gate" upperBound="-1"
+          eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/building"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="building" upperBound="-1"
+          eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/gate"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="org_dom" upperBound="-1"
+          eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/org"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Person">
+      <eOperations name="admitted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+        <eParameters name="q" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="aut" upperBound="-1"
+          eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="sit" lowerBound="1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dap_dom" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="Door">
+      <eOperations name="accept">
+        <eParameters name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+      </eOperations>
+      <eOperations name="refuse">
+        <eParameters name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+      </eOperations>
+      <eOperations name="pass_thru"/>
+      <eOperations name="off_grn"/>
+      <eOperations name="off_red"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="green" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="red" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="org" lowerBound="1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/org_dom"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dest" lowerBound="1"
+          eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="dap" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          eOpposite="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom"/>
+    </eClassifiers>
+  </ecore:EPackage>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ecore:EPackage name="collections">
+    <eClassifiers xsi:type="ocl.ecore:OrderedSetType" instanceClassName="java.util.LinkedHashSet"
+        elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    <eClassifiers xsi:type="ocl.ecore:SetType" instanceClassName="java.util.Set" elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    <eClassifiers xsi:type="ocl.ecore:OrderedSetType" instanceClassName="java.util.LinkedHashSet"
+        elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    <eClassifiers xsi:type="ocl.ecore:SequenceType" instanceClassName="java.util.List"
+        elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    <eClassifiers xsi:type="ocl.ecore:CollectionType" elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    <eClassifiers xsi:type="ocl.ecore:SetType" instanceClassName="java.util.Set" elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    <eClassifiers xsi:type="ocl.ecore:SetType" instanceClassName="java.util.Set" elementType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  </ecore:EPackage>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ocl.ecore:Variable name="q" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+      representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/admitted/q"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ecore:EPackage name="types">
+    <eClassifiers xsi:type="ocl.ecore:TypeType" referredType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  </ecore:EPackage>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept/p"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse/p"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Variable name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+  <ocl.ecore:Constraint name="P15" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OrderedSet(T)_Class/includes">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/aut">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/26/@specification/@contextVariable"/>
+        </source>
+        <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/sit">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/26/@specification/@contextVariable"/>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="gate_def" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OrderedSet(T)_Class/=">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/gate">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/27/@specification/@contextVariable"/>
+        </source>
+        <argument xsi:type="ocl.ecore:IteratorExp" name="collect" eType="ocl.ecore:SequenceType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Sequence(Building)">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Door)"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/org_dom">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/27/@specification/@contextVariable"/>
+          </source>
+          <body xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dest">
+            <source xsi:type="ocl.ecore:VariableExp" name="temp1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/27/@specification/@bodyExpression/collect/temp1"/>
+          </body>
+          <iterator xsi:type="ocl.ecore:Variable" name="temp1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P7" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/not">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OrderedSet(T)_Class/includes">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/gate">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/28/@specification/@contextVariable"/>
+          </source>
+          <argument xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/28/@specification/@contextVariable"/>
+        </source>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P10" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:IteratorExp" name="forAll" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/aut">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/29/@specification/@contextVariable"/>
+        </source>
+        <body xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Sequence(T)_Class/includes">
+          <source xsi:type="ocl.ecore:IteratorExp" name="collect" eType="ocl.ecore:SequenceType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Sequence(Building)">
+            <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/aut">
+              <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/29/@specification/@contextVariable"/>
+            </source>
+            <body xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building/building">
+              <source xsi:type="ocl.ecore:VariableExp" name="temp1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/29/@specification/@bodyExpression/%.1/collect/temp1"/>
+            </body>
+            <iterator xsi:type="ocl.ecore:Variable" name="temp1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+          </source>
+          <argument xsi:type="ocl.ecore:VariableExp" name="b" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/29/@specification/@bodyExpression/b"/>
+        </body>
+        <iterator xsi:type="ocl.ecore:Variable" name="b" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P17" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/admitted"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+          <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+            <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/org">
+              <source xsi:type="ocl.ecore:VariableExp" name="q" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/30/@specification/@parameterVariable.0"/>
+            </source>
+            <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/sit">
+              <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/30/@specification/@contextVariable"/>
+            </argument>
+          </source>
+          <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OrderedSet(T)_Class/includes">
+            <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/aut">
+              <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/30/@specification/@contextVariable"/>
+            </source>
+            <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dest">
+              <source xsi:type="ocl.ecore:VariableExp" name="q" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/30/@specification/@parameterVariable.0"/>
+            </argument>
+          </argument>
+        </source>
+        <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/isEmpty">
+          <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Door)">
+            <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+              <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+            </eAnnotations>
+            <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door">
+              <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/30/@specification/@contextVariable"/>
+              </item>
+            </part>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+      <resultVariable xsi:type="ocl.ecore:Variable" name="result" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="q" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/admitted/q"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P12" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:IteratorExp" name="forAll" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Person)"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclType_Class/allInstances">
+          <source xsi:type="ocl.ecore:TypeExp" eType="ocl.ecore:TypeType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/10/Person"
+              referredType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+        </source>
+        <body xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/implies">
+          <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+            <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+                referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/notEmpty">
+              <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Door)">
+                <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+                  <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+                </eAnnotations>
+                <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door">
+                  <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                      referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                    <source xsi:type="ocl.ecore:VariableExp" name="p1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                        referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/31/@specification/@bodyExpression/p1"/>
+                  </item>
+                </part>
+              </source>
+            </source>
+            <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+                referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+              <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                <source xsi:type="ocl.ecore:VariableExp" name="p1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/31/@specification/@bodyExpression/p1"/>
+              </source>
+              <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                <source xsi:type="ocl.ecore:VariableExp" name="p2" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/31/@specification/@bodyExpression/p2"/>
+              </argument>
+            </argument>
+          </source>
+          <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+            <source xsi:type="ocl.ecore:VariableExp" name="p1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/31/@specification/@bodyExpression/p1"/>
+            <argument xsi:type="ocl.ecore:VariableExp" name="p2" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/31/@specification/@bodyExpression/p2"/>
+          </argument>
+        </body>
+        <iterator xsi:type="ocl.ecore:Variable" name="p1" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+        <iterator xsi:type="ocl.ecore:Variable" name="p2" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P13a" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/includes">
+        <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Building)">
+          <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+            <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+          </eAnnotations>
+          <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building">
+            <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/sit">
+              <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/32/@specification/@contextVariable"/>
+            </item>
+          </part>
+        </source>
+        <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/org">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/32/@specification/@contextVariable"/>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P13b" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OrderedSet(T)_Class/includes">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:OrderedSetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/OrderedSet(Building)"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/aut">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/33/@specification/@contextVariable"/>
+        </source>
+        <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+            referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dest">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/33/@specification/@contextVariable"/>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="P14_green" constrainedElements="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+      stereotype="invariant">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/=">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/green">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/34/@specification/@contextVariable"/>
+        </source>
+        <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/notEmpty">
+          <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Person)">
+            <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+              <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+            </eAnnotations>
+            <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person">
+              <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/34/@specification/@contextVariable"/>
+              </item>
+            </part>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="accept_pre1" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/not">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/or">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/green">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/35/@specification/@contextVariable"/>
+          </source>
+          <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/red">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/35/@specification/@contextVariable"/>
+          </argument>
+        </source>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="accept_pre2" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/admitted">
+        <source xsi:type="ocl.ecore:VariableExp" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+            referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/36/@specification/@parameterVariable.0"/>
+        <argument xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+            referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/36/@specification/@contextVariable"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="accept_post" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/37/@specification/@contextVariable"/>
+          </source>
+          <argument xsi:type="ocl.ecore:VariableExp" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/37/@specification/@parameterVariable.0"/>
+        </source>
+        <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+            <source xsi:type="ocl.ecore:VariableExp" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/37/@specification/@parameterVariable.0"/>
+          </source>
+          <argument xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/37/@specification/@contextVariable"/>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/accept/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="pass_pre" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/pass_thru"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/green">
+        <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+            referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/38/@specification/@contextVariable"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="pass_post" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/pass_thru"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+          <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/OclAny_Class/=">
+            <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/sit">
+              <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  markedPre="true" referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/39/@specification/@contextVariable"/>
+              </source>
+            </source>
+            <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Building"
+                referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dest">
+              <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/39/@specification/@contextVariable"/>
+            </argument>
+          </source>
+          <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/isEmpty">
+            <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Door)">
+              <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+                <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+              </eAnnotations>
+              <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door">
+                <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                    referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                  <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                      markedPre="true" referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                    <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                        referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/39/@specification/@contextVariable"/>
+                  </source>
+                </item>
+              </part>
+            </source>
+          </argument>
+        </source>
+        <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/isEmpty">
+          <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Person)">
+            <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+              <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+            </eAnnotations>
+            <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person">
+              <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/39/@specification/@contextVariable"/>
+              </item>
+            </part>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="off_grn_pre" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/off_grn"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/green">
+        <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+            referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/40/@specification/@contextVariable"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="off_grn_post" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/off_grn"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/and">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/isEmpty">
+          <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Door)">
+            <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+              <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+            </eAnnotations>
+            <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door">
+              <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/dap_dom">
+                <source xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                    markedPre="true" referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                  <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                      referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/41/@specification/@contextVariable"/>
+                </source>
+              </item>
+            </part>
+          </source>
+        </source>
+        <argument xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Set(T)_Class/isEmpty">
+          <source xsi:type="ocl.ecore:CollectionLiteralExp" eType="ocl.ecore:SetType /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/2/Set(Person)">
+            <eAnnotations source="http://www.eclipse.org/ocl/1.1.0/OCL/Annotations">
+              <details key="IMPLICIT_SET_CONVERSION" value="true"/>
+            </eAnnotations>
+            <part xsi:type="ocl.ecore:CollectionItem" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person">
+              <item xsi:type="ocl.ecore:PropertyCallExp" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+                  referredProperty="ecore:EReference /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/dap">
+                <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                    referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/41/@specification/@contextVariable"/>
+              </item>
+            </part>
+          </source>
+        </argument>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="refuse_pre_1" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/not">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/or">
+          <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/green">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/42/@specification/@contextVariable"/>
+          </source>
+          <argument xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+              referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/red">
+            <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+                referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/42/@specification/@contextVariable"/>
+          </argument>
+        </source>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="refuse_pre_2" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse"
+      stereotype="precondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/not">
+        <source xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredOperation="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person/admitted">
+          <source xsi:type="ocl.ecore:VariableExp" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/43/@specification/@parameterVariable.0"/>
+          <argument xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/43/@specification/@contextVariable"/>
+        </source>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="refuse_post" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/red">
+        <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+            referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/44/@specification/@contextVariable"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+      <parameterVariable xsi:type="ocl.ecore:Variable" name="p" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Person"
+          representedParameter="ecore:EParameter /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/refuse/p"/>
+    </specification>
+  </ocl.ecore:Constraint>
+  <ocl.ecore:Constraint name="off_red_post" constrainedElements="ecore:EOperation /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/off_red"
+      stereotype="postcondition">
+    <specification xsi:type="ocl.ecore:ExpressionInOCL">
+      <bodyExpression xsi:type="ocl.ecore:OperationCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+          referredOperation="ecore:EOperation http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean_Class/=">
+        <source xsi:type="ocl.ecore:PropertyCallExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            referredProperty="ecore:EAttribute /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door/red">
+          <source xsi:type="ocl.ecore:VariableExp" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"
+              referredVariable="/home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/45/@specification/@contextVariable"/>
+        </source>
+        <argument xsi:type="ocl.ecore:BooleanLiteralExp" eType="ocl.ecore:PrimitiveType http://www.eclipse.org/ocl/1.1.0/oclstdlib.ecore#/0/Boolean"
+            booleanSymbol="false"/>
+      </bodyExpression>
+      <contextVariable xsi:type="ocl.ecore:Variable" name="self" eType="ecore:EClass /home/martin/Projects/specific-tool/files/fsl-3.emf.ecore#/0/Door"/>
+    </specification>
+  </ocl.ecore:Constraint>
+</xmi:XMI>

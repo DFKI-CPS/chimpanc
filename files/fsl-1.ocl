@@ -1,0 +1,23 @@
+package acs
+
+context Person
+  inv P5b: self.aut->includes(self.sit)
+
+-- P7: A building does not communicate with itself.
+context Building
+  inv P7b: not (self.gate->includes(self))
+
+-- P10: Any person authorised to be in a building must also be authorised
+-- to go into another building which communicates with the first one.
+context Person
+  inv P10b: self.aut-> forAll(b|self.aut.building->includes(b))
+
+-- The pass operation
+-- P8: A person can only go from one building in which he is to another
+-- where he desires to go if these two buildings communicate with each other.
+context Person::pass(b: Building): 
+  pre pass_pre1b: self.aut-> includes(b)
+  pre pass_pre2b: self.sit.gate-> includes(b)
+  post pass_postb: self.sit = b
+
+endpackage

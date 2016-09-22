@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/cpp/src" modelPluginID="cpp" modelName="Cpp" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>cpp.ecore</foreignModel>
+  <genPackages prefix="Cpp" basePackage="specific.emf" disposableProviderFactory="true"
+      ecorePackage="cpp.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="cpp.ecore#//CppVisibility">
+      <genEnumLiterals ecoreEnumLiteral="cpp.ecore#//CppVisibility/default"/>
+      <genEnumLiterals ecoreEnumLiteral="cpp.ecore#//CppVisibility/private"/>
+      <genEnumLiterals ecoreEnumLiteral="cpp.ecore#//CppVisibility/public"/>
+    </genEnums>
+    <genClasses ecoreClass="cpp.ecore#//CppNamespace">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppNamespace/typedefs"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppNamespace/operations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cpp.ecore#//CppNamespace/variables"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppClass">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppClass/typedefs"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppClass/nestedClasses"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppClass/parentClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppClass/namespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppClass/visibility"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppAttribute/visibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppAttribute/static"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppAttribute/typedef"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppOperation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppOperation/visibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppOperation/static"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppOperation/typedef"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppTypedef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cpp.ecore#//CppTypedef/visibility"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppParameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppParameter/typedef"/>
+    </genClasses>
+    <genClasses ecoreClass="cpp.ecore#//CppTypedefRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cpp.ecore#//CppTypedefRef/typedef"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

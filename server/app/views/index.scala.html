@@ -1,0 +1,39 @@
+@()
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ChimpanC</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("stylesheets/joint.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("lib/codemirror/lib/codemirror.css")">
+  <link rel="stylesheet" href="@routes.Assets.at("materialize/css/materialize.min.css")">
+</head>
+<body>
+  @playscalajs.html.scripts("/client", projectName = "client")
+  <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/lib/codemirror.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/addon/display/autorefresh.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/mode/clike/clike.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.layout.DirectedGraph.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.shapes.uml.js")'></script>
+  <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-2.1.4.min.js")"></script>
+  <script type="text/javascript" src='@routes.Assets.at("materialize/js/materialize.min.js")'></script>
+  <div class="navbar-fixed col s12">
+    <nav>
+      <div class="nav-wrapper">
+        <ul class="tabs" id="layer-tabs"></ul>
+      </div>
+    </nav>
+  </div>
+  <div id="main" class="layers"></div>
+  <div id="overlay" class="valign-wrapper">
+    <div class="valign container">
+      <div class="row">
+        <div class="col s12 offset-m1 m10 offset-l2 l8" id="tasks">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

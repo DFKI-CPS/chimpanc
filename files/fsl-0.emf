@@ -1,0 +1,14 @@
+package acs;
+
+// P1: The model is composed of people and buldings.
+class Building { }
+
+// P1: The model is composed of people and buildings.
+class Person {
+  op void pass(Building b);
+  // P2: Each person is authorized to enter certain buldings.
+  ref Building[*] aut;
+  // P3: A person can only be in one building.
+  // P4: A person must be in at least one building.
+  ref Building[1] sit;  
+}

@@ -1,0 +1,22 @@
+package acs
+
+context Person
+  inv P5c: self.aut->includes(self.sit)
+
+-- This defines the gate association
+context Building
+  inv gate_defc: self.gate = self.org_dom.dest
+
+context Building
+  inv P7c: not (self.gate->includes(self))
+
+context Person
+ inv P10c: self.aut->forAll(b|self.aut.building->includes(b))
+ 
+-- The enter operation on Doors
+context Door::enter(p: Person): 
+  pre enter_pre1c: p.aut-> includes(self.dest)
+  pre enter_pre2c: p.sit = self.org
+  post enter_postc: p.sit = self.dest
+
+endpackage

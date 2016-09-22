@@ -1,0 +1,27 @@
+package acs;
+
+class Building {	
+  ref Building[*]#building gate;
+  ref Building[*]#gate building;
+  ref Door[*] #org org_dom;
+}
+
+class Person {
+  op ecore.EBoolean admitted(Door q);
+  ref Building[*] aut;
+  ref Building[1] sit;
+  ref Door[0..1]#dap dap_dom;
+}
+
+class Door {
+  attr ecore.EBoolean green;
+  attr ecore.EBoolean red;
+  op void accept();
+  op void refuse();
+  op void pass_thru();
+  op void off_grn();
+  op void off_red();
+  ref Building[1] #org_dom org;
+  ref Building[1] dest;
+  ref Person[0..1]#dap_dom dap;
+}

@@ -1,0 +1,13 @@
+package acs
+
+-- P5: Any person in a given building is authorised to be there.
+context Person
+  inv P5: self.aut->includes(self.sit)
+
+-- The pass operation
+context Person::pass(b: Building):
+  pre pass_pre1a: self.aut->includes(b)
+  pre pass_pre2a: self.sit <> b
+  post pass_posta: self.sit = b
+
+endpackage

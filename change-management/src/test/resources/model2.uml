@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Blocks="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks" xmlns:Requirements="http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks http://www.eclipse.org/papyrus/0.7.0/SysML#//blocks http://www.eclipse.org/papyrus/0.7.0/SysML/Requirements http://www.eclipse.org/papyrus/0.7.0/SysML#//requirements">
+  <uml:Model xmi:id="_vjHQYAy_EeSPxo-PH2YJpQ" name="SysMLmodel">
+    <packagedElement xmi:type="uml:Class" xmi:id="_wHbeYAy_EeSPxo-PH2YJpQ" name="System">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nj3scAzAEeSPxo-PH2YJpQ" name="truck" type="_08skMAy_EeSPxo-PH2YJpQ" aggregation="composite" association="_o27PwAzAEeSPxo-PH2YJpQ"/>
+      <!--ownedAttribute xmi:type="uml:Property" xmi:id="_EcI4QAzBEeSPxo-PH2YJpQ" name="tire1" type="_3on-8Ay_EeSPxo-PH2YJpQ" aggregation="composite" association="_JKOYAAzBEeSPxo-PH2YJpQ"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_56YoQBDHEeSM39bt5a5ImA" name="tire2" type="_3on-8Ay_EeSPxo-PH2YJpQ" aggregation="composite" association="_9sVP4BDHEeSM39bt5a5ImA"/-->
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_08skMAy_EeSPxo-PH2YJpQ" name="Truck">
+      <!--ownedAttribute xmi:type="uml:Property" xmi:id="_53JsAAy_EeSPxo-PH2YJpQ" name="tire" type="_3on-8Ay_EeSPxo-PH2YJpQ" aggregation="composite" association="_53EzgAy_EeSPxo-PH2YJpQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_F2DuAAzAEeSPxo-PH2YJpQ" value="4"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_F2JNkAzAEeSPxo-PH2YJpQ" value="4"/>
+      </ownedAttribute-->
+    </packagedElement>
+    <!--<packagedElement xmi:type="uml:Class" xmi:id="_3on-8Ay_EeSPxo-PH2YJpQ" name="Tire">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_53JsAQy_EeSPxo-PH2YJpQ" name="truck" type="_08skMAy_EeSPxo-PH2YJpQ" association="_53EzgAy_EeSPxo-PH2YJpQ"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_tHMpoBDHEeSM39bt5a5ImA" name="pressure">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Real"/>
+      </ownedAttribute>
+    </packagedElement>-->
+    <!--packagedElement xmi:type="uml:Association" xmi:id="_53EzgAy_EeSPxo-PH2YJpQ" name="Association" memberEnd="_53JsAAy_EeSPxo-PH2YJpQ _53JsAQy_EeSPxo-PH2YJpQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_53H20Ay_EeSPxo-PH2YJpQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_53Id4Ay_EeSPxo-PH2YJpQ" key="nature" value="SysML_Nature"/>
+      </eAnnotations>
+    </packagedElement-->
+    <packagedElement xmi:type="uml:Association" xmi:id="_o27PwAzAEeSPxo-PH2YJpQ" name="Association1" memberEnd="_nj3scAzAEeSPxo-PH2YJpQ _o27PwwzAEeSPxo-PH2YJpQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_o27PwQzAEeSPxo-PH2YJpQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_o27PwgzAEeSPxo-PH2YJpQ" key="nature" value="SysML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_o27PwwzAEeSPxo-PH2YJpQ" name="system" type="_wHbeYAy_EeSPxo-PH2YJpQ" association="_o27PwAzAEeSPxo-PH2YJpQ"/>
+    </packagedElement>
+    <!--packagedElement xmi:type="uml:Association" xmi:id="_JKOYAAzBEeSPxo-PH2YJpQ" name="Association2" memberEnd="_EcI4QAzBEeSPxo-PH2YJpQ _JKOYAwzBEeSPxo-PH2YJpQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_JKOYAQzBEeSPxo-PH2YJpQ" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_JKOYAgzBEeSPxo-PH2YJpQ" key="nature" value="SysML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_JKOYAwzBEeSPxo-PH2YJpQ" name="system" type="_wHbeYAy_EeSPxo-PH2YJpQ" association="_JKOYAAzBEeSPxo-PH2YJpQ"/>
+    </packagedElement-->
+    <packagedElement xmi:type="uml:Class" xmi:id="_UdFMUAzBEeSPxo-PH2YJpQ" name="EnoughTires"/>
+    <!--packagedElement xmi:type="uml:Association" xmi:id="_9sVP4BDHEeSM39bt5a5ImA" name="Association3" memberEnd="_56YoQBDHEeSM39bt5a5ImA _9sVP4xDHEeSM39bt5a5ImA">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_9sVP4RDHEeSM39bt5a5ImA" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_9sVP4hDHEeSM39bt5a5ImA" key="nature" value="SysML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_9sVP4xDHEeSM39bt5a5ImA" name="system" type="_wHbeYAy_EeSPxo-PH2YJpQ" association="_9sVP4BDHEeSM39bt5a5ImA"/>
+    </packagedElement-->
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_v1I0gAy_EeSPxo-PH2YJpQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_v1L30Ay_EeSPxo-PH2YJpQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/0.7.0/SysML#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://SysML_PROFILES/SysML.profile.uml#_TZ_nULU5EduiKqCzJMWbGw"/>
+    </profileApplication>
+  </uml:Model>
+  <!--Blocks:Block xmi:id="_wHlPYAy_EeSPxo-PH2YJpQ" base_Class="_wHbeYAy_EeSPxo-PH2YJpQ"/-->
+  <Blocks:Block xmi:id="_08tyUAy_EeSPxo-PH2YJpQ" base_Class="_08skMAy_EeSPxo-PH2YJpQ"/>
+  <!--Blocks:Block xmi:id="_3opNEAy_EeSPxo-PH2YJpQ" base_Class="_3on-8Ay_EeSPxo-PH2YJpQ"/-->
+  <Requirements:Requirement xmi:id="_UePC4AzBEeSPxo-PH2YJpQ" text="The truck has 6 tires." id="1.1" base_Class="_UdFMUAzBEeSPxo-PH2YJpQ"/>
+</xmi:XMI>

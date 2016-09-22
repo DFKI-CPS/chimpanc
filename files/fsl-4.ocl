@@ -1,0 +1,58 @@
+package acs
+
+context Person
+  inv P15e: self.aut->includes(self.sit)
+
+context Building
+  inv gate_defe: self.gate = self.org_dom.dest
+
+context Building
+  inv P7e: not (self.gate-> includes(self))
+
+context Person
+  inv P10e: self.aut->forAll(b|self.aut.building->includes(b))
+
+context Person::admitted(q: Door): ecore::EBoolean
+  post P17e: q.org = self.sit and
+            self.aut->includes(q.dest) and
+            self.dap_dom->isEmpty()
+ 
+context Person
+  inv P12e: Person.allInstances()->forAll(p1, p2 | p1.dap_dom->notEmpty() and p1.dap_dom= p2.dap_dom implies p1= p2)
+
+context Person
+  inv P13ae: self.sit->includes(self.dap_dom.org)
+
+context Person
+  inv P13be: self.aut-> includes(self.dap_dom.dest)
+
+context Door
+  inv P14_greene: self.green = self.dap->notEmpty()
+
+context Door::accept():
+  pre accept_pre_1e: not (green or red)
+  pre accept_pre_2e: self.dap.admitted(self)
+  post accept_poste: self.dap.dap_dom= self
+
+context Door::pass_thru():
+  pre pass_pree:  self.green
+  post pass_poste:
+      self.dap@pre.sit = self.dest and
+      self.dap@pre.dap_dom->isEmpty() and
+      self.dap->isEmpty() -- implies not (self.green)
+        
+context Door::off_grn():
+  pre off_grn_pree:  self.green
+  post off_grn_poste:
+      self.dap@pre.dap_dom->isEmpty() and
+      self.dap->isEmpty() -- implies not (self.green)
+
+context Door::refuse():
+  pre refuse_pre_1e: not (green or red)
+  pre refuse_pre_2e: not (self.dap.admitted(self))
+  post refuse_poste: self.red
+
+context Door::off_red():
+  post off_red_poste: self.red = false
+
+endpackage

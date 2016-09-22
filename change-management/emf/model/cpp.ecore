@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cpp" nsURI="http://www.dfki.de/SPECifIC/emf/2015/cpp" nsPrefix="cpp">
+  <eClassifiers xsi:type="ecore:EEnum" name="CppVisibility">
+    <eLiterals name="default"/>
+    <eLiterals name="private" value="1"/>
+    <eLiterals name="public" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppNamespace" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedefs" upperBound="-1"
+        eType="#//CppTypedef" containment="true" eKeys="http://www.eclipse.org/emf/2002/Ecore#//ENamedElement/name">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="namespace" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
+        eType="#//CppOperation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
+        eType="#//CppAttribute" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppClass" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedefs" ordered="false"
+        upperBound="-1" eType="#//CppTypedef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nestedClasses" upperBound="-1"
+        eType="#//CppClass" containment="true" eOpposite="#//CppClass/parentClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentClass" eType="#//CppClass"
+        eOpposite="#//CppClass/nestedClasses"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="#//CppNamespace"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//CppVisibility"
+        defaultValueLiteral="default"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppAttribute" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//CppVisibility"
+        defaultValueLiteral="default"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="static" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedef" eType="#//CppTypedef">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="name" value="typedef"/>
+        <details key="namespace" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppOperation" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EOperation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//CppVisibility"
+        defaultValueLiteral="default"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="static" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedef" eType="#//CppTypedef">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="name" value="typedef"/>
+        <details key="namespace" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppTypedef" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EGenericType http://www.eclipse.org/emf/2002/Ecore#//ENamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//CppVisibility"
+        defaultValueLiteral="default"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppParameter" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EParameter">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="CPPParameter"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedef" eType="#//CppTypedef">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="name" value="typedef"/>
+        <details key="namespace" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CppTypedefRef" eSuperTypes="http://www.eclipse.org/emf/2002/Ecore#//EGenericType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typedef" eType="#//CppTypedef">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="name" value="typedef"/>
+        <details key="namespace" value=""/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

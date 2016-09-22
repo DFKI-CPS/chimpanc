@@ -1,0 +1,11 @@
+{ 
+  "layers": [
+    { "type": "nl", "name": "isl-0", "files": ["requirements.txt"] },
+    { "type": "fsl", "name": "fsl-0", "files": ["fsl-0.emf", "fsl-0.ocl"] },
+    { "type": "fsl", "name": "fsl-1", "files": ["fsl-1.emf", "fsl-1.ocl"] },
+    { "type": "fsl", "name": "fsl-2", "files": ["fsl-2.emf", "fsl-2.ocl"] },
+    { "type": "fsl", "name": "fsl-3", "files": ["fsl-3.emf", "fsl-3.ocl"] },
+    { "type": "fsl", "name": "fsl-4", "files": ["fsl-4.emf", "fsl-4.ocl"] },
+    { "type": "esl", "name": "esl-0", "files": ["esl.cpp"] }    
+  ]
+}
