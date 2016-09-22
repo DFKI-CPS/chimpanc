@@ -3,3 +3,5 @@
 .browse.VC.db-wal
 *.class
 target
+.idea
+/db
