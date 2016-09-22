@@ -24,8 +24,7 @@ For the change management we need several prerequesites:
 In addition you need [sbt](http://www.scala-sbt.org/download.html) installed for the build process (any version will do).
 
 *Configuration:*
-* Please configure the paths to clang, systemc, and dwarfdump in `/server/conf/application.conf`
-* Configure paths to neo4j and mdtool (mono develop command line interface) in `/project/Config.scala`
+* Please configure the paths to clang, systemc, and dwarfdump in `/server/conf/application.conf` (use `/server/conf/reference.conf` as guideline)
 
 To start the tool, follow these simple steps:
 
