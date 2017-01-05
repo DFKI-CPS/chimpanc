@@ -71,7 +71,7 @@ case class Entities(layer: String, entities: Set[LayerObject]) extends Message
 object Message {
   import upickle._
   
-  def read(raw: String) = upickle.read[Message](raw)
-  def write(msg: Message) = upickle.write(msg)
+  def read(raw: String) = upickle.default.read[Message](raw)
+  def write(msg: Message) = upickle.default.write(msg)
 }
 

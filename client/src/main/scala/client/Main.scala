@@ -9,7 +9,7 @@ import net.flatmap.codemirror._
 import js.JSStringOps.enableJSStringOps
 import Util._
 
-object Main extends SocketApp[Message,Message](s"ws://${location.host}/session")(Message.read,Message.write) {
+object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/session")(Message.read,Message.write) {
   var nlEditor: Option[CodeMirror] = None
 
   case class FSLEditors(emf: CodeMirror, ocl: CodeMirror)

@@ -61,17 +61,17 @@ class GraphEObject (var node: Node, val graphContainer: GraphEObject, resource: 
   def eResource(): org.eclipse.emf.ecore.resource.Resource = resource
 
   def eSet(x$1: org.eclipse.emf.ecore.EStructuralFeature, x$2: Any): Unit = connection.transaction { implicit tx =>
-    val query = s"START n WHERE id(n) = ${node.id} SET n.${x$1.getName} = '${x$2}'"
+    val query = s"START (n) WHERE id(n) = ${node.id} SET n.${x$1.getName} = '${x$2}'"
     Cypher(query).execute()
-    node = (Cypher(s"MATCH n WHERE id(n) = ${node.id} RETURN n as node")().map {
+    node = (Cypher(s"MATCH (n) WHERE id(n) = ${node.id} RETURN n as node")().map {
       row => row.get[Node]("node").get
     }).toStream.head
   }.get
 
   def eUnset(x$1: org.eclipse.emf.ecore.EStructuralFeature): Unit = connection.transaction { implicit tx =>
-    val query = s"MATCH n WHERE id(n) = ${node.id} REMOVE n.${x$1.getName}"
+    val query = s"MATCH (n) WHERE id(n) = ${node.id} REMOVE n.${x$1.getName}"
     Cypher(query).execute()
-    node = (Cypher(s"MATCH n WHERE id(n) = ${node.id} RETURN n as node")().map {
+    node = (Cypher(s"MATCH (n) WHERE id(n) = ${node.id} RETURN n as node")().map {
       row => row.get[Node]("node").get
     }).toStream.head
   }.get
@@ -88,7 +88,7 @@ class GraphEObject (var node: Node, val graphContainer: GraphEObject, resource: 
   def getGraphContents: GraphEList[GraphEObject] = contentCache.getOrElse { connection.transaction { implicit tx =>
     val contentsQuery = s"""
       |MATCH (n:EObject) WHERE id(n) = ${node.id}
-      |MATCH n -[:CONTENTS]-> (list), p = (list) -[:NEXT_SIBLING*0..]-> (list)
+      |MATCH (n) -[:CONTENTS]-> (list), p = (list) -[:NEXT_SIBLING*0..]-> (list)
       |RETURN [node IN nodes(p) WHERE node <> list | node ] as items
     """.stripMargin
     val items = Cypher(contentsQuery) { row => row.get[Seq[Node]]("items").get }.flatten
@@ -129,9 +129,9 @@ class GraphEObject (var node: Node, val graphContainer: GraphEObject, resource: 
 
   def remove(): Boolean = connection.transaction { implicit tx =>
     val q = Cypher(s"""
-      |MATCH before -[:NEXT_SIBLING]-> this -[:NEXT_SIBLING]-> after
+      |MATCH (before) -[:NEXT_SIBLING]-> (this) -[:NEXT_SIBLING]-> (after)
       |WHERE id(this) = ${node.id}
-      |MATCH this -[r]- ()
+      |MATCH (this) -[r]- ()
       |DELETE r, this
       |CREATE UNIQUE before -[:NEXT_SIBLING]-> after
     """.stripMargin)
@@ -166,7 +166,7 @@ class GraphEObject (var node: Node, val graphContainer: GraphEObject, resource: 
 
   def setPlain(feature: String, value: String): Boolean = connection.transaction { implicit tx => Cypher(
     s"""
-      |MATCH n
+      |MATCH (n)
       |WHERE id(n) = ${node.id}
       |SET n.$feature = "$value"
     """.stripMargin).execute()

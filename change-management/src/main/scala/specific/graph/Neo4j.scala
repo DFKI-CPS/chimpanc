@@ -2,14 +2,13 @@ package specific.graph
 
 import java.io.File
 
-import org.neo4j.cypher.internal.compiler.v1_9.pipes.matching.NodeIdentifier
-import org.neo4j.cypher.{ExecutionResult, ExecutionEngine}
-import org.neo4j.graphdb.{Transaction, GraphDatabaseService, SeverityLevel}
+import org.neo4j.graphdb.{GraphDatabaseService, Result, Transaction}
 import org.neo4j.graphdb.factory.GraphDatabaseFactory
 
-import scala.util.{Failure, Try, Success}
+import scala.util.{Failure, Success, Try}
 import scala.util.control.NonFatal
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
+import scala.collection.convert.Wrappers.SeqWrapper
 
 /**
  * Created by martin on 06.10.15.
@@ -23,8 +22,6 @@ class Neo4j(store: File) {
     })
     new GraphDatabaseFactory().newEmbeddedDatabase(store)
   }
-
-  private lazy val executionEngine = new ExecutionEngine(graphDb)
 
   def shutdown() = graphDb.shutdown()
 
@@ -45,10 +42,10 @@ class Neo4j(store: File) {
     }
   }
 
-  def query(query: String, params: Map[String,Any] = Map.empty) = {
+  def query(query: String, params: Map[String,AnyRef] = Map.empty) = {
     try {
-      val result = executionEngine.execute(query, params)
-      result.toStream.map(ResultRow(result,_))
+      val result = graphDb.execute(query, params.asJava)
+      result.asScala.toStream.map(x => ResultRow(result,x.asScala.toMap))
     } catch {
       case NonFatal(e) =>
         println("error while executing: " + query)
@@ -60,29 +57,29 @@ class Neo4j(store: File) {
 }
 
 class Node(underlying: org.neo4j.graphdb.Node) {
-  val props = underlying.getAllProperties.toMap
+  val props = underlying.getAllProperties.asScala.toMap
   val id = underlying.getId
 }
 
-case class ResultRow(result: ExecutionResult, row: Map[String,Any]) {
+case class ResultRow(result: Result, row: Map[String,AnyRef]) {
   def apply[T](column: String)(implicit convert: ResultConverter[T]): T = get[T](column).get
   def get[T](column: String)(implicit convert: ResultConverter[T]): Option[T] =
     row.get(column).flatMap(convert.apply)
 }
 
 object Row {
-  def unapplySeq(row: ResultRow): Option[Seq[Any]] = Some(row.result.columns.map(row.row.get(_).get))
+  def unapplySeq(row: ResultRow): Option[Seq[Any]] = Some(row.result.columns.asScala.map(row.row.get(_).get))
 }
 
 trait ResultConverter[T] {
-  def apply(value: Any): Option[T]
-  def isDefinedAt(value: Any): Boolean
+  def apply(value: AnyRef): Option[T]
+  def isDefinedAt(value: AnyRef): Boolean
 }
 
 object ResultConverter {
-  def apply[T](f: PartialFunction[Any,T]) = new ResultConverter[T] {
-    def apply(value: Any) = f.lift(value)
-    def isDefinedAt(value: Any) = f.isDefinedAt(value)
+  def apply[T](f: PartialFunction[AnyRef,T]) = new ResultConverter[T] {
+    def apply(value: AnyRef) = f.lift(value)
+    def isDefinedAt(value: AnyRef) = f.isDefinedAt(value)
   }
 }
 
@@ -90,7 +87,7 @@ object Neo4j {
   def apply(path: String = "./db") = new Neo4j(new File(path))
 
   implicit val BooleanResult = ResultConverter[Boolean]{
-    case s: Boolean => s
+    case s: java.lang.Boolean => s
   }
 
   implicit val StringResult = ResultConverter[String]{
@@ -98,8 +95,8 @@ object Neo4j {
   }
 
   implicit val LongResult = ResultConverter[Long]{
-    case l: Long => l
-    case i: Int => i
+    case l: java.lang.Long => l
+    case i: java.lang.Integer => i.toLong
   }
 
   implicit val NodeResult = ResultConverter[Node]{
@@ -116,17 +113,19 @@ object Neo4j {
   }
 
   implicit def SeqResult[T](implicit convert: ResultConverter[T]) = ResultConverter[Seq[T]] {
-    case s: Seq[Any] if s.forall(convert.isDefinedAt) =>
+    case s: SeqWrapper[AnyRef] if s.underlying.forall(convert.isDefinedAt) =>
+      s.underlying.map(convert.apply).map(_.get)
+    case s: Seq[AnyRef] if s.forall(convert.isDefinedAt) =>
       s.map(convert.apply).map(_.get)
   }
 }
 
 trait CypherQuery { self =>
   val query: String
-  val params: Map[String,Any] = Map.empty
-  def on(ps: (String,Any)*) = new CypherQuery {
+  val params: Map[String,AnyRef] = Map.empty
+  def on(ps: (String,AnyRef)*) = new CypherQuery {
     override val query: String = self.query
-    override val params: Map[String,Any] = self.params ++ ps
+    override val params: Map[String,AnyRef] = self.params ++ ps
   }
   def apply[T](f: ResultRow => T)(implicit neo4j: Neo4j, tx: Transaction): Seq[T] = {
     val t0 = System.currentTimeMillis()

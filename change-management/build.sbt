@@ -2,7 +2,7 @@ name := "change-management"
 
 version := "1.0"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.8"
 
 parallelExecution in Test := false
 
@@ -16,8 +16,9 @@ libraryDependencies ++= Seq(
   "org.antlr" % "antlr-runtime" % "3.5.2",
   "org.jetbrains" % "annotations" % "13.0",
   "com.typesafe" % "config" % "1.2.1",
-  "org.neo4j" % "neo4j" % "2.3.0-M03",
-  "org.neo4j.app" % "neo4j-server" % "2.3.0-M03",
+  "org.neo4j" % "neo4j" % "3.1.0",
+  "commons-logging" % "commons-logging" % "1.2",
+  //"org.neo4j.app" % "neo4j-server" % "3.1.0",
   "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
   "org.eclipse.xtend" % "org.eclipse.xtend.lib" % "2.8.2",
   "edu.stanford.nlp" % "stanford-parser" % "3.3.1",

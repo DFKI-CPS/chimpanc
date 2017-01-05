@@ -3,7 +3,7 @@ package actors
 import _root_.specific.graph.Semantics
 import akka.actor.{Actor, ActorRef}
 import specific._
-import upickle._
+import upickle.default._
 
 import scala.util.Try
 

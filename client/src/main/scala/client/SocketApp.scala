@@ -43,6 +43,6 @@ abstract class SocketApp[I,O](url: String)(deserialize: String => I, serialize: 
 
   def socketClosed(): Unit = {
     this.socket = None
-    location.reload()
+    window.location.reload()
   }
 }

@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="@routes.Assets.at("materialize/css/materialize.min.css")">
 </head>
 <body>
-  @playscalajs.html.scripts("/client", projectName = "client")
+  @scalajs.html.scripts(projectName = "client", name => routes.Assets.at(name).toString, name => getClass.getResource(s"/public/$name") != null)
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/lib/codemirror.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/addon/display/autorefresh.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/mode/clike/clike.js")'></script>

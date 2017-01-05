@@ -23,24 +23,24 @@ object Requirements {
   def writeToGraph(layer: String, requirements: Seq[Requirement])(implicit connection: Neo4j) = connection.transaction { implicit tx =>
     if (requirements.nonEmpty) {
     Cypher(requirements.map { req => s"""
-      |MERGE l -[:hasA]-> (r:Requirement { $$TYPE: "Requirement", name: "${req.name}" })
-      |ON CREATE SET r.$$STATUS = "ADDED"
-      |ON MATCH SET r.$$STATUS = (CASE r.content WHEN "${req.content}" THEN "PRESERVED" ELSE "MODIFIED" END)
+      |MERGE (l) -[:hasA]-> (r:Requirement { _TYPE: "Requirement", name: "${req.name}" })
+      |ON CREATE SET r._STATUS = "ADDED"
+      |ON MATCH SET r._STATUS = (CASE r.content WHEN "${req.content}" THEN "PRESERVED" ELSE "MODIFIED" END)
       |SET r.content = "${req.content}"
       """.stripMargin
     }.mkString(s"""
-      |MERGE (l: Layer {$$TYPE: "Layer", name: "$layer"})
-      |ON CREATE SET l.$$STATUS = "ADDED"
-      |ON MATCH SET l.$$STATUS = "PRESERVED"
+      |MERGE (l: Layer { _TYPE: "Layer", name: "$layer"})
+      |ON CREATE SET l._STATUS = "ADDED"
+      |ON MATCH SET l._STATUS = "PRESERVED"
     """.stripMargin, " WITH l ", "")).execute()
   } }
 
     /*implicit val create = Buffer.empty[String]
-    create.append(s"""(r:Semantic:Layer { $$TYPE: "Layer", name: "$layer" } )""")
-    create.append("""(rc:Semantic { $$TYPE: "List" } )""")
+    create.append(s"""(r:Semantic:Layer { _TYPE: "Layer", name: "$layer" } )""")
+    create.append("""(rc:Semantic { _TYPE: "List" } )""")
     requirements.zipWithIndex foreach { case (t,i) =>
       val id = "rc_"+i
-      create.append(s"""($id:Semantic:Requirement { $$STATUS: "ADDED", $$TYPE: "Requirement", name: "${t.name}", content: "${t.content}" } )""")
+      create.append(s"""($id:Semantic:Requirement { _STATUS: "ADDED", _TYPE: "Requirement", name: "${t.name}", content: "${t.content}" } )""")
       if (i == 0) create.append(s"(rc -[:NEXT_SIBLING]-> $id)")
       else create.append(s"(rc_${i-1} -[:NEXT_SIBLING]-> $id)")
     }
