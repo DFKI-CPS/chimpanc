@@ -2,7 +2,7 @@ import sbt.Project.projectToRef
 
 val scalaV = "2.11.8"
 
-lazy val server = project.settings(
+lazy val server = (project in file("modules/server")).settings(
   scalaVersion := scalaV,
   scalaJSProjects := Seq(client),
   pipelineStages in Assets := Seq(scalaJSPipeline),
@@ -12,9 +12,9 @@ lazy val server = project.settings(
     "com.typesafe" % "config" % "1.2.1",
     "org.webjars" % "codemirror" % "5.11")
  ).enablePlugins(PlayScala,SbtWeb)
-  .dependsOn(commonJVM, changeManagement, guidelineChecking)
+  .dependsOn(commonJVM, changeManagement)
 
-lazy val client = project.dependsOn(common.js).settings(
+lazy val client = (project in file("modules/client")).dependsOn(common.js).settings(
     scalaVersion := scalaV,
     persistLauncher := true,
     persistLauncher in Test := false,
@@ -26,21 +26,13 @@ lazy val client = project.dependsOn(common.js).settings(
       "org.denigma" %%% "codemirror-facade" % "5.11-0.7"
     )).enablePlugins(ScalaJSPlugin)
 
-lazy val common = (crossProject.crossType(CrossType.Pure) in file("common"))
+lazy val common = (crossProject.crossType(CrossType.Pure) in file("modules/common"))
   .settings(
     scalaVersion := scalaV,
     libraryDependencies += "com.lihaoyi" %%% "upickle" % "0.4.3"
   ).jsConfigure(_ enablePlugins ScalaJSWeb)
 
-lazy val guidelineChecking = project.in(file("guideline-checking")).settings(
-  scalaVersion := scalaV,
-  libraryDependencies ++= Seq(
-    "edu.stanford.nlp" % "stanford-parser" % "3.3.1",
-    "edu.stanford.nlp" % "stanford-corenlp" % "3.3.1",
-    "edu.stanford.nlp" % "stanford-corenlp" % "3.3.1" classifier "models")
-)
-
-lazy val changeManagement = project in file("change-management") dependsOn(common.jvm, guidelineChecking)
+lazy val changeManagement = project in file("modules/change-management") dependsOn(common.jvm)
 
 lazy val commonJS = common.js
 lazy val commonJVM = common.jvm

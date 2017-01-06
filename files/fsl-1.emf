@@ -10,5 +10,6 @@ class Building {
 class Person {
   op void pass(Building b);
   ref Building[1] sit;
+  ref Boolean blub;
   ref Building[*] aut;  
 }

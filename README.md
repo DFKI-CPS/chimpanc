@@ -34,4 +34,4 @@ To start the tool, follow these simple steps:
 
 ------------
 
-May 2015 - Martin Ring, DFKI Bremen <martin.ring@dfki.de>
+Jan 2017 - Martin Ring, DFKI Bremen <martin.ring@dfki.de>

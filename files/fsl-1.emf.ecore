@@ -15,6 +15,7 @@
         <eParameters name="b" eType="ecore:EClass /home/martin/Projects/chimpanc/files/fsl-1.emf.ecore#/0/Building"/>
       </eOperations>
       <eStructuralFeatures xsi:type="ecore:EReference" name="sit" lowerBound="1" eType="ecore:EClass /home/martin/Projects/chimpanc/files/fsl-1.emf.ecore#/0/Building"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="blub" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="aut" upperBound="-1"
           eType="ecore:EClass /home/martin/Projects/chimpanc/files/fsl-1.emf.ecore#/0/Building"/>
     </eClassifiers>
