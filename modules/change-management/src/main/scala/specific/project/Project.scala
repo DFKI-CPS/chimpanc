@@ -15,12 +15,15 @@ case class Project(layers: Seq[Layer]) {
   require(layers.isEmpty || !layers.init.exists(_.isInstanceOf[Layer.ESL]), "only the last layer can be a esl layer")
 
   lazy val nl: Option[Layer.NL] = layers.headOption.collect { case nl: Layer.NL => nl }
-  lazy val fsls: Seq[Layer.FSL] = layers.collect { case fsl: Layer.FSL => fsl}
+  lazy val fsls: Seq[Layer.FSLLayer] = layers.collect { case fsl: Layer.FSLLayer => fsl}
   lazy val esl: Option[Layer.ESL] = layers.lastOption.collect { case esl: Layer.ESL => esl }
 
   def toSpecs = Specs(
     nl.map(nl => specific.NL(nl.name, nl.source)),
-    fsls.map(fsl => specific.FSL(fsl.name, fsl.emfSource, fsl.oclSource)),
+    fsls.map {
+      case sysml: Layer.SysML => specific.SysML(sysml.name, sysml.source)
+      case fsl: Layer.FSL => specific.FSL(fsl.name, fsl.emfSource, fsl.oclSource)
+    },
     esl.map(esl => specific.ESL(esl.name, esl.source))
   )
 }
@@ -61,6 +64,7 @@ object Layer {
         map("type").asInstanceOf[String] match {
           case "nl" => NL(name, path + "/" + files(0))
           case "fsl" => FSL(name, path + "/" + files(0), path + "/" + files(1))
+          case "sysml" => SysML(name, path + "/" + files(0))
           case "esl" => ESL(name, path + "/" + files(0))
         }
     }
@@ -72,7 +76,15 @@ object Layer {
     def source_=(value: String) = Layer.writeFile(file,value)
   }
 
-  case class FSL(name: String, emfFile: String, oclFile: String) extends Layer {
+  sealed trait FSLLayer extends Layer
+
+  case class SysML(name: String, file: String) extends FSLLayer {
+    require(new File(file).exists())
+    def source: String = scala.io.Source.fromFile(file).mkString
+    def source_=(value: String) = Layer.writeFile(file,value)
+  }
+
+  case class FSL(name: String, emfFile: String, oclFile: String) extends FSLLayer {
     require(new File(emfFile).exists())
     require(new File(oclFile).exists())
     def emfSource: String = scala.io.Source.fromFile(emfFile).mkString

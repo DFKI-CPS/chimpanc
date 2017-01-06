@@ -3,6 +3,7 @@ package actors
 import _root_.specific.graph.Semantics
 import akka.actor.{Actor, ActorRef}
 import specific._
+import specific.project.Layer
 import upickle.default._
 
 import scala.util.Try
@@ -25,8 +26,20 @@ class Socket(out: ActorRef) extends Actor {
       CM.listMappings()
       CM.listIssues()
     }
+    case MSG(Commit(SysML(name,content))) => {
+      val layer = CM.project.fsls.collectFirst {
+        case x: Layer.SysML if x.name == name => x
+      }.get
+      layer.source = content
+      CM.commit(name)
+      CM.autoMap()
+      CM.listMappings()
+      CM.listIssues()
+    }
     case MSG(Commit(FSL(name,emf,ocl))) => {
-      val layer = CM.project.fsls.find(_.name == name).get
+      val layer = CM.project.fsls.collectFirst {
+        case x: Layer.FSL if x.name == name => x
+      }.get
       layer.emfSource = emf
       layer.oclSource = ocl
       CM.commit(name)

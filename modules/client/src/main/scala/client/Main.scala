@@ -229,6 +229,63 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           }
           this.fslEditors = Seq(FSLEditors(emfEditor, oclEditor))
         })
+      case SysML(layerName, sysml) =>
+        (HTML(s"""<div class="layer sysml" id="${layer.id}-container">
+                 |  <div class="content">
+                 |  <div class="card">
+                 |    <div class="card-content">
+                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Formal Specification Level</span>
+                 |      <div id="${layer.id}"></div>
+                 |    </div>
+                 |    <div class="card-action">
+                 |      <button class="waves-effect waves-light btn blue" id="commit-${layer.id}">Commit</button>
+                 |    </div>
+                 |  </div>
+                 |  </div>
+                 |</div>""".stripMargin),(nodes) => {
+          layer.active.react {
+            case true => query(s"#${layer.id}-container").classes += "active"
+            case false => query(s"#${layer.id}-container").classes -= "active"
+          }
+          val sysmlEditor = CodeMirror(document.getElementById(layer.id))
+          sysmlEditor.setOption("mode", "text/x-c++src")
+          sysmlEditor.setOption("autoRefresh",true)
+          sysmlEditor.getDoc().setValue(sysml)
+          sysmlEditor.setOption("gutters",js.Array("issues"))
+          def update(e: CodeMirror, ev: raw.Event): Unit = {
+            query(e.getWrapperElement()).query(".tooltipped").$.tooltip()
+          }
+          sysmlEditor.on("viewportChange", update _)
+          query(s"#commit-${layer.id}").on(Event.Mouse.Click) { _ =>
+            send(Commit(ESL(layer.name,sysmlEditor.getDoc().getValue())))
+          }
+          layer.addMapping.react {
+            case true =>
+              sysmlEditor.getWrapperElement().classList.add("add-mapping")
+            case false =>
+              sysmlEditor.getWrapperElement().classList.remove("add-mapping")
+          }
+          layer.entities.react { e =>
+            sysmlEditor.getDoc().getAllMarks().foreach(_.clear())
+            layer.entityElements.values.foreach(_.clear())
+            layer.entityElements.clear()
+            e.foreach { e =>
+              val elem = HTML(s"<span class='entity'><span class='name'>${e.name}</span></span>").head.asInstanceOf[HTMLElement]
+              if (e.isInstanceOf[Clazz])
+                elem.classList.add("class")
+              else
+                elem.classList.add("member")
+              val o = TextMarkerOptions()
+              o.replacedWith = elem
+              o.addToHistory = false
+              markESL(sysmlEditor, e, o).map { m =>
+                layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, sysmlEditor, m)
+              }
+            }
+          }
+          this.eslEditor = Some(sysmlEditor)
+        })
+
       case ESL(layerName, esl) =>
         (HTML(s"""<div class="layer esl" id="${layer.id}-container">
                  |  <div class="content">

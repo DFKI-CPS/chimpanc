@@ -18,32 +18,6 @@ import scala.util.Try
 /**
  * Created by martin on 31.07.15.
  */
-sealed trait OCLExpression
-
-sealed trait CallExp extends OCLExpression {
-  val source: OCLExpression
-  //val x: OperationCallExp
-}
-
-case class FeatureCallExp(source: OCLExpression,
-                          isPre: Boolean) extends CallExp
-
-sealed trait LoopExp extends CallExp
-
-case class IteratorExp(source: OCLExpression) extends LoopExp
-case class IterateExp(source: OCLExpression) extends LoopExp
-
-case class LiteralExp() extends OCLExpression
-
-case class IfExp(condition: OCLExpression,
-                 thenExpression: OCLExpression,
-                 elseExpression: OCLExpression) extends OCLExpression
-
-case class VariableExp(initExpression: Option[OCLExpression],
-                       representedParameter: OCLExpression) extends OCLExpression
-case class TypeExp() extends OCLExpression
-case class MessageExp() extends OCLExpression
-case class StateExp() extends OCLExpression
 
 object OCL {
   def getInfos(resource: Seq[Constraint]): Seq[ConstraintInfo] = {

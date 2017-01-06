@@ -46,8 +46,11 @@ object ECoreToGraph {
     val fs = features.mapValues[String] {
       case value: EObject =>
         getURI(obj.eResource(),rootId,value).toString
-      case value: EList[EObject] =>
-        value.map(value => getURI(obj.eResource(),rootId,value).toString).mkString(",")
+      case value: EList[_] =>
+        value.collect {
+          case value: EObject =>
+            getURI(obj.eResource(),rootId,value).toString
+        }.mkString(",")
       //case value: Integer => value
       //case value: java.lang.Boolean => value
       case value => value.toString

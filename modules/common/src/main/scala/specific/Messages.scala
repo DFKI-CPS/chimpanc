@@ -17,15 +17,24 @@ case class OCLProofObligation(layer: String, clazz: String, premise: Seq[String]
 
 sealed trait Spec { val name: String }
 case class NL(name: String, content: String) extends Spec
-case class FSL(name: String, emf: String, ocl: String) extends Spec
+sealed trait FSLSpec extends Spec
+case class SysML(name: String, content: String) extends FSLSpec
+case class FSL(name: String, emf: String, ocl: String) extends FSLSpec
 case class ESL(name: String, systemc: String) extends Spec
 
-case class Specs(nl: Option[NL], fsl: Seq[FSL], esl: Option[ESL])
+case class Specs(nl: Option[NL], fsl: Seq[FSLSpec], esl: Option[ESL])
 
 sealed trait LayerObject {
   val name: String
   def qName: String
   override def toString = qName
+}
+
+case class PositionedLayerObject(obj: LayerObject, line: Int, column: Int) extends LayerObject {
+  val name = obj.name
+  def qName = obj.qName
+
+  override def toString: String = s"$obj at [$line:$column]"
 }
 
 sealed trait Entity extends LayerObject

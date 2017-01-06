@@ -7,16 +7,21 @@ import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil
 import nl.Requirements
 import project.{Layer, Project}
 import specific.emf.cpp.CppPackage
-import specific.systemc.{SystemC, ClangASTParser}
-import sysml.{OCL, Emfatic}
-import specific.graph.{Neo4j, Semantics, HybridResourceSet}
+import specific.systemc.{ClangASTParser, SystemC}
+import sysml.{Emfatic, OCL}
+import specific.graph.{HybridResourceSet, Neo4j, Semantics}
 import secore.SEcore._
+
 import collection.JavaConversions._
 import de.dfki.cps.stools.STools
 import java.io.File
+
 import org.eclipse.papyrus.sysml.blocks.BlocksPackage
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import de.dfki.cps.specific.nlp
+import de.dfki.cps.specific.sysml.Synthesis
+
+import scala.util.Try
 
 object ChangeManagement  {
   private var initialized = false
@@ -38,6 +43,7 @@ object ChangeManagement  {
 
   implicit lazy val resourceSet = {
     val rs = new HybridResourceSet
+    Synthesis.prepareLibrary(rs)
     UMLResourcesUtil.init(rs)
     rs.getPackageRegistry put ("http://www.eclipse.org/papyrus/0.7.0/SysML/Blocks", BlocksPackage.eINSTANCE)
     rs.getPackageRegistry put ("http://www.eclipse.org/emf/2002/Ecore", EcorePackage.eINSTANCE)
@@ -109,6 +115,67 @@ object ChangeManagement  {
     Requirements.writeToGraph(layer.name, reqs)
     layerObjects += layer.name -> reqs.toSet[LayerObject]
     out.taskDone(Entities(layer.name, reqs.toSet))
+  }
+
+  def commitSysML(layer: Layer.SysML) = {
+    implicit val out = output.task(s"Committing FSL layer '${layer.name}'")
+
+    val oldModel = resourceSet.getGraphResource(layer.name, loadOnDemand =  false)
+
+    out.info("Parsing EMFatic and OCL")
+    val newModel = Try {
+      de.dfki.cps.specific.sysml.Model.load(new File(layer.file).toURI).eResource()
+    }
+
+    if (newModel.isFailure) {
+      newModel.failed.get match {
+        case s => out.error(s"Failed to load SysML model: " + s.getMessage, newModel.failed.get)
+      }
+    }
+
+    for {
+      newModel <- newModel
+    } {
+      newModel.save(mapAsJavaMap(Map.empty))
+
+      val entities = Emfatic.getEntities(newModel).map {
+        case Clazz(n,_) => Clazz(n)
+        case other => other
+      }
+
+      layerObjects = layerObjects + (layer.name -> entities.toSet)
+
+      out.info("Creating syntactic diff")
+      val diff = stools.getSTool("ecore").sdiff(new SResource(oldModel, layer.name), new SResource(newModel, layer.name))
+
+      if (diff.isEmpty) {
+        out.info("No changes")
+        Semantics.deleteDeleted(oldModel)
+        Semantics.resetAdded(oldModel)
+      }
+      else {
+        if (diff.entries.size == 1 && diff.entries.head._1.getLabel() == "root") {
+          out.info("No prior FSL model; creating new one")
+          database.transaction { implicit tx =>
+            writeResource(newModel, layer.name)
+          }
+        }
+        else {
+          out.info("Resetting Semantics")
+          Semantics.deleteDeleted(oldModel)
+          Semantics.resetSemantics(oldModel)
+          out.info("Applying diff")
+          applyDiff(diff)
+        }
+
+        val newGraphModel = resourceSet.getGraphResource(layer.name, loadOnDemand =  false)
+
+        out.info("Propagate FSL semantics")
+        Semantics.propagate(newGraphModel)
+      }
+
+      out.taskDone(Entities(layer.name, entities.toSet))
+    }
   }
 
   def commitFSL(layer: Layer.FSL) = {
@@ -241,6 +308,7 @@ object ChangeManagement  {
   def commit(layer: String): Unit = {
     project.layers.find(_.name == layer) match {
       case Some(nl:  Layer.NL)  => commitNL(nl)
+      case Some(sysml: Layer.SysML) => commitSysML(sysml)
       case Some(fsl: Layer.FSL) => commitFSL(fsl)
       case Some(esl: Layer.ESL) => commitESL(esl)
     }
