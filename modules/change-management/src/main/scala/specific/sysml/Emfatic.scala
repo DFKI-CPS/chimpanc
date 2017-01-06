@@ -45,9 +45,10 @@ object Emfatic {
   }
 
   def load(filename: String)(implicit resourceSet: ResourceSet): Try[Resource] = Try {
-    require(new File(filename).exists(), s"file '$filename' not found")
+    val file = new File(filename)
+    require(file.exists(), s"file '$filename' not found")
     val source = Source.fromFile(filename)
-    val parser = new EmfaticParserDriver
+    val parser = new EmfaticParserDriver(URI.createFileURI(filename))
     val context = parser.parse(source.bufferedReader())
     val builder = new Builder with EmfaticSourceMapExtractor
     val tempFile = new java.io.File(filename + ".ecore").getAbsolutePath

@@ -32,10 +32,10 @@ object ChangeManagement  {
   implicit val output = new Output.MultiOut
   output.add(Output.StdOut)
 
-  def project = Project.parse("files/project")
+  def project = Project.parse("example/project")
 
   implicit val database = Neo4j("db")
-      
+
   implicit lazy val resourceSet = {
     val rs = new HybridResourceSet
     UMLResourcesUtil.init(rs)
@@ -49,7 +49,7 @@ object ChangeManagement  {
 
   private var layerObjects = Map.empty[String,Set[LayerObject]]
 
-  private val stools = new STools(new File(getClass.getResource("/ecore.simeq").getFile))     
+  private val stools = new STools(new File(getClass.getResource("/ecore.simeq").getFile))
 
   private var nlProblems = Set.empty[RequirementEvaluation]
 
