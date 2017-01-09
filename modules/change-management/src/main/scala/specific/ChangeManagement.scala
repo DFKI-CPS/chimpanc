@@ -118,11 +118,11 @@ object ChangeManagement  {
   }
 
   def commitSysML(layer: Layer.SysML) = {
-    implicit val out = output.task(s"Committing FSL layer '${layer.name}'")
+    implicit val out = output.task(s"Committing SysML layer '${layer.name}'")
 
     val oldModel = resourceSet.getGraphResource(layer.name, loadOnDemand =  false)
 
-    out.info("Parsing EMFatic and OCL")
+    out.info("Parsing SysML")
     val newModel = Try {
       de.dfki.cps.specific.sysml.Model.load(new File(layer.file).toURI).eResource()
     }
@@ -136,7 +136,7 @@ object ChangeManagement  {
     for {
       newModel <- newModel
     } {
-      newModel.save(mapAsJavaMap(Map.empty))
+      //newModel.save(mapAsJavaMap(Map.empty))
 
       val entities = sysml.SysML.getEntities(newModel).map {
         case Clazz(n,_) => Clazz(n)
@@ -155,7 +155,7 @@ object ChangeManagement  {
       }
       else {
         if (diff.entries.size == 1 && diff.entries.head._1.getLabel() == "root") {
-          out.info("No prior FSL model; creating new one")
+          out.info("No prior model; creating new one")
           database.transaction { implicit tx =>
             writeResource(newModel, layer.name)
           }

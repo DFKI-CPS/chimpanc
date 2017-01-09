@@ -45,15 +45,7 @@ trait SEObject { self: SEStructuralFeature with SResource =>
     lazy val getAnnotations: java.util.List[SAnnotation[_]] =
       (underlying.eClass().getEAllStructuralFeatures())
         .filter(f => !f.isDerived && underlying.eIsSet(f))
-        .map(a => new SEStructuralFeature(a, this, host)) ++ (underlying.eClass().getName match {
-        case "Constraint" =>
-          val repr = underlying match {
-            case g: GraphEObject => g.plain("representation").get
-            case other => other.toString
-          }
-          Some(ConstAnnotation("representation", repr, this))
-        case _ => None
-      })
+        .map(a => new SEStructuralFeature(a, this, host))
   
     def hasAnnotation(namespace: String, name: String): java.lang.Boolean = {
       getAnnotations.exists(a => a.getNameSpace() == namespace && a.getName() == name)

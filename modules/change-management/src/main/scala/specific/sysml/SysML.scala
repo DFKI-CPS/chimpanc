@@ -26,9 +26,9 @@ object SysML {
     resource.getAllContents.collect {
       case e: uml.Class if Try(e.getName.forall(isIdChar)).toOption.contains(true) =>
         positioned(e,Clazz(e.getName))
-      case e: uml.StructuralFeature if Try(e.getFeaturingClassifiers.head.getName.forall(isIdChar)).toOption.contains(true)
+      case e: uml.Property if Try(e.getFeaturingClassifiers.head.getName.forall(isIdChar)).toOption.contains(true)
         && Try(e.getName.forall(isIdChar)).toOption.contains(true) =>
-        positioned(e,Attribute(e.getFeaturingClassifiers.head.getName, e.getName, Option(e.getType).map(_.getName).getOrElse("void")))
+        positioned(e,Reference(e.getFeaturingClassifiers.head.getName, e.getName, Option(e.getType).map(_.getName).getOrElse("void")))
       case e: uml.Operation if Try(e.getFeaturingClassifiers.head.getName.forall(isIdChar)).toOption.contains(true)
         && Try(e.getName.forall(isIdChar)).toOption.contains(true) =>
         positioned(e,Operation(e.getFeaturingClassifiers.head.getName, e.getName, Option(e.getType).map(_.getName).getOrElse("void"), Try(e.getOwnedParameters.map(p => (p.getName, p.getType.getName))).getOrElse(Seq.empty)))

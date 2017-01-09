@@ -109,6 +109,54 @@ object Semantics {
       |WITH l, c
       |MATCH (l) -[:IMPLEMENTS]-> (l2) -[:hasA]-> (d:Constraint)
       |SET d.proven = (d.proven AND c._STATUS = "PRESERVED")""".stripMargin).execute()
+    // SysML specific
+    Cypher(
+      s"""
+      |MATCH (resource:Resource { id: "${resource.rootId}" })
+      |MERGE (resource) <-[:ORIGIN]- (l:Layer)
+      |ON CREATE SET l._STATUS = "ADDED"
+      |ON MATCH SET l._STATUS = (CASE [l.name] WHEN [resource.id] THEN "PRESERVED" ELSE "MODIFIED" END)
+      |SET l.name = resource.id, l._TYPE = "Layer"
+      |
+      |WITH resource, l
+      |MATCH (resource) -[*]-> (origin:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Class" } )
+      |MERGE (origin) <-[:ORIGIN]- (c:Class)
+      |ON CREATE SET c._STATUS = "ADDED"
+      |ON MATCH SET c._STATUS = (CASE [c.name] WHEN [origin.name] THEN "PRESERVED" ELSE "MODIFIED" END)
+      |SET c.name = origin.name, c._TYPE = "Class"
+      |MERGE (l) -[:hasA]-> (c)
+      |
+      |WITH origin as r, c
+      |MATCH (r) -[:CONTENTS]-> () -[:NEXT_SIBLING *]-> (origin:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Operation" } )
+      |MERGE (origin) <-[:ORIGIN]- (o:Operation)
+      |ON CREATE SET o._STATUS = "ADDED"
+      |ON MATCH SET o._STATUS = (CASE [o.name] WHEN [origin.name] THEN "PRESERVED" ELSE "MODIFIED" END)
+      |SET o.name = origin.name, o._TYPE = "Operation"
+      |MERGE (c) -[:hasA]-> (o)
+      |MERGE (o) -[:parameter]-> (p:Parameter { name: "this", position: 0, _TYPE: "Parameter" }) -[:type]-> (c)
+      |ON CREATE SET p._STATUS = "ADDED"
+      |ON MATCH SET p._STATUS = "PRESERVED"
+      |
+      |WITH origin as oo, o
+      |MATCH (oo) -[:CONTENTS]-> (list) -[:NEXT_SIBLING *]-> (origin:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Parameter" } ),
+      |      path = shortestPath((list) -[:NEXT_SIBLING *]-> (origin))
+      |WITH o, origin, count(path) as position
+      |MERGE (origin) <-[:ORIGIN]- (p:Parameter)
+      |ON CREATE SET p._STATUS = "ADDED"
+      |ON MATCH SET p._STATUS = (CASE [p.name, p.position] WHEN [origin.name, position] THEN "PRESERVED" ELSE "MODIFIED" END)
+      |SET p.name = origin.name, p.position = position, p._TYPE = "Parameter"
+      |MERGE (o) -[:parameter]-> (p)""".stripMargin).execute()
+    // Propagate Properties
+    Cypher(
+      s"""
+      |MATCH (resource:Resource { id: "${resource.rootId}" })
+      |MATCH (resource) -[*]-> (r:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Class" } ) <-[:ORIGIN]- (c:Class)
+      |MATCH (r) -[:CONTENTS]-> () -[:NEXT_SIBLING *]-> (origin:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Property" } )
+      |MERGE (origin) <-[:ORIGIN]- (a:Reference)
+      |ON CREATE SET a._STATUS = "ADDED"
+      |ON MATCH SET a._STATUS = (CASE [a.name] WHEN [origin.name] THEN "PRESERVED" ELSE "MODIFIED" END)
+      |SET a.name = origin.name, a._TYPE = "Reference"
+      |MERGE (c) -[:hasA]-> (a)""".stripMargin).execute()
     val refs = Cypher(
       s"""
       |MATCH (:Layer { name: "${resource.rootId}" }) -[:hasA*]-> (a:Attribute) -[:ORIGIN]-> (origin)
@@ -170,6 +218,7 @@ object Semantics {
         }
       }
     }
+    refs.foreach(println)
     refs.foreach(Cypher(_).execute())
   }.get
 
@@ -204,6 +253,7 @@ object Semantics {
   }
 
   def matchEntity(name: String, layer: String, entity: LayerObject): String = entity match {
+    case PositionedLayerObject(x,_,_) => matchEntity(name,layer,x)
     case Clazz(clazz,_) =>
       s"""(:Layer { name: "$layer" }) -[:hasA *..2]->
          |($name:Class { name: "$clazz" })""".stripMargin
@@ -292,7 +342,8 @@ object Semantics {
   def listMappings()(implicit connection: Neo4j): Seq[Mapping] = connection.transaction { implicit tx =>
     Cypher("""
         |MATCH (a) -[:IMPLEMENTS]-> (b)
-        |WHERE NOT a:Layer AND NOT b:Layer
+        |WHERE a.name IS NOT NULL AND b.name IS NOT NULL
+        |  AND NOT a:Layer AND NOT b:Layer
         |  AND a._STATUS <> "DELETED" AND b._STATUS <> "DELETED"
         |MATCH (layerA:Layer) -[:hasA|parameter*1..4]-> (a)
         |MATCH (layerB:Layer) -[:hasA|parameter*1..4]-> (b)

@@ -39,8 +39,11 @@ trait SEStructuralFeature { self: SEObject =>
       case e: EObject => e.eGet(underlying) match {
         case value: EObject =>
           getURI(ref.getObject().eResource(), host, value).toString
-        case values: EList[EObject] =>
-          values.map(value => getURI(ref.getObject().eResource(), host, value).toString).mkString(",")
+        case values: EList[_] =>
+          values.collect { // TODO: handle strings
+            case value: EObject =>
+              getURI(ref.getObject().eResource(), host, value).toString
+          }.mkString(",")
         case other =>
           other.toString
       }
