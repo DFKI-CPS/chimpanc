@@ -278,7 +278,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
               val o = TextMarkerOptions()
               o.replacedWith = elem
               o.addToHistory = false
-              markESL(sysmlEditor, e, o).map { m =>
+              markSysML(sysmlEditor, e, o).map { m =>
                 layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, sysmlEditor, m)
               }
             }
@@ -387,6 +387,32 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
 
   def markFSL(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
     entity match {
+      case Clazz(clazz,_) =>
+        mark(r"(?:class|enum)\s+($clazz)", editor, options, Some((clazz.length,0)))
+      case Attribute(clazz, member, _) =>
+        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:val|attr)[^\n]+\s($member);", editor, options, Some((member.length,1)))
+      case Reference(clazz, member, t) =>
+        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:ref|val)[^\n]+\s($member);", editor, options, Some((member.length,1)))
+      case Operation(clazz, member, t, params) =>
+        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s($member)(?:\()", editor, options, Some((member.length + 1,0)))
+      case Parameter(clazz, member, "this", t) =>
+        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)(\()", editor, options, Some((0,0)))
+      case Parameter(clazz, member, name, t) =>
+        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)\([^\)]*(?:$t)\s+($name)(?:\)|,)", editor, options, Some((name.length,1)))
+      case Invariant(clazz, name) =>
+        mark(r"(?:inv\s+)($name)\s*\:", editor, options, Some((name.length,1)))
+      case Precondition(op, name) =>
+        mark(r"(?:pre\s+)($name)\s*\:", editor, options, Some((name.length,1)))
+      case Postcondition(op, name) =>
+        mark(r"(?:post\s+)($name)\s*\:", editor, options, Some((name.length,1)))
+    }
+  }
+
+  def markSysML(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
+    entity match {
+      case PositionedLayerObject(x,line,column) =>
+        val doc = editor.getDoc()
+        Seq(doc.markText(CodeMirror.Pos(line -1 ,column -1),CodeMirror.Pos(line-1,column-1 + x.name.length), options))
       case Clazz(clazz,_) =>
         mark(r"(?:class|enum)\s+($clazz)", editor, options, Some((clazz.length,0)))
       case Attribute(clazz, member, _) =>

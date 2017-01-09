@@ -138,7 +138,7 @@ object ChangeManagement  {
     } {
       newModel.save(mapAsJavaMap(Map.empty))
 
-      val entities = Emfatic.getEntities(newModel).map {
+      val entities = sysml.SysML.getEntities(newModel).map {
         case Clazz(n,_) => Clazz(n)
         case other => other
       }
