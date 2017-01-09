@@ -18,13 +18,12 @@ block Person
         self.dap_dom->isEmpty()
   references
     aut: Building[*]
-    sit: Building[1]
+    sit: Building[1] { subsets aut }
     dap_dom: Door[0..1] <- dap
   constraints
     inv: aut->forAll(b|self.aut.building->includes(b))
     inv: aut->includes(dap_dom.dest)
-    inv: subsets aut
-    inv: sit.includes(dap_dom.org)
+    inv: sit->includes(dap_dom.org)
     inv: Person.allInstances()->
              forAll(p1, p2 |p1.dap_dop->notEmpty()
                         and p1.dap_dom = p2.dap_dom
