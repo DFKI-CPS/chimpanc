@@ -13,11 +13,13 @@
   @scalajs.html.scripts(projectName = "client", name => routes.Assets.at(name).toString, name => getClass.getResource(s"/public/$name") != null)
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/lib/codemirror.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/addon/display/autorefresh.js")'></script>
+  <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/addon/mode/simple.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("lib/codemirror/mode/clike/clike.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.layout.DirectedGraph.js")'></script>
   <script type="text/javascript" src='@routes.Assets.at("javascripts/joint.shapes.uml.js")'></script>
   <script type="text/javascript" src="@routes.Assets.at("javascripts/jquery-2.1.4.min.js")"></script>
+  <script type="text/javascript" src="@routes.Assets.at("javascripts/sysml-mode.js")"></script>
   <script type="text/javascript" src='@routes.Assets.at("materialize/js/materialize.min.js")'></script>
   <div class="navbar-fixed col s12">
     <nav>

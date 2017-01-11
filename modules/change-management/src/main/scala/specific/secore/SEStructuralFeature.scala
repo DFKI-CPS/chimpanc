@@ -27,8 +27,8 @@ trait SEStructuralFeature { self: SEObject =>
 
     def getURI(local: Resource, host: String, obj: EObject): URI = {
       if (obj.eResource() == local) {
-        val oldUri = EcoreUtil.getURI(obj)
-        val newUri = URI.createURI(s"graph://$host#${oldUri.fragment()}")
+        val fragment = EcoreUtil.getRelativeURIFragmentPath(null,obj)
+        val newUri = URI.createURI(s"graph://$host#$fragment")
         newUri
       } else EcoreUtil.getURI(obj)
     }

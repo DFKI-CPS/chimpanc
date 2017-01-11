@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource.Factory
 
 import scala.collection.mutable
 
@@ -11,13 +12,11 @@ import scala.collection.mutable
  * @author Martin Ring <martin.ring@dfki.de>
  */
 class HybridResourceSet(implicit connection: Neo4j) extends ResourceSetImpl {
-  override def getResource(uri: URI, loadOnDemand: Boolean): Resource = uri.scheme match {
-    case "graph" =>
-      getGraphResource(uri.host(), loadOnDemand)
-    case _ => super.getResource(uri, loadOnDemand)
-  }
+  this.getResourceFactoryRegistry.getProtocolToFactoryMap.put("graph",new Factory {
+    def createResource(uri: URI) = getGraphResource(uri.host())
+  })
 
-  override def getEObject(uri: URI, loadOnDemand: Boolean): EObject = uri.scheme match {
+  /*override def getEObject(uri: URI, loadOnDemand: Boolean): EObject = uri.scheme match {
     case "graph" =>
       val resource = getGraphResource(uri.host(), loadOnDemand)
       val fragment = uri.fragment() match {
@@ -32,7 +31,7 @@ class HybridResourceSet(implicit connection: Neo4j) extends ResourceSetImpl {
         case other => other
       }
     case _ => super.getEObject(uri, loadOnDemand)
-  }
+  }*/
   
   def getGraphResource(rootId: String, loadOnDemand: Boolean = true): GraphResource = {
     new GraphResource(rootId, this, loadOnDemand)

@@ -14,7 +14,7 @@ block Building
 
 block Person
   operations
-    pass(b: Building)
+     passage(b: Person)
       pre: self.aut->includes(b)
       -- P8: A person can only go from one building in
       -- which he is to another where he desires to go if

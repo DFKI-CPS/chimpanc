@@ -71,7 +71,8 @@ std::string log_time()
 /* An LED, which can be turned on and off. */
 SC_MODULE(LED) {
   sc_in<bool> in;
-
+  sc_in<bool> in2;
+  
   SC_CTOR(LED)
   {
     SC_METHOD(blink);

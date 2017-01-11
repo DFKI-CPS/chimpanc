@@ -248,7 +248,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
             case false => query(s"#${layer.id}-container").classes -= "active"
           }
           val sysmlEditor = CodeMirror(document.getElementById(layer.id))
-          sysmlEditor.setOption("mode", "text/x-c++src")
+          sysmlEditor.setOption("mode", "sysml")
           sysmlEditor.setOption("autoRefresh",true)
           sysmlEditor.getDoc().setValue(sysml)
           sysmlEditor.setOption("gutters",js.Array("issues"))
@@ -257,7 +257,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           }
           sysmlEditor.on("viewportChange", update _)
           query(s"#commit-${layer.id}").on(Event.Mouse.Click) { _ =>
-            send(Commit(ESL(layer.name,sysmlEditor.getDoc().getValue())))
+            send(Commit(SysML(layer.name,sysmlEditor.getDoc().getValue())))
           }
           layer.addMapping.react {
             case true =>

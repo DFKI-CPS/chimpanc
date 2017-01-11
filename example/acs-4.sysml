@@ -49,7 +49,7 @@ block Door
   references
     org:  Building[1] <- org_dom
     dest: Building[1]
-    dap:  Person[0..1] <- dap_dom
+    dap:  Person[0..2] <- dap_dom
   ports
     incoming: Person
     passing: Person

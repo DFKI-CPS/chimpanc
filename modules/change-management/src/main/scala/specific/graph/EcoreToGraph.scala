@@ -20,8 +20,8 @@ import org.eclipse.uml2.uml.OpaqueExpression
 object ECoreToGraph {
   def getURI(local: Resource, host: String, obj: EObject): URI = {
     val res = if (obj.eResource() == local) {
-      val oldUri = EcoreUtil.getURI(obj)
-      val newUri = URI.createURI(s"graph://$host#${oldUri.fragment()}")
+      val fragment = EcoreUtil.getRelativeURIFragmentPath(null, obj)
+      val newUri = URI.createURI(s"graph://$host#$fragment")
       newUri
     } else EcoreUtil.getURI(obj)
     println(res)

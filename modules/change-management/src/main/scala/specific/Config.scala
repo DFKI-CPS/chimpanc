@@ -12,11 +12,8 @@ import org.eclipse.emf.ecore.{EDataType, EObject, EAnnotation, EPackage}
 object Config { 
   private lazy val config = ConfigFactory.load()  
   lazy val clangCommand = config.getString("systemc.clang-command")
-  lazy val dwarfdumpCommand = config.getString("systemc.dwarfdump-command")
-  lazy val monoCommand = config.getString("systemc.mono-command")
   lazy val systemcHome = config.getString("systemc.systemc-home")
   lazy val systemCLib = config.getString("systemc.systemc-lib")
-  lazy val macOSXstyleDwarf = config.getBoolean("systemc.macosx-style-dwarf")
 
   val ignorePackages = Set("std","sc_core","sc_dt","__gnu_cxx", "__exception_ptr", "__debug", "__gnu_debug", "__detail", "__exception_ptr")
 

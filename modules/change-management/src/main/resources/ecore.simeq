@@ -7,7 +7,6 @@ equivspec ecore {
     }
   }
 
-
   element EPackage {
     constituents {
       unordered {
@@ -16,7 +15,27 @@ equivspec ecore {
     }
   }
 
+  element Package {
+    constituents {
+      unordered {
+        _
+      }
+    }
+  }
+
+
   element EClass {
+    annotations {
+      name!
+    }
+    constituents {
+      unordered {
+        _
+      }
+    }
+  }
+
+  element Class {
     annotations {
       name!
     }
@@ -33,6 +52,12 @@ equivspec ecore {
     }
   }
 
+  element Property {
+    annotations {
+      name!
+    }
+  }
+
   element EAttribute {
     annotations {
       name!
@@ -40,6 +65,17 @@ equivspec ecore {
   }
 
   element EOperation {
+    annotations {
+      name!
+    }
+    constituents {
+      unordered {
+        _
+      }
+    }
+  }
+
+  element Operation {
     annotations {
       name!
     }

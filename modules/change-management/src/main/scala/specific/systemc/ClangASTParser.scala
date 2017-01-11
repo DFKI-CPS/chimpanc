@@ -1,14 +1,8 @@
 package specific.systemc
 
-import java.nio.file.{Paths, Path}
-
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.EcorePackage.Literals
 import org.eclipse.emf.ecore._
-import org.eclipse.emf.ecore.impl.{EStructuralFeatureImpl, EOperationImpl}
-import org.eclipse.emf.ecore.resource.ContentHandler.Registry
-import org.eclipse.emf.ecore.resource.{ResourceSet, Resource}
-import org.eclipse.emf.ecore.resource.impl.ResourceImpl
+import org.eclipse.emf.ecore.resource.{Resource, ResourceSet}
 import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl
 import org.eclipse.emf.ecore.xmi.XMLResource
 import specific.emf.cpp._
@@ -17,11 +11,16 @@ import specific.util.Helpers._
 
 import scala.collection.mutable
 import scala.sys.process._
-
 import scala.collection.JavaConversions._
 import scala.util.Try
 
-object ClangASTParser extends App {
+object ClangASTParserTest extends App {
+  implicit val rs = ChangeManagement.resourceSet
+  val x = ClangASTParser.parse("example/esl.cpp")
+  println(x.get)
+}
+
+object ClangASTParser {
 
   trait Handler extends PartialFunction[(String, String), Option[Handler]]
 
@@ -35,12 +34,13 @@ object ClangASTParser extends App {
 
   def handle(f: PartialFunction[(String, String), Option[Handler]]): Option[Handler] = Some(new Handler {
     override def isDefinedAt(x: (String, String)): Boolean = f.isDefinedAt(x)
-
     override def apply(v1: (String, String)): Option[Handler] = f.apply(v1)
   })
 
+  var nodes = 0
+
   def read[T](filename: String)(h: PartialFunction[(String, String), Option[Handler]]) = {
-    val stdlib = if (Config.macOSXstyleDwarf) "-stdlib=libc++" else "-stdlib=libstdc++"
+    val stdlib = if (System.getProperty("os.name").toLowerCase.contains("mac")) "-stdlib=libc++" else "-stdlib=libstdc++"
     val clangProcess = Seq(
       Config.clangCommand,
       "-Xclang",
@@ -48,24 +48,29 @@ object ClangASTParser extends App {
       "-fsyntax-only",
       "-std=c++11", stdlib,
       s"-I${Config.systemcHome}include/",
-      filename,
-      stdlib)
+      filename)
 
     var handler = mutable.Stack(h)
     def indent = handler.size - 1
 
     clangProcess.lineStream.foreach { line =>
+      nodes += 1
       val (i, content) = line.span(!_.isLetterOrDigit)
       val ind = i.length / 2
       if (ind < indent)
         for (x <- 0 until (indent - ind)) handler.pop()
       if (ind == indent) {
         val (name, rest) = content.span(_.isLetterOrDigit)
-        if (handler.top.isDefinedAt((name, rest.tail))) {
+        Try(handler.top.isDefinedAt((name, rest.tail))).map { if (_) {
           //if (ind < 5) println(line)
           //if (line.contains(" size_type ")) println("####: " + line)
           val res = handler.top((name, rest.tail))
           res.foreach(handler.push(_))
+        } }.failed.foreach { x =>
+          println("CLANG ERROR: " + x.getMessage)
+          println(content)
+          println(name)
+          println(rest)
         }
       }
     }
@@ -339,7 +344,6 @@ object ClangASTParser extends App {
     }
     
     var unresolved = 0
-
     def resolveTypeName(scope: Scope, tname: String, originalScope: Option[Scope] = None): Option[Either[EClassifier, EGenericType]] = {
       //println(s"LOOKING FOR $tname in ${pkge.getName} and ${clazz.map(_.getName)}")
       tname match {
@@ -555,13 +559,14 @@ object ClangASTParser extends App {
         case ("TranslationUnitDecl", _) =>
           handle {
             case ("NamespaceDecl", Namespace(name)) if !name.startsWith("_") =>
-              //println("PACKAGE " + name)
               val pkg = getTLPackage(resource, name)
               handlePackage(pkg)
           }
       }
     }
 
+    println(s"processed $nodes nodes")
+    nodes = 0
     println(unresolved + " unresolved types")
 
     val uriHandler = new URIHandlerImpl {
