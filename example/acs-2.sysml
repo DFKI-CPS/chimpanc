@@ -11,7 +11,7 @@ block Building
     gate: Building[*] <- building
     building: Building[*] { unique, nonunique } <- gate
   ports
-    incoming: Pers
+    incoming: Person
   owned behaviors
     state machine EnterBehavior -- dest_dom::DoorBehavior
       initial state Waiting

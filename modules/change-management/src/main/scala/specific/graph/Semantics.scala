@@ -6,6 +6,7 @@ import specific._
 
 import scala.util.control.NonFatal
 import Neo4j._
+import org.eclipse.uml2.uml.{Constraint, Stereotype}
 
 import scala.collection.convert.Wrappers.SeqWrapper
 
@@ -157,6 +158,20 @@ object Semantics {
       |ON MATCH SET a._STATUS = (CASE [a.name] WHEN [origin.name] THEN "PRESERVED" ELSE "MODIFIED" END)
       |SET a.name = origin.name, a._TYPE = "Reference"
       |MERGE (c) -[:hasA]-> (a)""".stripMargin).execute()
+    // Propagate Constraints
+    Cypher(
+      s"""
+      |MATCH (resource:Resource { id: "${resource.rootId}" }) <-[:ORIGIN]- (l:Layer)
+      |MATCH (resource) -[*]-> (origin:EObject { eClass: "http://www.eclipse.org/uml2/5.0.0/UML#//Constraint" } )
+      |MERGE (origin) <-[:ORIGIN]- (c:Constraint)
+      |ON CREATE SET c._STATUS = "ADDED", c.proven = false
+      |ON MATCH SET c._STATUS = (CASE [c.name, c.representation] WHEN [origin.name, origin.representation] THEN "PRESERVED" ELSE "MODIFIED" END),
+      |             c.proven = (CASE c.representation WHEN origin.representation THEN c.proven ELSE false END)
+      |SET c.name = origin.name, c._TYPE = "Constraint", c.representation = origin.representation
+      |MERGE (l) -[:hasA]-> (c)
+      |WITH l, c
+      |MATCH (l) -[:IMPLEMENTS]-> (l2) -[:hasA]-> (d:Constraint)
+      |SET d.proven = (d.proven AND c._STATUS = "PRESERVED")""".stripMargin).execute()
     val refs = Cypher(
       s"""
       |MATCH (:Layer { name: "${resource.rootId}" }) -[:hasA*]-> (a:Attribute) -[:ORIGIN]-> (origin)

@@ -22,8 +22,7 @@ lazy val client = (project in file("modules/client")).dependsOn(common.js).setti
     resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.8.0",
-      "com.lihaoyi" %%% "upickle" % "0.4.3",
-      "org.denigma" %%% "codemirror-facade" % "5.11-0.7"
+      "com.lihaoyi" %%% "upickle" % "0.4.3"
     )).enablePlugins(ScalaJSPlugin)
 
 lazy val common = (crossProject.crossType(CrossType.Pure) in file("modules/common"))
