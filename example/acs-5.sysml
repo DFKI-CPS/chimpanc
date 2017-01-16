@@ -39,6 +39,8 @@ block Door
       pre: not (green or red)
       pre: p.admitted(self)
       post: dap = p and p.dap_dom = self
+    -- Not mentioned explicitly:
+    -- If a door is not accepted for a certain person, it is refused.
     refuse(p: Person)
       pre: not (green or red)
       pre: not (p.admitted(self))
@@ -52,6 +54,8 @@ block Door
       pre: green
       post: dap@pre.dap_dom->isEmpty()
         and dap->isEmpty()
+    -- P15: The red light of a door whose access has just been refused stays on
+    -- for a period of 2 seconds, the door stays blocked of course.
     off_red()
       post: not red
   references

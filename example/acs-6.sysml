@@ -21,7 +21,7 @@ block Person
 		sit: Building[1] { subsets aut }
 		dap_dom: Door[0..1] <- dap
 	constraints
-		inv: aut->forAll(b|self.aut.building->includes(b))
+		inv: aut->forAll(b|aut.building->includes(b))
 		inv: aut->includes(dap_dom.dest)
 		inv: sit.includes(dap_dom.org)
 
@@ -54,16 +54,13 @@ block Door
 		org:  Building[1] <- org_dom
 		dest: Building[1]
 		dap:  Person[0..1] <- dap_dom
-	ports
-		incoming: Person
-		passing: Person
 	owned behaviors
 		state machine DoorBehavior
 			initial state Waiting
-				receive incoming(p) / accept(p) -> Accepting
-				receive incoming(p) / refuse(p) -> Refusing
+				accept() -> Accepting
+				refuse() -> Refusing
 			state Accepting
 				after 30 seconds / off_grn() -> Waiting
-				receive passing(p) / pass_thru() -> Waiting
+				pass_thru() -> Waiting
 			state Refusing
 				after 30 seconds / off_red() -> Waiting

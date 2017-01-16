@@ -1,6 +1,9 @@
 bdd [package] acs [ACS]
 -----------------------------------------------------------
 
+-- P6: The geometry of buildings serves to define which
+-- buildings can communicate between each other, and in
+-- which direction.
 block Building
   operations
     enter(p: Person)
@@ -8,12 +11,12 @@ block Building
       pre:  p.sit.gate->includes(self)
       post: p.sit = self
   references
+    building: Building[*] <- gate
     gate: Building[*] <- building
-    building: Building[*] { unique, nonunique } <- gate
   ports
     incoming: Person
   owned behaviors
-    state machine EnterBehavior -- dest_dom::DoorBehavior
+    state machine EnterBehavior
       initial state Waiting
         receive incoming(p) / enter(p) -> Waiting
 

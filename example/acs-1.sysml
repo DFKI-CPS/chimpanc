@@ -14,13 +14,13 @@ block Building
 
 block Person
   operations
-    pass(b: Person)
-      pre: self.aut->includes(b)
+    pass(b: Building)
+      pre: aut->includes(b)
       -- P8: A person can only go from one building in
       -- which he is to another where he desires to go if
       -- these two buildings communicate with each other.
-      pre: self.sit.gate->includes(b)
-      post: self.sit = b
+      pre: sit.gate->includes(b)
+      post: sit = b
   references
     aut: Building[*]
     sit: Building[1] { subsets aut }
@@ -28,4 +28,4 @@ block Person
     -- P10: Any person authorised to be in a building must
     -- also be authorised to go into another building which
     -- communicates with the first one.
-    inv: self.aut->forAll(b|self.aut.building->includes(b))
+    inv: aut->forAll(b|aut.building->includes(b))

@@ -8,9 +8,9 @@ block Building
 block Person
   operations
     pass(b: Building)
-      pre:  self.aut->includes(b)
-      pre:  self.sit <> b
-      post: self.sit = b
+      pre:  aut->includes(b)
+      pre:  sit <> b
+      post: sit = b
   references
     -- P2: Each person is authorized to enter certain buldings.
     aut: Building[*]
