@@ -1,9 +1,12 @@
 package specific.systemc
 
+import java.io.File
+
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore._
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.resource.{Resource, ResourceSet}
-import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl
+import org.eclipse.emf.ecore.xmi.impl.{EcoreResourceFactoryImpl, URIHandlerImpl}
 import org.eclipse.emf.ecore.xmi.XMLResource
 import specific.emf.cpp._
 import specific.{ChangeManagement, Config}
@@ -13,12 +16,6 @@ import scala.collection.mutable
 import scala.sys.process._
 import scala.collection.JavaConversions._
 import scala.util.Try
-
-object ClangASTParserTest extends App {
-  implicit val rs = ChangeManagement.resourceSet
-  val x = ClangASTParser.parse("example/esl.cpp")
-  println(x.get)
-}
 
 object ClangASTParser {
 
@@ -47,8 +44,8 @@ object ClangASTParser {
       "-ast-dump",
       "-fsyntax-only",
       "-std=c++11", stdlib,
-      s"-I${Config.systemcHome}include/",
-      filename)
+      s"-I${Config.systemcHome}include/"
+    ) :+ filename
 
     var handler = mutable.Stack(h)
     def indent = handler.size - 1
@@ -186,7 +183,7 @@ object ClangASTParser {
       "sc_dt" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_dt", "sc_dt")
     )
 
-    val resource = resourceSet.createResource(URI.createURI(filename + ".ecore"))
+    val resource = resourceSet.createResource(URI.createFileURI(filename + ".ecore"))
 
 
     def tlqName(p: EPackage): String =
@@ -554,14 +551,50 @@ object ClangASTParser {
       }
     }
 
+    def handleTopLevel: Option[Handler] = handle {
+      case ("LinkageSpecDecl", _) =>
+        handleTopLevel
+      case ("NamespaceDecl", Namespace(name)) if !name.startsWith("_") =>
+        val pkg = getTLPackage(resource, name)
+        handlePackage(pkg)
+      case ("CXXRecordDecl", Class(name)) =>
+        handleClass(getTLClass(getTLPackage(resource,"<root>"), name))
+      case ("ClassTemplateDecl", Template(name)) =>
+        val clazz: CppClass = getTLClass(getTLPackage(resource,"<root>"), name)
+        handle {
+          case ("TemplateTypeParmDecl", TemplateTypeParam(name)) =>
+            val param = eFactory.createETypeParameter()
+            param.setName(name)
+            clazz.getETypeParameters.add(param)
+            /*handle {
+                case ("TemplateArgument", x) if x.startsWith("type") =>
+                  clazz.getETypeParameters.remove(param)
+                  None
+              }*/
+            None
+          case ("CXXRecordDecl", Class(cname)) if name == cname =>
+            handleClass(clazz)
+        }
+      case ("TypedefDecl" | "TypeAliasDecl", TypedefDecl(name, tpe)) =>
+        resolve(Scope(getTLPackage(resource,"<root>")), tpe).foreach { x =>
+          val tdef = typedef(name, x)
+          getTLPackage(resource,"<root>").getTypedefs.add(tdef)
+        }
+        None
+      case ("EnumDecl", Enum(name)) =>
+        val enum: EEnum = getEnum(getTLPackage(resource,"<root>"), name)
+        handle {
+          case ("EnumConstantDecl", EnumLiteral(name)) =>
+            val lit = eFactory.createEEnumLiteral()
+            lit.setName(name)
+            enum.getELiterals.add(lit)
+            None
+        }
+    }
+
     timed("parse") {
       read(filename) {
-        case ("TranslationUnitDecl", _) =>
-          handle {
-            case ("NamespaceDecl", Namespace(name)) if !name.startsWith("_") =>
-              val pkg = getTLPackage(resource, name)
-              handlePackage(pkg)
-          }
+        case ("TranslationUnitDecl", _) => handleTopLevel
       }
     }
 

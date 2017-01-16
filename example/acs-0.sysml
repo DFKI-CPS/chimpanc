@@ -7,7 +7,7 @@ block Building
 -- P1: The model is composed of people and buldings.
 block Person
   operations
-    passage(b: Building)
+    pass(b: Building)
       pre:  self.aut->includes(b)
       pre:  self.sit <> b
       post: self.sit = b

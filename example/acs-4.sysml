@@ -26,7 +26,6 @@ block Person
                         and p1.dap_dom = p2.dap_dom
                     implies p1 = p2)
 
-
 block Door
   values
     green: Boolean
@@ -49,7 +48,7 @@ block Door
   references
     org:  Building[1] <- org_dom
     dest: Building[1]
-    dap:  Person[0..2] <- dap_dom
+    dap:  Person[0..1] <- dap_dom
   ports
     incoming: Person
     passing: Person

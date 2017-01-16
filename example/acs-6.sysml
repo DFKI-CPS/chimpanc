@@ -26,7 +26,8 @@ block Person
 		inv: sit.includes(dap_dom.org)
 		inv: Person.allInstances()->
 			forAll(p1, p2 |
-				p1.dap_dom->notEmpty() and p1.dap_dom = p2.dap_dom implies p1 = p2)
+				p1.dap_dom->notEmpty() and
+				p1.dap_dom = p2.dap_dom implies p1 = p2)
 
 block Door
 	values

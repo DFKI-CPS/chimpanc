@@ -59,11 +59,6 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
                  |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Natural Language</span>
                  |      <div id="${layer.id}"></div>
                  |    </div>
-                 |    <div class="card-action">
-                 |      <button class="waves-effect waves-light btn blue" id="check-${layer.id}">Check</button>
-                 |      <button class="waves-effect waves-light btn blue" id="commit-${layer.id}" disabled>Commit</button>
-                 |      <a id="lock-nl" class='btn-floating blue right' href='#'><i class='material-icons'>lock_open</i></a>
-                 |    </div>
                  |  </div>
                  |  </div>
                  |</div>""".stripMargin),(nodes) => {
@@ -138,13 +133,6 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
                  |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Formal Specification Level</span>
                  |      <div id="${layer.id}-emf"></div>
                  |      <div id="${layer.id}-ocl"></div>
-                 |    </div>
-                 |    <div class="card-action">
-                 |      <button class="waves-effect waves-light btn blue" id="commit-${layer.id}">Commit</button>
-                 |      <!--div class="right">
-                 |        <a id="${layer.id}-abstract" class="waves-effect waves-teal btn-flat"><i class="material-icons left">chevron_left</i>Abstract</a>
-                 |        <a id="${layer.id}-refine" class="waves-effect waves-teal btn-flat">Refine<i class="material-icons right">chevron_right</i></a>
-                 |      </div-->
                  |    </div>
                  |  </div>
                  |  </div>
@@ -237,9 +225,6 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
                  |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Formal Specification Level</span>
                  |      <div id="${layer.id}"></div>
                  |    </div>
-                 |    <div class="card-action">
-                 |      <button class="waves-effect waves-light btn blue" id="commit-${layer.id}">Commit</button>
-                 |    </div>
                  |  </div>
                  |  </div>
                  |</div>""".stripMargin),(nodes) => {
@@ -249,6 +234,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           }
           val sysmlEditor = CodeMirror(document.getElementById(layer.id))
           sysmlEditor.setOption("mode", "sysml")
+          sysmlEditor.setOption("readOnly",true)
           sysmlEditor.setOption("autoRefresh",true)
           sysmlEditor.getDoc().setValue(sysml)
           sysmlEditor.setOption("gutters",js.Array("issues"))
@@ -293,9 +279,6 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
                  |    <div class="card-content">
                  |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Electronic System Level</span>
                  |      <div id="${layer.id}"></div>
-                 |    </div>
-                 |    <div class="card-action">
-                 |      <button class="waves-effect waves-light btn blue" id="commit-${layer.id}">Commit</button>
                  |    </div>
                  |  </div>
                  |  </div>
