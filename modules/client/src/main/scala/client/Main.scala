@@ -51,178 +51,15 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
 
   lazy val layers: RBuffer[Layer] = RBuffer[Layer](query("#main"), { (layer: Layer) =>
     layer.content() match {
-      case NL(layerName, nl) =>
-        (HTML(s"""<div class="layer nl" id="${layer.id}-container">
-                 |  <div class="content">
-                 |  <div class="card">
-                 |    <div class="card-content">
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Natural Language</span>
-                 |      <div id="${layer.id}"></div>
-                 |    </div>
-                 |  </div>
-                 |  </div>
-                 |</div>""".stripMargin),(nodes) => {
-            layer.active.react {
-              case true =>
-                query(s"#${layer.id}-container").classes += "active"
-              case false =>
-                query(s"#${layer.id}-container").classes -= "active"
-            }
-            $"#lock-nl".onclick {
-              nlPinned = !nlPinned
-              if (nlPinned) {
-                $"#lock-nl i".elements.head.innerHTML = "lock"
-                $"#${layer.id}-container".classes += "locked"
-              }
-              else {
-                $"#lock-nl i".elements.head.innerHTML = "lock_open"
-                $"#${layer.id}-container".classes -= "locked"
-              }
-              triple = !triple
-              setCenterColumn(centerColumn)
-            }
-            val nlpEditor = CodeMirror(document.getElementById(layer.id))
-            nlpEditor.setOption("mode", null)
-            nlpEditor.setOption("autoRefresh",true)
-            nlpEditor.setOption("lineWrapping",true)
-            nlpEditor.setOption("gutters",js.Array("issues"))
-            nlpEditor.getDoc().setValue(nl)
-            def update(e: CodeMirror, ev: raw.Event): Unit = {
-              query(nlpEditor.getWrapperElement()).query(".tooltipped").$.tooltip()
-            }
-            nlpEditor.on("viewportChange", update _)
-            query(s"#check-${layer.id}").on(Event.Mouse.Click) { _ =>
-              val doc = nlEditor.get.getDoc()
-              send(Evaluate(NL(layer.name, doc.getValue())))
-              nlEditor.get.refresh()
-              $"#commit-${layer.id}".head.asInstanceOf[html.Button].disabled = false;
-            }
-            $"#commit-${layer.id}".on(Event.Mouse.Click) { _ =>
-              val doc = nlEditor.get.getDoc()
-              println("COMMIT NL")
-              send(Commit(NL(layer.name, doc.getValue())))
-            }
-            layer.entities.react { e =>
-              nlpEditor.getDoc().getAllMarks().foreach(_.clear())
-              layer.entityElements.values.foreach(_.clear())
-              layer.entityElements.clear()
-              e.foreach { e =>
-                val elem = HTML(s"<span class='entity'><span class='name'>${e.name}</span></span>").head.asInstanceOf[HTMLElement]
-                if (e.isInstanceOf[Clazz])
-                  elem.classList.add("class")
-                else if (e.isInstanceOf[Parameter])
-                  elem.classList.add("param")
-                else
-                  elem.classList.add("member")
-                val o = TextMarkerOptions()
-                o.replacedWith = elem
-                o.addToHistory = false
-                markNL(nlpEditor, e, o).map { m =>
-                  layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, nlpEditor, m)
-                }
-              }
-            }
-            this.nlEditor = Some(nlpEditor)
-          })
-      case FSL(layerName, emf,ocl) =>
-        (HTML(s"""<div class="layer fsl" id="${layer.id}-container">
-                 |  <div class="content">
-                 |  <div class="card">
-                 |    <div class="card-content">
-                 |      <span class="card-title truncate right"><a id="${layer.id}-emf-link">EMF</a> | <a id="${layer.id}-ocl-link">OCL</a></span>
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Formal Specification Level</span>
-                 |      <div id="${layer.id}-emf"></div>
-                 |      <div id="${layer.id}-ocl"></div>
-                 |    </div>
-                 |  </div>
-                 |  </div>
-                 |</div>""".stripMargin),(nodes) => {
-          layer.active.react {
-            case true => query(s"#${layer.id}-container").classes += "active"
-            case false => query(s"#${layer.id}-container").classes -= "active"
-          }
-          val emfEditor = CodeMirror(document.getElementById(layer.id + "-emf"))
-          val oclEditor = CodeMirror(document.getElementById(layer.id + "-ocl"))
-          emfEditor.setOption("mode", "text/x-csrc")
-          emfEditor.setOption("autoRefresh",true)
-          emfEditor.getDoc().setValue(emf)
-          emfEditor.setOption("gutters",js.Array("issues"))
-          oclEditor.setOption("mode", "text/x-csrc")
-          oclEditor.setOption("autoRefresh",true)
-          oclEditor.getDoc().setValue(ocl)
-          oclEditor.setOption("gutters",js.Array("issues"))
-          oclEditor.getWrapperElement().classList.add("hide")
-          def update(e: CodeMirror, ev: raw.Event): Unit = {
-            query(e.getWrapperElement()).query(".tooltipped").$.tooltip()
-          }
-          emfEditor.on("viewportChange", update _)
-          oclEditor.on("viewportChange", update _)
-          layer.addMapping.react {
-            case true =>
-              oclEditor.getWrapperElement().classList.add("add-mapping")
-              emfEditor.getWrapperElement().classList.add("add-mapping")
-            case false =>
-              oclEditor.getWrapperElement().classList.remove("add-mapping")
-              emfEditor.getWrapperElement().classList.remove("add-mapping")
-          }
-
-          $"#commit-${layer.id}".onclick {
-            send(Commit(FSL(layer.name,emfEditor.getDoc().getValue(), oclEditor.getDoc().getValue())))
-          }
-          $"#${layer.id}-emf-link".onclick {
-            oclEditor.getWrapperElement().classList.add("hide")
-            emfEditor.getWrapperElement().classList.remove("hide")
-            emfEditor.refresh()
-          }
-          $"#${layer.id}-ocl-link".onclick {
-            emfEditor.getWrapperElement().classList.add("hide")
-            oclEditor.getWrapperElement().classList.remove("hide")
-            oclEditor.refresh()
-          }
-          $"#${layer.id}-abstract".onclick {
-            val i: Int = layers.indexOf(layer)
-            val newLayer = new Layer(layer.content())
-            tabs.insert(i, newLayer)
-            layers.insert(i, newLayer)
-            document.getElementById(newLayer.id + "-tab").asInstanceOf[html.Anchor].click()
-          }
-          $"#${layer.id}-refine".onclick {
-            val i: Int = layers.indexOf(layer) + 1
-            val newLayer = new Layer(layer.content())
-            tabs.insert(i, newLayer)
-            layers.insert(i, newLayer)
-            document.getElementById(newLayer.id + "-tab").asInstanceOf[html.Anchor].click()
-          }
-          layer.entities.react { e =>
-            emfEditor.getDoc().getAllMarks().foreach(_.clear())
-            oclEditor.getDoc().getAllMarks().foreach(_.clear())
-            layer.entityElements.values.foreach(_.clear())
-            layer.entityElements.clear()
-            e.foreach { e =>
-              val elem = HTML(s"<span class='entity'><span class='name'>${e.name}</span></span>").head.asInstanceOf[HTMLElement]
-              if (e.isInstanceOf[Clazz])
-                elem.classList.add("class")
-              else
-                elem.classList.add("member")
-              val o = TextMarkerOptions()
-              o.replacedWith = elem
-              o.addToHistory = false
-              if (e.isInstanceOf[ConstraintInfo]) markFSL(oclEditor, e, o).map { m =>
-                layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, oclEditor, m)
-              } else
-              markFSL(emfEditor, e, o).map { m =>
-                layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, emfEditor, m)
-              }
-            }
-          }
-          this.fslEditors = Seq(FSLEditors(emfEditor, oclEditor))
-        })
       case SysML(layerName, sysml) =>
-        (HTML(s"""<div class="layer sysml" id="${layer.id}-container">
+        (HTML(
+          s"""<div class="layer sysml" id="${layer.id}
+-container">
                  |  <div class="content">
                  |  <div class="card">
                  |    <div class="card-content">
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Formal Specification Level</span>
+                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}
+: Formal Specification Level</span>
                  |      <div id="${layer.id}"></div>
                  |    </div>
                  |  </div>
@@ -234,16 +71,19 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           }
           val sysmlEditor = CodeMirror(document.getElementById(layer.id))
           sysmlEditor.setOption("mode", "sysml")
-          sysmlEditor.setOption("readOnly",true)
+          sysmlEditor.setOption("readOnly", true)
           sysmlEditor.setOption("autoRefresh",true)
           sysmlEditor.getDoc().setValue(sysml)
+
           sysmlEditor.setOption("gutters",js.Array("issues"))
           def update(e: CodeMirror, ev: raw.Event): Unit = {
-            query(e.getWrapperElement()).query(".tooltipped").$.tooltip()
+            query(e.getWrapperElement()).
+
+              query(".tooltipped").$.tooltip()
           }
           sysmlEditor.on("viewportChange", update _)
           query(s"#commit-${layer.id}").on(Event.Mouse.Click) { _ =>
-            send(Commit(SysML(layer.name,sysmlEditor.getDoc().getValue())))
+            send(Commit)
           }
           layer.addMapping.react {
             case true =>
@@ -257,76 +97,17 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
             layer.entityElements.clear()
             e.foreach { e =>
               val elem = HTML(s"<span class='entity'><span class='name'>${e.name}</span></span>").head.asInstanceOf[HTMLElement]
-              if (e.isInstanceOf[Clazz])
-                elem.classList.add("class")
-              else
-                elem.classList.add("member")
               val o = TextMarkerOptions()
               o.replacedWith = elem
               o.addToHistory = false
-              markSysML(sysmlEditor, e, o).map { m =>
-                layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, sysmlEditor, m)
+              mark(sysmlEditor, e, o).map { m =>
+                layer.entityElements += e.path -> new EntityElement(Seq(elem), layer, e, sysmlEditor, m)
               }
             }
           }
           this.eslEditor = Some(sysmlEditor)
         })
-
-      case ESL(layerName, esl) =>
-        (HTML(s"""<div class="layer esl" id="${layer.id}-container">
-                 |  <div class="content">
-                 |  <div class="card">
-                 |    <div class="card-content">
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}: Electronic System Level</span>
-                 |      <div id="${layer.id}"></div>
-                 |    </div>
-                 |  </div>
-                 |  </div>
-                 |</div>""".stripMargin),(nodes) => {
-          layer.active.react {
-            case true => query(s"#${layer.id}-container").classes += "active"
-            case false => query(s"#${layer.id}-container").classes -= "active"
-          }
-          val eslEditor = CodeMirror(document.getElementById(layer.id))
-          eslEditor.setOption("mode", "text/x-c++src")
-          eslEditor.setOption("autoRefresh",true)
-          eslEditor.getDoc().setValue(esl)
-          eslEditor.setOption("gutters",js.Array("issues"))
-          def update(e: CodeMirror, ev: raw.Event): Unit = {
-            query(e.getWrapperElement()).query(".tooltipped").$.tooltip()
-          }
-          eslEditor.on("viewportChange", update _)
-          query(s"#commit-${layer.id}").on(Event.Mouse.Click) { _ =>
-            send(Commit(ESL(layer.name,eslEditor.getDoc().getValue())))
-          }
-          layer.addMapping.react {
-            case true =>
-              eslEditor.getWrapperElement().classList.add("add-mapping")
-            case false =>
-              eslEditor.getWrapperElement().classList.remove("add-mapping")
-          }
-          layer.entities.react { e =>
-            eslEditor.getDoc().getAllMarks().foreach(_.clear())
-            layer.entityElements.values.foreach(_.clear())
-            layer.entityElements.clear()
-            e.foreach { e =>
-              val elem = HTML(s"<span class='entity'><span class='name'>${e.name}</span></span>").head.asInstanceOf[HTMLElement]
-              if (e.isInstanceOf[Clazz])
-                elem.classList.add("class")
-              else
-                elem.classList.add("member")
-              val o = TextMarkerOptions()
-              o.replacedWith = elem
-              o.addToHistory = false
-              markESL(eslEditor, e, o).map { m =>
-                layer.entityElements += e.qName -> new EntityElement(Seq(elem), layer, e, eslEditor, m)
-              }
-            }
-          }
-          this.eslEditor = Some(eslEditor)
-        })
-    }
-  })
+  }})
 
 
   val rules: List[String] = List(
@@ -361,62 +142,14 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
     }.toSeq
   }
 
-  def markNL(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
-    entity match {
-      case Requirement(name, content) =>
-        mark(r"($name):\s+(?:$content)", editor, options)
-    }
+  def mark(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
+    val doc = editor.getDoc()
+    val line = entity.line
+    val column = entity.column
+    Seq(doc.markText(CodeMirror.Pos(line -1 ,column -1),CodeMirror.Pos(line-1,column-1 + entity.name.length), options))
   }
 
-  def markFSL(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
-    entity match {
-      case Clazz(clazz,_) =>
-        mark(r"(?:class|enum)\s+($clazz)", editor, options, Some((clazz.length,0)))
-      case Attribute(clazz, member, _) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:val|attr)[^\n]+\s($member);", editor, options, Some((member.length,1)))
-      case Reference(clazz, member, t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:ref|val)[^\n]+\s($member);", editor, options, Some((member.length,1)))
-      case Operation(clazz, member, t, params) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s($member)(?:\()", editor, options, Some((member.length + 1,0)))
-      case Parameter(clazz, member, "this", t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)(\()", editor, options, Some((0,0)))
-      case Parameter(clazz, member, name, t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)\([^\)]*(?:$t)\s+($name)(?:\)|,)", editor, options, Some((name.length,1)))
-      case Invariant(clazz, name) =>
-        mark(r"(?:inv\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-      case Precondition(op, name) =>
-        mark(r"(?:pre\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-      case Postcondition(op, name) =>
-        mark(r"(?:post\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-    }
-  }
-
-  def markSysML(editor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
-    entity match {
-      case PositionedLayerObject(x,line,column) =>
-        val doc = editor.getDoc()
-        Seq(doc.markText(CodeMirror.Pos(line -1 ,column -1),CodeMirror.Pos(line-1,column-1 + x.name.length), options))
-      case Clazz(clazz,_) =>
-        mark(r"(?:class|enum)\s+($clazz)", editor, options, Some((clazz.length,0)))
-      case Attribute(clazz, member, _) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:val|attr)[^\n]+\s($member);", editor, options, Some((member.length,1)))
-      case Reference(clazz, member, t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*(?:ref|val)[^\n]+\s($member);", editor, options, Some((member.length,1)))
-      case Operation(clazz, member, t, params) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s($member)(?:\()", editor, options, Some((member.length + 1,0)))
-      case Parameter(clazz, member, "this", t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)(\()", editor, options, Some((0,0)))
-      case Parameter(clazz, member, name, t) =>
-        mark(r"(?:class|enum)\s+(?:$clazz)\s+\{[^\}]*op[^\n]+\s(?:$member)\([^\)]*(?:$t)\s+($name)(?:\)|,)", editor, options, Some((name.length,1)))
-      case Invariant(clazz, name) =>
-        mark(r"(?:inv\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-      case Precondition(op, name) =>
-        mark(r"(?:pre\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-      case Postcondition(op, name) =>
-        mark(r"(?:post\s+)($name)\s*\:", editor, options, Some((name.length,1)))
-    }
-  }
-
+    /*
   def markESL(eslEditor: CodeMirror, entity: LayerObject, options: TextMarkerOptions): Seq[TextMarker] = {
     entity match {
       case Clazz(clazz,_) =>
@@ -433,7 +166,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
         if (name == "this") Seq.empty
         else mark(r"(?:SC_MODULE\()$clazz\)\s*\{(?:.|\n)*?[^\n\s]\s($op)\([^\)]*\s+($name)(?:\)|,)", eslEditor, options, Some((name.length,1)))
     }
-  }
+  }*/
 
   def fslUnimplemented(emf: Layer)(clazz: String): Unit = {
     val e = emf.entityElements(clazz).error := true
@@ -444,14 +177,14 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
   }
 
   def markMapping(mapping: Mapping) = for {
-    to <- layer(mapping.toLayer).entityElements.get(mapping.to.qName)
+    to <- layer(mapping.toLayer).entityElements.get(mapping.to.path)
   } {
     //from.matches += (layer(mapping.toLayer), mapping.to)
     to.matches += (layer(mapping.fromLayer), mapping.from)
   }
 
   def removeMapping(mapping: Mapping) = for {
-    to <- layer(mapping.toLayer).entityElements.get(mapping.to.qName)
+    to <- layer(mapping.toLayer).entityElements.get(mapping.to.path)
   } {
     //from.matches -= (layer(mapping.toLayer), mapping.to)
     to.matches -= (layer(mapping.fromLayer), mapping.from)
@@ -521,12 +254,22 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
          |</ul>""".stripMargin), (nodes) => ())
   })
 
+  var initalized = false
+
   def receive: PartialFunction[Message,Unit] = {
-    case InitSpecs(Specs(nl,fsls,esl)) =>
-      val layers = nl.map(new Layer(_)) ++ fsls.map(new Layer(_)) ++ esl.map(new Layer(_))
+    case InitSpecs(Specs(ls)) if !initalized =>
+      window.on(Event.Key.Press) { k =>
+        if (k.key == "r") send(CommitAll)
+      }
+      val layers = ls.map(new Layer(_))
       tabs ++= layers
       this.layers ++= layers
       layers.headOption.foreach(_.active := true)
+      initalized = true
+    case InitSpecs(Specs(ls)) if initalized =>
+      ls.foreach { layer =>
+        this.layers.find(_.name == layer.name).foreach(_.content := layer)
+      }
     case StartTask(name) =>
       val old = tasks.indexWhere(_.name == name)
       if (old >= 0) tasks.remove(old)
@@ -575,38 +318,38 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
       this.issues = issues
       removed.foreach {
         case UnimplementedModel(layer, model) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.error := false
             elem.tooltip := None
           }
         case IgnoredModel(layer, model, reason) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.ignored := None
           }
         case RemovedModel(tl, model, fl, impl) =>
-          this.layer(fl).entityElements.get(impl.qName).foreach { elem =>
+          this.layer(fl).entityElements.get(impl.path).foreach { elem =>
             elem.removedModel := None
           }
         case RemovedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.qName).foreach { elem =>
+          this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.removedImpl := None
           }
         case ModifiedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.qName).foreach { elem =>
+          this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.modifiedImpl := None
           }
         case RequirementEvaluation(layer, requirement, results) =>
-          this.layer(layer).entityElements.get(requirement.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(requirement).foreach { elem =>
             elem.tooltip := None
             elem.warn := false
           }
         case MaltypedMapping(layer, model, actual, expected) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.error := false
             elem.tooltip := None
           }
         case MismatchingBounds(layer,model,_,_) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.error := false
             elem.tooltip := None
           }
@@ -617,28 +360,28 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
       }
       issues.foreach {
         case UnimplementedModel(layer, model) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.error := true
-            elem.tooltip := Some(s"'${model.qName}' doesn't have an implementation")
+            elem.tooltip := Some(s"'${model.name}' doesn't have an implementation")
           }
         case IgnoredModel(layer, model, reason) =>
-          this.layer(layer).entityElements.get(model.qName).foreach { elem =>
+          this.layer(layer).entityElements.get(model.path).foreach { elem =>
             elem.ignored := Some(reason)
           }
         case RemovedModel(tl, model, fl, impl) =>
-          this.layer(fl).entityElements.get(impl.qName).foreach { elem =>
+          this.layer(fl).entityElements.get(impl.path).foreach { elem =>
             elem.removedModel := Some(model)
           }
         case RemovedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.qName).foreach { elem =>
+          this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.removedImpl := Some(impl)
           }
         case ModifiedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.qName).foreach { elem =>
+          this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.modifiedImpl := Some(impl)
           }
         case MismatchingBounds(tl, model, _, _) =>
-          this.layer(tl).entityElements.get(model.qName).foreach { elem =>
+          this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.error := true
             elem.tooltip := Some(s"Mismatching bounds")
           }
@@ -647,11 +390,11 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
             case (Some(false),i) => rules(i)
             case (None,i) => "(" + rules(i) + ")"
           }.mkString("; ")
-          this.layer(layer).entityElements(requirement.qName).warn := true
-          this.layer(layer).entityElements(requirement.qName).tooltip := Some(out)
+          this.layer(layer).entityElements(requirement).warn := true
+          this.layer(layer).entityElements(requirement).tooltip := Some(out)
         case MaltypedMapping(layer, model, expected, actual) =>
-          this.layer(layer).entityElements(model.qName).error := true
-          this.layer(layer).entityElements(model.qName).tooltip := Some(s"Maltyped implementation: expected: $expected, actual: $actual")
+          this.layer(layer).entityElements(model.path).error := true
+          this.layer(layer).entityElements(model.path).tooltip := Some(s"Maltyped implementation: expected: $expected, actual: $actual")
         case obl: OCLProofObligation =>
           this.layer(obl.layer).entityElements.get(obl.clazz).foreach { elem =>
             elem.proofObligations.modify(_ + obl)

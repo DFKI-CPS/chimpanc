@@ -24,30 +24,6 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
     lineWidget.foreach(_.clear())
   }
 
-  entity match {
-    case Clazz(_,Some(svgCode)) =>
-      val info = HTML("<i class='blue-text tiny material-icons'>info</i>")
-      elem.append(HTML("&nbsp") ++ info)
-      info.onclick {
-        if (widget().isDefined)
-          widget := None
-        else {
-          val svg = HTML("<div class='stateChart'></div>")
-          svg.elements.head.innerHTML = svgCode
-          widget := Some(svg.head.asInstanceOf[HTMLElement])
-        }
-      }
-    case op@Operation(c,n,_,params) if c != n =>
-      println(op)
-      val comma = if (params.nonEmpty && (params.size > 1 || (params.head._1 != "this" && params.head._1 != null))) ", " else ""
-      val receiver = HTML(s"<span class='receiverParam entity param'>$c <span class='name'>this</span></span>")
-      elem.insertAfter(HTML(comma))
-      elem.insertAfter(receiver)
-      elem.insertAfter(HTML("("))
-      layer.entityElements += (entity.qName + "(this)") -> (new EntityElement(receiver, layer, Parameter(c, n, "this", c), editor, marker))
-    case _ =>
-  }
-
   val warn = RVar(false)
   warn.react { v =>
     if (v) {
@@ -104,7 +80,7 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
           elem.elements.foreach(_.removeAttribute("tabindex"))
         }
         ignore.on(Event.Mouse.Click) { _ =>
-          Main.send(IgnoreModel(layer.name, entity, org.scalajs.dom.window.prompt(s"Why should the model '${entity.qName}' be ignored?")))
+          Main.send(IgnoreModel(layer.name, entity, org.scalajs.dom.window.prompt(s"Why should the model '${entity.name}' be ignored?")))
           ignore.blur()
         }
       } else {
@@ -219,7 +195,7 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
       tooltip := None
       elem.classes -= "removedModel"
     case Some(model) =>
-      tooltip := Some(s"Model '${model.qName}' has been removed")
+      tooltip := Some(s"Model '${model.name}' has been removed")
       elem.classes += "removedModel"
   }
 
@@ -229,7 +205,7 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
       tooltip := None
       elem.classes -= "removedImpl"
     case Some(model) =>
-      tooltip := Some(s"Implementation '${model.qName}' has been removed")
+      tooltip := Some(s"Implementation '${model.name}' has been removed")
       elem.classes += "removedImpl"
   }
 
@@ -239,7 +215,7 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
       tooltip := None
       elem.classes -= "removedImpl"
     case Some(model) =>
-      tooltip := Some(s"Implementation '${model.qName}' has been modified")
+      tooltip := Some(s"Implementation '${model.name}' has been modified")
       elem.classes += "removedImpl"
   }
 
@@ -261,13 +237,13 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
     def += (layer: Layer, entity: LayerObject) = {
       if (!matchedElements.contains((layer,entity))) {
         val e1 = elem.query(".name").take(1).on(Event.Mouse.Enter) { e =>
-          layer.entityElements.get(entity.qName).foreach { e =>
+          layer.entityElements.get(entity.path).foreach { e =>
             e.hover := true
             e.show()
           }
         }
         val e2 = elem.query(".name").take(1).on(Event.Mouse.Leave) { e =>
-          layer.entityElements.get(entity.qName).foreach { e =>
+          layer.entityElements.get(entity.path).foreach { e =>
             e.hover := false
           }
         }

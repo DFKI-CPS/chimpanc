@@ -6,17 +6,15 @@ scalaVersion := "2.11.8"
 
 parallelExecution in Test := false
 
-resolvers += Resolver.bintrayRepo("dfki-cps","maven")
-
 resolvers ++= Seq(
+  Resolver.bintrayRepo("dfki-cps","maven"),
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"
 )
 
 libraryDependencies ++= Seq(
-  "de.dfki.cps" %% "stools" % "1.0.1",
-  "de.dfki.cps" %% "egraph" % "0.2.1",
+  "de.dfki.cps" %% "egraph" % "0.2.5",
   "de.dfki.cps" %% "guideline-checking" % "1.0.0",
-  "de.dfki.cps" %% "specific-sysml" % "0.1.6",
+  "de.dfki.cps" %% "specific-sysml" % "0.2.2",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.5",
   "com.typesafe" % "config" % "1.2.1",
   "org.neo4j" % "neo4j" % "3.1.0",

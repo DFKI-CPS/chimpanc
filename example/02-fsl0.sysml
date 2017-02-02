@@ -1,4 +1,4 @@
-bdd [package] acs [ACS]
+bdd [package] fsl0::acs [ACS]
 -----------------------------------------------------------
 
 -- P1: The model is composed of people and buldings.

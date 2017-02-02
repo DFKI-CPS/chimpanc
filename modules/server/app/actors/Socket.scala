@@ -1,9 +1,7 @@
 package actors
 
-import _root_.specific.graph.Semantics
 import akka.actor.{Actor, ActorRef}
 import specific._
-import specific.project.Layer
 import upickle.default._
 
 import scala.util.Try
@@ -15,55 +13,29 @@ class Socket(out: ActorRef) extends Actor {
   import _root_.specific.{ChangeManagement => CM}
   
   def send(msg: Message) {
+    println("sending: " + msg)
     out ! write(msg)
   }
   
   def receive = {
-    case MSG(Commit(NL(name,content))) => {
-      val layer = CM.project.nl.find(_.name == name).get
-      layer.source = content
-      CM.commit(name)
+    case MSG(CommitAll) => {
+      CM.commit()
       CM.listMappings()
       CM.listIssues()
     }
-    case MSG(Commit(SysML(name,content))) => {
-      val layer = CM.project.fsls.collectFirst {
-        case x: Layer.SysML if x.name == name => x
-      }.get
-      layer.source = content
-      CM.commit(name)
-      CM.autoMap()
-      CM.listMappings()
-      CM.listIssues()
-    }
-    case MSG(Commit(FSL(name,emf,ocl))) => {
-      val layer = CM.project.fsls.collectFirst {
-        case x: Layer.FSL if x.name == name => x
-      }.get
-      layer.emfSource = emf
-      layer.oclSource = ocl
-      CM.commit(name)
-      CM.autoMap()
-      CM.listMappings()
-      CM.listIssues()
-    }
-    case MSG(Commit(ESL(name,content))) => {
-      val layer = CM.project.esl.find(_.name == name).get
-      layer.source = content
-      CM.commit(name)
-      CM.autoMap()
+    case MSG(Commit) => {
+      CM.commit()
+      send(InitSpecs(CM.layers))
       CM.listMappings()
       CM.listIssues()
     }
     case MSG(IgnoreModel(layer,model,reason)) => {
       CM.ignoreModel(layer,model,reason)
-      CM.autoMap()
       CM.listMappings()
       CM.listIssues()
     }
     case MSG(AddMapping(fromLayer,from,toLayer,to)) => {
       CM.createMapping(fromLayer,from,toLayer,to)
-      CM.autoMap()
       CM.listMappings()
       CM.listIssues()
     }
@@ -75,11 +47,11 @@ class Socket(out: ActorRef) extends Actor {
     case MSG(Proven(layer,constr)) =>
       CM.proven(layer,constr)
       CM.listIssues()
-    case MSG(Evaluate(NL(name,content))) =>
-      val layer = CM.project.nl.find(_.name == name).get
+    case MSG(Evaluate(SysML(name,content))) =>
+      /*val layer = CM.project.nl.find(_.name == name).get
       layer.source = content
       CM.evaluateNL(layer)
-      CM.listIssues()
+      CM.listIssues()*/
   }
 
   val output = new Output {
@@ -114,14 +86,12 @@ class Socket(out: ActorRef) extends Actor {
 
   override def preStart(): Unit =  {
     CM.output.add(output)
-    send(InitSpecs(CM.project.toSpecs))
-    CM.initialize()
+    CM.commit()
+    send(InitSpecs(CM.layers))
     CM.entities.foreach {
       case (name, entities) =>
-        println(name + ": " + entities)
         send(Entities(name,entities))
     }
-    CM.autoMap()
     CM.listMappings()
     CM.listIssues()
   }

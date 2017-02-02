@@ -1,4 +1,4 @@
-bdd [package] acs [ACS]
+bdd [package] fsl1::acs [ACS]
 -----------------------------------------------------------
 
 -- P6: The geometry of buildings serves to define which

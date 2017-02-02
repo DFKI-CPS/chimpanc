@@ -1,4 +1,4 @@
-bdd [package] acs [ACS]
+bdd [package] fsl3::acs [ACS]
 -----------------------------------------------------------
 
 block Building

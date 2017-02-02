@@ -1,4 +1,4 @@
-bdd [package] acs [ACS]
+bdd [package] fsl5::acs [ACS]
 -----------------------------------------------------------
 
 block Building
@@ -12,7 +12,7 @@ block Building
 
 block Person
   operations
-    admitted(q: Door): Boolean
+    admitted(q: Door): Boolean { query }
       post: q.org = self.sit and
         self.aut->includes(q.dest) and
         self.dap_dom->isEmpty()
@@ -48,7 +48,7 @@ block Door
     pass_thru()
       pre: green
       post: dap@pre.sit = dest
-        and dap@pre.dap_dom->isEmpty
+        and dap@pre.dap_dom->isEmpty()
         and dap->isEmpty()
     off_grn()
       pre: green
