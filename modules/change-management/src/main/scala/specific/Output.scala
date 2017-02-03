@@ -25,7 +25,7 @@ object Output {
       }
       override def debug(msg: Any): Unit = println(s"[$name][debug] $msg")
       override def taskDone(): Unit = println(s"[$name][success]")
-      override def taskDone(result: Message): Unit = println(s"[$name][success] " + result.toString)
+      override def taskDone(result: Message): Unit = println(s"[$name][success] " + result.toString.take(20) + "...")
       override def info(msg: Any): Unit = println(s"[$name][info] $msg")
     }
   }

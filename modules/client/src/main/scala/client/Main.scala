@@ -177,17 +177,17 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
   }
 
   def markMapping(mapping: Mapping) = for {
-    to <- layer(mapping.toLayer).entityElements.get(mapping.to.path)
+    to <- layer(mapping.toLayer).entityElements.get(mapping.to)
+    from <- layer(mapping.fromLayer).entityElements.get(mapping.from)
   } {
-    //from.matches += (layer(mapping.toLayer), mapping.to)
-    to.matches += (layer(mapping.fromLayer), mapping.from)
+    to.matches += (layer(mapping.fromLayer), from.entity)
   }
 
   def removeMapping(mapping: Mapping) = for {
-    to <- layer(mapping.toLayer).entityElements.get(mapping.to.path)
+    to <- layer(mapping.toLayer).entityElements.get(mapping.to)
+    from <- layer(mapping.fromLayer).entityElements.get(mapping.from)
   } {
-    //from.matches -= (layer(mapping.toLayer), mapping.to)
-    to.matches -= (layer(mapping.fromLayer), mapping.from)
+    to.matches -= (layer(mapping.fromLayer), from.entity)
   }
 
   var issues: Set[SemanticIssue] = Set.empty
@@ -354,7 +354,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
             elem.tooltip := None
           }
         case obl: OCLProofObligation =>
-          this.layer(obl.layer).entityElements.get(obl.clazz).foreach { elem =>
+          this.layer(obl.layer).entityElements.get(obl.owner).foreach { elem =>
             elem.proofObligations.modify(_ - obl)
           }
       }
@@ -396,7 +396,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           this.layer(layer).entityElements(model.path).error := true
           this.layer(layer).entityElements(model.path).tooltip := Some(s"Maltyped implementation: expected: $expected, actual: $actual")
         case obl: OCLProofObligation =>
-          this.layer(obl.layer).entityElements.get(obl.clazz).foreach { elem =>
+          this.layer(obl.layer).entityElements.get(obl.owner).foreach { elem =>
             elem.proofObligations.modify(_ + obl)
           }
       }

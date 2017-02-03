@@ -1,15 +1,15 @@
 package client
 
-import net.flatmap.codemirror.{TextMarker, CodeMirror, LineWidget}
-import net.flatmap.materialize.{ jQuery => $ }
+import net.flatmap.codemirror.{CodeMirror, LineWidget, TextMarker, TextMarkerOptions}
+import net.flatmap.materialize.{jQuery => $}
 import org.scalajs.dom._
-import org.scalajs.dom.raw.{HTMLElement}
+import org.scalajs.dom.raw.HTMLElement
 import specific._
 import Util._
 
 import scala.util.control.NonFatal
 
-class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: CodeMirror, marker: TextMarker) {
+class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, editor: CodeMirror, marker: TextMarker) {
   val error = RVar(false)
   error.react { v =>
     if (v) {
@@ -116,9 +116,10 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
   private var obligationWidget = false
   private var obligationHTML = Option.empty[Seq[Node]]
 
-  private def renderPO(po: OCLProofObligation): Seq[Node] = HTML("<a class='collection-item'>" + po.premise.mkString(" ∧ ") +
-    " ⇒ " + po.implication + s"<i class='secondary-content material-icons ${if (po.proven) "green" else "red"}-text'>"+
+  private def renderPO(po: OCLProofObligation): Seq[Node] = HTML("<a class='collection-item'>" + po.implication + s"<i class='secondary-content material-icons ${if (po.proven) "green" else "red"}-text'>"+
     s"${if (po.proven) "done" else "close"}</i></a>")
+
+  private var poMark = Option.empty[TextMarker]
 
   val proofObligations = RVar(Set.empty[OCLProofObligation])
   proofObligations.react { case pos =>
@@ -145,6 +146,23 @@ class EntityElement(elem: Seq[Node], layer: Layer, entity: LayerObject, editor: 
         pos.foreach { po => if (!po.proven) {
           val e = renderPO(po)
           obls.append(e)
+          e.on(Event.Mouse.Enter) { e =>
+            poMark.foreach(_.clear())
+            val options = TextMarkerOptions()
+            options.css = "background-color: lightgoldenrodyellow"
+            val startPos = CodeMirror.Pos(po.cLine - 1, po.cColumn - 1)
+            poMark = Some(
+              editor.getDoc().markText(
+                startPos,
+                editor.getDoc().posFromIndex(editor.getDoc().indexFromPos(startPos) + po.implication.trim.length),
+                options
+              )
+            )
+          }
+          e.on(Event.Mouse.Leave) { e =>
+            poMark.foreach(_.clear())
+            poMark = None
+          }
           e.onclick {
             Main.send(Proven(po.layer,po.implication))
           }

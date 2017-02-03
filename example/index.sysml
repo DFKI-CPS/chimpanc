@@ -12,6 +12,8 @@ include
 
 fsl0 <|- fsl1
 fsl1 <|- fsl2
+  Person <|- Person
+    pass <|- b.enter(self)
 fsl2 <|- fsl3
 fsl3 <|- fsl4
 fsl4 <|- fsl5
@@ -20,3 +22,7 @@ fsl5 <|- fsl6
 satisfy isl::acs::P1
   <- fsl0::acs::Building
   <- fsl0::acs::Person
+satisfy isl::acs::P2 <- fsl0::acs::Person::aut
+satisfy isl::acs::P3 <- fsl0::acs::Person::sit
+satisfy isl::acs::P4 <- fsl0::acs::Person::sit
+satisfy isl::acs::P5 <- fsl0::acs::Person::sit

@@ -8,10 +8,13 @@ import java.io.File
 import de.dfki.cps.egraph.{EGraphStore, GraphResource, Labels}
 import de.dfki.cps.secore.SResource
 import de.dfki.cps.specific.nlp
+import org.eclipse.uml2.uml
+import org.eclipse.papyrus.sysml.requirements
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.dfki.cps.egraph.internal.Util._
+import org.eclipse.uml2.uml.OpaqueExpression
 
 import scala.collection.mutable
 import scala.io.Source
@@ -42,7 +45,40 @@ object ChangeManagement  {
 
   private var nlProblems = Set.empty[RequirementEvaluation]
 
+  def getConstraints(model: uml.Model) = {
+    model.eAllContents().asScala.collect {
+      case c: uml.Constraint => c
+    }
+  }
+
+  def calcualateProofObligations() = {
+    val out = output.task("Calculating Proof Obligations")
+    val project = resourceSet.getResource(URI.createURI("graph://index"),true)
+    val obligations: Set[SemanticIssue] = project.getAllContents.asScala.collect {
+      case r: uml.Realization =>
+        (r.getSuppliers.get(0),r.getClients.asScala.headOption) match {
+          case (sm: uml.Model, Some(cm: uml.Model)) => {
+            getConstraints(sm).map { c =>
+              val pos = store.graphDb.transaction {
+                positions(c.eResource().asInstanceOf[GraphResource].root.get.getProperty("originalURI").asInstanceOf[String])(c.eResource().getURIFragment(c.getSpecification))
+              }.get
+              val ctx = c.getContext match {
+                case op: uml.Operation => op.getClass_
+                case prop: uml.Property => prop.getClass_
+                case other => other
+              }
+              val spec = c.getSpecification.asInstanceOf[OpaqueExpression].getBodies.asScala.mkString("; ")
+              OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column)
+            }.toSeq
+          }
+          case other => Nil
+        }
+    }.flatten.toSet
+    out.taskDone(IssueList(obligations))
+  }
+
   def listIssues() = {
+    calcualateProofObligations()
     /*val out = output.task("Detecting semantic problems")
     val problems = Semantics.findProblems() ++ project.layers.zip(project.layers.tail).flatMap {
       case (to,from) =>
@@ -55,7 +91,7 @@ object ChangeManagement  {
     out.taskDone(IssueList(nlProblems ++ problems))*/
   }
 
-  val positions = mutable.Map.empty[(String,String),Position]
+  val positions = mutable.Map.empty[String,Map[String,Position]]
 
   def proven(layer: String, constr: String) = ??? // Semantics.proven(layer,constr)
 
@@ -68,7 +104,7 @@ object ChangeManagement  {
         r
     }
     layerObjects += layer.getURI.toString -> reqs.map { r =>
-      val pos = positions((layer.getURI.toString,layer.getURIFragment(r.getBase_Class)))
+      val pos = positions(layer.getURI.toString)(layer.getURIFragment(r.getBase_Class))
       LayerObject(r.getId, r.getText,pos.line,pos.column)
     }.toSet
     nlProblems = Set.empty
@@ -98,117 +134,6 @@ object ChangeManagement  {
     out.taskDone()
   }
 
-  /*def commitSysML(layer: Resource) = {
-    implicit val out = output.task(s"Committing SysML layer '${layer.name}'")
-
-    val oldModel = resourceSet.getResource(URI.createURI("graph:://" + layer.name), true)
-
-    out.info("Parsing SysML")
-    val newModel = Try {
-      val resource = resourceSet.createResource(URI.createFileURI(File.createTempFile("temp",".ecore").getPath))
-      de.dfki.cps.specific.SysML.load()
-    }
-
-    if (newModel.isFailure) {
-      newModel.failed.get match {
-        case s => out.error(s"Failed to load SysML model: " + s.getMessage, newModel.failed.get)
-      }
-    }
-
-    for {
-      newModel <- newModel
-    } {
-      //newModel.save(mapAsJavaMap(Map.empty))
-
-      /*val entities = SysML.getEntities(newModel).map {
-        case Clazz(n,_) => Clazz(n)
-        case other => other
-      }
-
-      layerObjects = layerObjects + (layer.name -> entities.toSet)*/
-
-      out.info("Creating syntactic diff")
-      val diff = stools.getSTool("ecore").sdiff(new SResource(oldModel), new SResource(newModel))
-
-      if (diff.isEmpty) {
-        out.info("No changes")
-        //Semantics.deleteDeleted(oldModel)
-        //Semantics.resetAdded(oldModel)
-      }
-      else {
-        if (diff.entries.size == 1 && diff.entries.head._1.getLabel() == "root") {
-          out.info("No prior model; creating new one")
-          newModel.save(new java.util.HashMap)
-        }
-        else {
-          out.info("Resetting Semantics")
-          //Semantics.deleteDeleted(oldModel)
-          //Semantics.resetSemantics(oldModel)
-          out.info("Applying diff")
-          //applyDiff(diff)
-        }
-
-        val newGraphModel = resourceSet.getResource(URI.createURI("graph:://" + layer.name), true)
-
-        out.info("Propagate FSL semantics")
-        //Semantics.propagate(newGraphModel)
-      }
-
-      out.taskDone(Entities(layer.name, entities.toSet))
-    }
-  }*/
-
-  /*def commitESL(layer: Layer.ESL) = {
-    implicit val out = output.task(s"Committing ESL layer '${layer.name}'")
-
-    out.info("Extracting ECore")
-
-    val oldImpl = resourceSet.getResource(URI.createURI("graph:://" + layer.name), true)
-    oldImpl.unload()
-    val newImpl = ClangASTParser.parse(layer.file)  // ClangAstParser.parse(layer.file)
-
-    newImpl.failed.foreach { e =>
-      out.error("Failed to load ESL", e)
-    }
-
-    newImpl.foreach { newImpl =>
-      val entities = SystemC.getEntities(newImpl).toSet
-      layerObjects = layerObjects + (layer.name -> entities)
-
-      out.info("Creating diff")
-
-      val diff = stools.getSTool("ecore").sdiff(new SResource(oldImpl), new SResource(newImpl))
-      if (diff.isEmpty) {
-        out.info("No changes.")
-        //Semantics.deleteDeleted(oldImpl)
-        //Semantics.resetAdded(oldImpl)
-      }
-      else {
-        if (diff.entries.size == 1 && diff.entries.head._1.getLabel() == "root") {
-          out.info("No prior ESL entry; creating new one.")
-          val res = Try(newImpl.save(new java.util.HashMap))
-          res.failed.foreach { e =>
-            out.error("Model could not be written to Graph", e)
-          }
-        }
-        else {
-          out.info("Resetting semantics")
-          //Semantics.deleteDeleted(oldImpl)
-          //Semantics.resetSemantics(oldImpl)
-          out.info("Applying diff")
-          //applyDiff(diff)
-        }
-
-        val newGraphImpl = resourceSet.getResource(URI.createURI("graph:://" + layer.name), true)
-
-        out.info("Propagating ESL semantics")
-        //Semantics.propagate(newGraphImpl)
-      }
-
-      out.taskDone(Entities(layer.name, entities))
-    }
-  }*/
-
   def load(output: TaskOutput): (URI => Resource) = (uri: URI) => {
     output.info(s"loading $uri")
     val file = new File(uri.toFileString)
@@ -217,9 +142,11 @@ object ChangeManagement  {
     store.graphDb.transaction {
       Option(store.graphDb.findNode(Labels.Resource,"originalURI",uri.toString)).fold {
         // resource not existent before
-        println("loading", uri)
         val resource = resourceSet.createResource(graphURI).asInstanceOf[GraphResource]
         val positions = de.dfki.cps.specific.SysML.load(file,resource,includeProfileApplcations = false)
+        this.positions(uri.toString) = positions.map {
+          case (o,p) => resource.getURIFragment(o) -> p
+        }
         resource.save(new java.util.HashMap)
         resource.root.foreach(_.setProperty("originalURI",uri.toString))
         resource.root.foreach(_.setProperty("lastModified",file.lastModified()))
@@ -231,12 +158,29 @@ object ChangeManagement  {
       } { node =>
         if (node.getProperties("lastModified") == file.lastModified()) {
           // wasn't modified
+          if (!this.positions.isDefinedAt(uri.toString)) {
+            val tempRes = resourceSet.createResource(uri.appendFileExtension("ecore"))
+            val positions = de.dfki.cps.specific.SysML.load(file, tempRes, includeProfileApplcations = false)
+            this.positions(uri.toString) = positions.map {
+              case (o,p) => tempRes.getURIFragment(o) -> p
+            }
+            layerObjects += uri.toString -> sysml.SysML.getEntities(tempRes,positions.map {
+              case (o,p) => tempRes.getURIFragment(o) -> p
+            }.lift)
+          }
           resourceSet.getResource(graphURI, true).asInstanceOf[GraphResource]
         } else {
           // was potentially modified
-          val oldResource = resourceSet.getResource(graphURI,true).asInstanceOf[GraphResource]
+          val oldResource =  resourceSet.createResource(graphURI).asInstanceOf[GraphResource]
+          oldResource.load(new java.util.HashMap)
           val newResource = resourceSet.createResource(uri.appendFileExtension("ecore"))
-          de.dfki.cps.specific.SysML.load(file,newResource)
+          val positions = de.dfki.cps.specific.SysML.load(file,newResource,includeProfileApplcations = false)
+          this.positions(uri.toString) = positions.map {
+            case (o,p) => newResource.getURIFragment(o) -> p
+          }
+          layerObjects += uri.toString -> sysml.SysML.getEntities(newResource,positions.map {
+            case (o,p) => newResource.getURIFragment(o) -> p
+          }.lift)
           val diff = de.dfki.cps.secore.stools.getSTool("specific").sdiff(new SResource(oldResource), new SResource(newResource))
           de.dfki.cps.egraph.stools.Diff.applyDiff(oldResource,diff)
           oldResource.unload()
@@ -260,13 +204,67 @@ object ChangeManagement  {
   def commit(): Unit = {
     val out = output.task("Updating")
     val uri = URI.createFileURI("example/index.sysml")
-    val newResource = resourceSet.createResource(uri.appendFileExtension("ecore"))
-    val res = de.dfki.cps.specific.SysML.loadProject(URI.createFileURI("example/index.sysml"),newResource,load(out))
+    out.info(s"loading project $uri")
+    val graphURI = URI.createURI("graph://index")
+    val file = new File(uri.toFileString)
+    store.graphDb.transaction {
+      Option(store.graphDb.findNode(Labels.Resource,"originalURI",uri.toString)).fold {
+        // resource not existent before
+        val resource = resourceSet.createResource(graphURI).asInstanceOf[GraphResource]
+        val positions = de.dfki.cps.specific.SysML.loadProject(uri,resource,load(out))
+        this.positions(uri.toString) = positions.map {
+          case (o,p) => resource.getURIFragment(o) -> p
+        }
+        resource.save(new java.util.HashMap)
+        resource.root.foreach(_.setProperty("originalURI",uri.toString))
+        resource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
+        layerObjects += uri.toString -> sysml.SysML.getEntities(resource,positions.map {
+          case (o,p) => resource.getURIFragment(o) -> p
+        }.lift)
+        resource
+      } { node =>
+        // was potentially modified
+        println("diff project")
+        val oldResource =  resourceSet.getResource(graphURI,true).asInstanceOf[GraphResource]
+        oldResource.load(new java.util.HashMap)
+        val newResource = resourceSet.createResource(uri.appendFileExtension("ecore"))
+        val positions = de.dfki.cps.specific.SysML.loadProject(uri,newResource,load(out))
+        this.positions(uri.toString) = positions.map {
+          case (o,p) => newResource.getURIFragment(o) -> p
+        }
+        val diff = de.dfki.cps.secore.stools.getSTool("specific").sdiff(new SResource(oldResource), new SResource(newResource))
+        de.dfki.cps.egraph.stools.Diff.applyDiff(oldResource,diff)
+        oldResource.unload()
+        oldResource.load(new java.util.HashMap)
+        oldResource.root.foreach(_.setProperty("lastModified",file.lastModified()))
+        oldResource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
+        oldResource
+      }
+    }.get
     out.taskDone()
   }
 
-  def createMapping(fromLayer: String, from: LayerObject, toLayer: String, to: LayerObject) = ()
-    //Semantics.createMapping(fromLayer,from,toLayer,to)
+  def normalizeURI(uri: URI): URI = { // FIXME: Quick Hack
+    if (uri.scheme() == "graph")
+      URI.createFileURI(s"example/${uri.host()}")
+    else uri
+  }
+
+  def createMapping(fromLayer: String, from: LayerObject, toLayer: String, to: LayerObject) = {
+    val fromFileURI = URI.createFileURI(fromLayer)
+    val fromURI = URI.createURI(s"graph://${fromFileURI.lastSegment()}")
+
+    val toFileURI = URI.createFileURI(toLayer)
+    val toURI = URI.createURI(s"graph://${fromFileURI.lastSegment()}")
+
+    val f = resourceSet.getResource(fromURI,true)
+    val t = resourceSet.getResource(toURI,true)
+
+    val fromObj = f.getEObject(from.path).asInstanceOf[uml.NamedElement]
+    val toObj = t.getEObject(to.path).asInstanceOf[uml.NamedElement]
+
+    println(fromObj,toObj)
+  }
 
   def removeMappings(layer: String, to: LayerObject) = ()
     //Semantics.removeMappings(layer, to)
@@ -277,7 +275,38 @@ object ChangeManagement  {
 
   def listMappings() = {
     val out = output.task("Retrieving mappings from semantic graph")
-    val result = Nil // Semantics.listMappings()
-    out.taskDone(MappingsList(result.toSet))
+    val project = resourceSet.getResource(URI.createURI("graph://index"),true)
+    val mappings = project.getAllContents.asScala.collect {
+      case r: uml.Realization =>
+        val s = r.getSuppliers.get(0)
+        val cs = r.getClients.asScala
+        cs.map { c =>
+          Mapping(
+            normalizeURI(c.eResource().getURI).toString,
+            c.eResource().getURIFragment(c),
+            normalizeURI(s.eResource().getURI).toString,
+            s.eResource().getURIFragment(s)
+          )
+        }
+      case s: requirements.Satisfy =>
+        val abstr = s getBase_Abstraction()
+        println(abstr)
+        val su = abstr.getSuppliers.get(0) match {
+          case r: requirements.Requirement => r.getBase_Class
+          case other => other
+        }
+        val cs = abstr.getClients.asScala
+        cs.map { c =>
+          println(c.eResource().getURIFragment(c))
+          println(su.eResource().getURIFragment(su))
+          Mapping(
+            normalizeURI(c.eResource().getURI).toString,
+            c.eResource().getURIFragment(c),
+            normalizeURI(su.eResource().getURI).toString,
+            su.eResource().getURIFragment(su)
+          )
+        }
+    }.flatten
+    out.taskDone(MappingsList(mappings.toSet))
   }
 }

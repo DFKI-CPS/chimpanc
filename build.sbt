@@ -5,6 +5,7 @@ val scalaV = "2.11.8"
 lazy val server = (project in file("modules/server")).settings(
   scalaVersion := scalaV,
   scalaJSProjects := Seq(client),
+  isDevMode := true,
   pipelineStages in Assets := Seq(scalaJSPipeline),
   libraryDependencies ++= Seq (
     "com.lihaoyi" %% "upickle" % "0.4.3",
@@ -16,9 +17,9 @@ lazy val server = (project in file("modules/server")).settings(
 
 lazy val client = (project in file("modules/client")).dependsOn(common.js).settings(
     scalaVersion := scalaV,
+    (emitSourceMaps in fullOptJS) := true,
     persistLauncher := true,
     persistLauncher in Test := false,
-    unmanagedSourceDirectories in Compile := Seq((scalaSource in Compile).value),
     resolvers += sbt.Resolver.bintrayRepo("denigma", "denigma-releases"),
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.8.0",

@@ -13,7 +13,6 @@ class Socket(out: ActorRef) extends Actor {
   import _root_.specific.{ChangeManagement => CM}
   
   def send(msg: Message) {
-    println("sending: " + msg)
     out ! write(msg)
   }
   
@@ -103,7 +102,6 @@ class Socket(out: ActorRef) extends Actor {
 
 object MSG {
   def unapply(msg: String): Option[Message] = {
-    println(msg)
     Try(read[Message](msg)).toOption
   }
 }

@@ -38,6 +38,7 @@ abstract class SocketApp[I,O](url: String)(deserialize: String => I, serialize: 
 
   def rawReceive(msg: String) = {
     val it = deserialize(msg)
+    console.log("[debug] receive: ", it.toString)
     receive(it)
   }
 
