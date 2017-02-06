@@ -252,7 +252,8 @@ class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, edit
   private val matchedElements = collection.mutable.Map.empty[(Layer, LayerObject), Subscription]
 
   object matches {
-    def += (layer: Layer, entity: LayerObject) = {
+    def += (layer: Layer, entity: LayerObject, morph: Option[String]) = {
+      tooltip := morph
       if (!matchedElements.contains((layer,entity))) {
         val e1 = elem.query(".name").take(1).on(Event.Mouse.Enter) { e =>
           layer.entityElements.get(entity.path).foreach { e =>

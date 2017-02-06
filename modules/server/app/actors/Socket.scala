@@ -19,34 +19,34 @@ class Socket(out: ActorRef) extends Actor {
   def receive = {
     case MSG(CommitAll) => {
       CM.commit()
-      CM.listMappings()
+      send(MappingsList(CM.mappings.values.flatten.toSet))
       CM.listIssues()
     }
     case MSG(Commit) => {
       CM.commit()
       send(InitSpecs(CM.layers))
-      CM.listMappings()
+      send(MappingsList(CM.mappings.values.flatten.toSet))
       CM.listIssues()
     }
     case MSG(IgnoreModel(layer,model,reason)) => {
       CM.ignoreModel(layer,model,reason)
-      CM.listMappings()
+      send(MappingsList(CM.mappings.values.flatten.toSet))
       CM.listIssues()
     }
     case MSG(AddMapping(fromLayer,from,toLayer,to)) => {
       CM.createMapping(fromLayer,from,toLayer,to)
-      CM.listMappings()
+      send(MappingsList(CM.mappings.values.flatten.toSet))
       CM.listIssues()
     }
     case MSG(RemoveMappings(layer,to)) => {
       CM.removeMappings(layer, to)
-      CM.listMappings()
+      send(MappingsList(CM.mappings.values.flatten.toSet))
       CM.listIssues()
     }
     case MSG(Proven(layer,constr)) =>
       CM.proven(layer,constr)
       CM.listIssues()
-    case MSG(Evaluate(SysML(name,content))) =>
+    case MSG(Evaluate(SysML(name,uri,content))) =>
       /*val layer = CM.project.nl.find(_.name == name).get
       layer.source = content
       CM.evaluateNL(layer)
@@ -91,7 +91,7 @@ class Socket(out: ActorRef) extends Actor {
       case (name, entities) =>
         send(Entities(name,entities))
     }
-    CM.listMappings()
+    send(MappingsList(CM.mappings.values.flatten.toSet))
     CM.listIssues()
   }
 

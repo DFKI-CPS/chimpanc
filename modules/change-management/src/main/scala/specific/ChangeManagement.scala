@@ -54,6 +54,9 @@ object ChangeManagement  {
   def calcualateProofObligations() = {
     val out = output.task("Calculating Proof Obligations")
     val project = resourceSet.getResource(URI.createURI("graph://index"),true)
+    val mappedConstraints = project.getAllContents.asScala.collect {
+      case c: uml.Constraint => c.getConstrainedElements.get(0) -> c
+    }.toMap
     val obligations: Set[SemanticIssue] = project.getAllContents.asScala.collect {
       case r: uml.Realization =>
         (r.getSuppliers.get(0),r.getClients.asScala.headOption) match {
@@ -67,7 +70,7 @@ object ChangeManagement  {
                 case prop: uml.Property => prop.getClass_
                 case other => other
               }
-              val spec = c.getSpecification.asInstanceOf[OpaqueExpression].getBodies.asScala.mkString("; ")
+              val spec = mappedConstraints.get(c).getOrElse(c).getSpecification.asInstanceOf[OpaqueExpression].getBodies.get(0)
               OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column)
             }.toSeq
           }
@@ -92,6 +95,7 @@ object ChangeManagement  {
   }
 
   val positions = mutable.Map.empty[String,Map[String,Position]]
+  val mappings = mutable.Map.empty[String,Set[Mapping]]
 
   def proven(layer: String, constr: String) = ??? // Semantics.proven(layer,constr)
 
@@ -147,7 +151,11 @@ object ChangeManagement  {
         this.positions(uri.toString) = positions.map {
           case (o,p) => resource.getURIFragment(o) -> p
         }
+        this.mappings(uri.toString) = getMappings(resource)
         resource.save(new java.util.HashMap)
+        resource.getContents.asScala.collectFirst {
+          case m: uml.Model => m.getName
+        }.foreach(name => resource.root.foreach(_.setProperty("model",name)))
         resource.root.foreach(_.setProperty("originalURI",uri.toString))
         resource.root.foreach(_.setProperty("lastModified",file.lastModified()))
         resource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
@@ -161,9 +169,11 @@ object ChangeManagement  {
           if (!this.positions.isDefinedAt(uri.toString)) {
             val tempRes = resourceSet.createResource(uri.appendFileExtension("ecore"))
             val positions = de.dfki.cps.specific.SysML.load(file, tempRes, includeProfileApplcations = false)
+
             this.positions(uri.toString) = positions.map {
               case (o,p) => tempRes.getURIFragment(o) -> p
             }
+            this.mappings(uri.toString) = getMappings(tempRes)
             layerObjects += uri.toString -> sysml.SysML.getEntities(tempRes,positions.map {
               case (o,p) => tempRes.getURIFragment(o) -> p
             }.lift)
@@ -178,6 +188,7 @@ object ChangeManagement  {
           this.positions(uri.toString) = positions.map {
             case (o,p) => newResource.getURIFragment(o) -> p
           }
+          this.mappings(uri.toString) = getMappings(newResource)
           layerObjects += uri.toString -> sysml.SysML.getEntities(newResource,positions.map {
             case (o,p) => newResource.getURIFragment(o) -> p
           }.lift)
@@ -185,6 +196,9 @@ object ChangeManagement  {
           de.dfki.cps.egraph.stools.Diff.applyDiff(oldResource,diff)
           oldResource.unload()
           oldResource.load(new java.util.HashMap)
+          newResource.getContents.asScala.collectFirst {
+            case m: uml.Model => m.getName
+          }.foreach(name => oldResource.root.foreach(_.setProperty("model",name)))
           oldResource.root.foreach(_.setProperty("lastModified",file.lastModified()))
           oldResource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
           oldResource
@@ -194,10 +208,12 @@ object ChangeManagement  {
   }
 
   def layers = store.graphDb.transaction {
-    val nodes = store.graphDb.findNodes(Labels.Resource)
-    nodes.asScala.toList.foreach(println)
-    Specs(store.graphDb.findNodes(Labels.Resource).asScala.map { node =>
-      SysML(node.getProperty("originalURI").asInstanceOf[String],node.getProperty("content").asInstanceOf[String])
+    Specs(store.graphDb.findNodes(Labels.Resource).asScala.filter(_.hasProperty("model")).map { node =>
+      SysML(
+        node.getProperty("model").asInstanceOf[String],
+        node.getProperty("originalURI").asInstanceOf[String],
+        node.getProperty("content").asInstanceOf[String]
+      )
     }.toList)
   }.get
 
@@ -215,6 +231,7 @@ object ChangeManagement  {
         this.positions(uri.toString) = positions.map {
           case (o,p) => resource.getURIFragment(o) -> p
         }
+        this.mappings(uri.toString) = getMappings(resource)
         resource.save(new java.util.HashMap)
         resource.root.foreach(_.setProperty("originalURI",uri.toString))
         resource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
@@ -232,6 +249,7 @@ object ChangeManagement  {
         this.positions(uri.toString) = positions.map {
           case (o,p) => newResource.getURIFragment(o) -> p
         }
+        this.mappings(uri.toString) = getMappings(newResource)
         val diff = de.dfki.cps.secore.stools.getSTool("specific").sdiff(new SResource(oldResource), new SResource(newResource))
         de.dfki.cps.egraph.stools.Diff.applyDiff(oldResource,diff)
         oldResource.unload()
@@ -247,6 +265,8 @@ object ChangeManagement  {
   def normalizeURI(uri: URI): URI = { // FIXME: Quick Hack
     if (uri.scheme() == "graph")
       URI.createFileURI(s"example/${uri.host()}")
+    else if (uri.fileExtension()== "ecore")
+      uri.trimFileExtension()
     else uri
   }
 
@@ -273,10 +293,8 @@ object ChangeManagement  {
     //Semantics.ignoreModel(layer, model, reason)
   }
 
-  def listMappings() = {
-    val out = output.task("Retrieving mappings from semantic graph")
-    val project = resourceSet.getResource(URI.createURI("graph://index"),true)
-    val mappings = project.getAllContents.asScala.collect {
+  def getMappings(layer: Resource): Set[Mapping] = {
+    val mappings = layer.getAllContents.asScala.collect {
       case r: uml.Realization =>
         val s = r.getSuppliers.get(0)
         val cs = r.getClients.asScala
@@ -285,7 +303,8 @@ object ChangeManagement  {
             normalizeURI(c.eResource().getURI).toString,
             c.eResource().getURIFragment(c),
             normalizeURI(s.eResource().getURI).toString,
-            s.eResource().getURIFragment(s)
+            s.eResource().getURIFragment(s),
+            Option(r.getMapping).map(_.getBodies.asScala.mkString("\n"))
           )
         }
       case s: requirements.Satisfy =>
@@ -303,10 +322,11 @@ object ChangeManagement  {
             normalizeURI(c.eResource().getURI).toString,
             c.eResource().getURIFragment(c),
             normalizeURI(su.eResource().getURI).toString,
-            su.eResource().getURIFragment(su)
+            su.eResource().getURIFragment(su),
+            None
           )
         }
     }.flatten
-    out.taskDone(MappingsList(mappings.toSet))
+    mappings.toSet
   }
 }

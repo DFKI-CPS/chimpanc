@@ -47,11 +47,16 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
     })
   }
 
-  def layer(name: String): Layer = layers.find(_.name == name).get
+  def layer(name: String): Layer = {
+    val l = layers.find(_.name == name)
+    l.fold {
+      sys.error(s"could not find layer $name")
+    } { identity }
+  }
 
   lazy val layers: RBuffer[Layer] = RBuffer[Layer](query("#main"), { (layer: Layer) =>
     layer.content() match {
-      case SysML(layerName, sysml) =>
+      case SysML(layerName, uri, sysml) =>
         (HTML(
           s"""<div class="layer sysml" id="${layer.id}
 -container">
@@ -180,7 +185,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
     to <- layer(mapping.toLayer).entityElements.get(mapping.to)
     from <- layer(mapping.fromLayer).entityElements.get(mapping.from)
   } {
-    to.matches += (layer(mapping.fromLayer), from.entity)
+    to.matches += (layer(mapping.fromLayer), from.entity, mapping.ocl)
   }
 
   def removeMapping(mapping: Mapping) = for {
@@ -264,11 +269,11 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
       val layers = ls.map(new Layer(_))
       tabs ++= layers
       this.layers ++= layers
-      layers.headOption.foreach(_.active := true)
+      //layers.headOption.foreach(_.active := true)
       initalized = true
     case InitSpecs(Specs(ls)) if initalized =>
       ls.foreach { layer =>
-        this.layers.find(_.name == layer.name).foreach(_.content := layer)
+        this.layers.find(_.name == layer.uri).foreach(_.content := layer)
       }
     case StartTask(name) =>
       val old = tasks.indexWhere(_.name == name)

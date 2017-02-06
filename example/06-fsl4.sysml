@@ -34,13 +34,13 @@ block Person
     inv: aut->forAll(b|aut.building->includes(b))
     -- P13: For a door to be accepted for a certain person, this person should be
     -- inside the building of origin of that door. [...]
-    inv: sit->includes(dap_dom.org)
+    inv P13a: sit->includes(dap_dom.org)
     -- P13: [...] Moreover, this person should be authorised to enter the destination building of that same door.
-    inv: aut->includes(dap_dom.dest)
+    inv P13b: aut->includes(dap_dom.dest)
     -- P12: [...] A door can
     -- only be accepted for one person at a time. Conversely, any person implied
     -- in the acceptance of a door cannot do the same of another.
-    inv: Person.allInstances()->
+    inv P12: Person.allInstances()->
              forAll(p1, p2 | p1.dap_dom->notEmpty()
                          and p1.dap_dom = p2.dap_dom
                      implies p1 = p2)
@@ -80,13 +80,12 @@ block Door
     dest: Building[1]
     -- P12: [...]A door can only be accepted for one person at a time.
     dap:  Person[0..1] <- dap_dom
-  ports
-    incoming: Person
-    passing: Person
   owned behaviors
     state machine EnterBehavior
       initial state Waiting
-        receive incoming(p) / accept(p) -> Accepting
+        accept / -> Accepting
       state Accepting
-        after 30 seconds / off_grn() -> Waiting
-        receive passing(p) / pass_thru() -> Waiting
+        off_grn / -> Waiting
+        pass_thru / -> Waiting
+  constraints
+    inv P16: red <> green

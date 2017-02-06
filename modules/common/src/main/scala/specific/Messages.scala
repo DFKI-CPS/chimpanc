@@ -15,14 +15,14 @@ case class ModifiedImplementation(layer: String, model: LayerObject, otherLayer:
 case class MismatchingBounds(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int) extends SemanticIssue
 
-sealed trait Spec { val name: String }
-case class SysML(name: String, content: String) extends Spec
+sealed trait Spec { val uri: String }
+case class SysML(name: String, uri: String, content: String) extends Spec
 case class Specs(layers: Seq[Spec])
 
 case class LayerObject(path: String, name: String, line: Int, column: Int)
 
 sealed trait SemanticInfo
-case class Mapping(fromLayer: String, from: String, toLayer: String, to: String) extends SemanticInfo
+case class Mapping(fromLayer: String, from: String, toLayer: String, to: String, ocl: Option[String]) extends SemanticInfo
 
 sealed trait Message
 case class Init(nlp: String, fsl: String, esl: String) extends Message

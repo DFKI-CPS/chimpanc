@@ -10,7 +10,7 @@ block Building
     building: Building[*] <- gate
   constraints
     -- P7: A building does not communicate with itself.
-    inv: not (self.gate->includes(self))
+    inv P7: not (self.gate->includes(self))
 
 block Person
   operations
@@ -19,7 +19,7 @@ block Person
       -- P8: A person can only go from one building in
       -- which he is to another where he desires to go if
       -- these two buildings communicate with each other.
-      pre: sit.gate->includes(b)
+      pre P8: sit.gate->includes(b)
       post: sit = b
   references
     aut: Building[*]
@@ -28,4 +28,4 @@ block Person
     -- P10: Any person authorised to be in a building must
     -- also be authorised to go into another building which
     -- communicates with the first one.
-    inv: aut->forAll(b|aut.building->includes(b))
+    inv P10: aut->forAll(b|aut.building->includes(b))
