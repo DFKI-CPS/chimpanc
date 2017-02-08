@@ -30,7 +30,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
   lazy val tabs: RBuffer[Layer] = {
     var activeLayer: Option[Layer] = None
     RBuffer[Layer](query("#layer-tabs"), { (layer: Layer) =>
-      (HTML(s"<li class='tab'><a id='${layer.id}-tab'>${layer.name}</a></li>"), (nodes) => {
+      (HTML(s"<li class='tab'><a id='${layer.id}-tab'>${layer.title}</a></li>"), (nodes) => {
         query("#layer-tabs").$.tabs()
         layer.active.react { (active) => if (active)
           activeLayer.foreach(_.active := false)
@@ -63,7 +63,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
                  |  <div class="content">
                  |  <div class="card">
                  |    <div class="card-content">
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.name.toUpperCase}
+                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.title.toUpperCase}
 : Formal Specification Level</span>
                  |      <div id="${layer.id}"></div>
                  |    </div>
@@ -339,9 +339,17 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.removedImpl := None
           }
-        case ModifiedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.path).foreach { elem =>
-            elem.modifiedImpl := None
+        case Modified(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modified := false
+          }
+        case ModifiedClient(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modifiedClient := false
+          }
+        case ModifiedSupplier(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modifiedClient := false
           }
         case RequirementEvaluation(layer, requirement, results) =>
           this.layer(layer).entityElements.get(requirement).foreach { elem =>
@@ -381,9 +389,17 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           this.layer(tl).entityElements.get(model.path).foreach { elem =>
             elem.removedImpl := Some(impl)
           }
-        case ModifiedImplementation(tl, model, fl, impl) =>
-          this.layer(tl).entityElements.get(model.path).foreach { elem =>
-            elem.modifiedImpl := Some(impl)
+        case Modified(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modified := true
+          }
+        case ModifiedClient(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modifiedClient := true
+          }
+        case ModifiedSupplier(l,p) =>
+          this.layer(l).entityElements.get(p).foreach { elem =>
+            elem.modifiedSupplier := true
           }
         case MismatchingBounds(tl, model, _, _) =>
           this.layer(tl).entityElements.get(model.path).foreach { elem =>

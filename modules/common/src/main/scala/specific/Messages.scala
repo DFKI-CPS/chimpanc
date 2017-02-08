@@ -6,6 +6,9 @@ package specific
 
 sealed trait SemanticIssue
 case class RequirementEvaluation(layer: String, path: String, results: Seq[Option[Boolean]]) extends SemanticIssue
+case class Modified(layer: String, path: String) extends SemanticIssue
+case class ModifiedSupplier(layer: String, path: String) extends SemanticIssue
+case class ModifiedClient(layer: String, path: String) extends SemanticIssue
 case class UnimplementedModel(layer: String, model: LayerObject) extends SemanticIssue
 case class MaltypedMapping(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class IgnoredModel(layer: String, model: LayerObject, reason: String) extends SemanticIssue
@@ -15,7 +18,7 @@ case class ModifiedImplementation(layer: String, model: LayerObject, otherLayer:
 case class MismatchingBounds(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int) extends SemanticIssue
 
-sealed trait Spec { val uri: String }
+sealed trait Spec { val uri: String; val name: String }
 case class SysML(name: String, uri: String, content: String) extends Spec
 case class Specs(layers: Seq[Spec])
 

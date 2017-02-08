@@ -25,6 +25,8 @@ class Layer(initialContent: Spec) {
 
   val content = RVar(initialContent)
 
+  val title = content().name
+
   def name = content().uri
 
   override def toString = name

@@ -227,13 +227,31 @@ class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, edit
       elem.classes += "removedImpl"
   }
 
-  val modifiedImpl = RVar(Option.empty[LayerObject])
-  modifiedImpl.react {
-    case None =>
+  val modified = RVar(false)
+  modified.react {
+    case false =>
+      elem.classes -= "removedImpl"
+    case true =>
+      elem.classes += "removedImpl"
+  }
+
+  val modifiedClient = RVar(false)
+  modifiedClient.react {
+    case false =>
       tooltip := None
       elem.classes -= "removedImpl"
-    case Some(model) =>
-      tooltip := Some(s"Implementation '${model.name}' has been modified")
+    case true =>
+      tooltip := Some(s"A Client has been modified")
+      elem.classes += "removedImpl"
+  }
+
+  val modifiedSupplier = RVar(false)
+  modifiedSupplier.react {
+    case false =>
+      tooltip := None
+      elem.classes -= "removedImpl"
+    case true =>
+      tooltip := Some(s"A supplier has been modified")
       elem.classes += "removedImpl"
   }
 
