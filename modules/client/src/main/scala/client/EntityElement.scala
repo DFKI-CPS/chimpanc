@@ -9,7 +9,7 @@ import Util._
 
 import scala.util.control.NonFatal
 
-class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, editor: CodeMirror, marker: TextMarker) {
+class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, editor: CodeMirror, marker: TextMarker) {
   val error = RVar(false)
   error.react { v =>
     if (v) {
@@ -207,6 +207,18 @@ class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, edit
       elem.classes += "ignored"
   }
 
+  val showTransitiveHull = RVar(false)
+  elem.on(Event.Mouse.Click) { _ =>
+    showTransitiveHull.modify(!_)
+  }
+  showTransitiveHull.react {
+    case true =>
+      elem.classes += "transitiveMatch"
+      show()
+    case false =>
+      elem.classes -= "transitiveMatch"
+  }
+
   val removedModel = RVar(Option.empty[LayerObject])
   removedModel.react {
     case None =>
@@ -270,18 +282,49 @@ class EntityElement(elem: Seq[Node], layer: Layer, val entity: LayerObject, edit
   private val matchedElements = collection.mutable.Map.empty[(Layer, LayerObject), Subscription]
 
   object matches {
-    def += (layer: Layer, entity: LayerObject, morph: Option[String]) = {
+    def += (layer: Layer, entity: LayerObject, morph: Option[String], stereotype: String) = {
       tooltip := morph
       if (!matchedElements.contains((layer,entity))) {
+        var assoc = Option.empty[UML.Association]
+        setInterval(() => assoc.foreach(_.update()), 10);
         val e1 = elem.query(".name").take(1).on(Event.Mouse.Enter) { e =>
           layer.entityElements.get(entity.path).foreach { e =>
             e.hover := true
             e.show()
+            if (assoc.isEmpty) assoc = for {
+              from <- e.elem.elements.headOption
+              to <- elem.elements.headOption
+            } yield {
+              new UML.Association(from,to,stereotype)
+            }
           }
         }
         val e2 = elem.query(".name").take(1).on(Event.Mouse.Leave) { e =>
           layer.entityElements.get(entity.path).foreach { e =>
             e.hover := false
+            if (!showTransitiveHull()) {
+              assoc.foreach(_.remove())
+              assoc = None
+            }
+          }
+        }
+        layer.entityElements.get(entity.path).foreach { e =>
+          showTransitiveHull.react { v =>
+            e.showTransitiveHull := v
+            if (v) {
+              if (assoc.isEmpty) assoc = for {
+                from <- e.elem.elements.headOption
+                to <- elem.elements.headOption
+              } yield {
+                new UML.Association(from,to,stereotype)
+              }
+            } else {
+              assoc.foreach(_.remove())
+              assoc = None
+            }
+          }
+          e.showTransitiveHull.react {
+            showTransitiveHull.:=(_)
           }
         }
         val e = e1 + e2

@@ -10,6 +10,7 @@ case class Modified(layer: String, path: String) extends SemanticIssue
 case class ModifiedSupplier(layer: String, path: String) extends SemanticIssue
 case class ModifiedClient(layer: String, path: String) extends SemanticIssue
 case class UnimplementedModel(layer: String, model: LayerObject) extends SemanticIssue
+case class InvalidatedMapping(mapping: Mapping) extends SemanticIssue
 case class MaltypedMapping(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class IgnoredModel(layer: String, model: LayerObject, reason: String) extends SemanticIssue
 case class RemovedModel(layer: String, model: LayerObject, otherLayer: String, implementation: LayerObject) extends SemanticIssue
@@ -25,7 +26,7 @@ case class Specs(layers: Seq[Spec])
 case class LayerObject(path: String, name: String, line: Int, column: Int)
 
 sealed trait SemanticInfo
-case class Mapping(fromLayer: String, from: String, toLayer: String, to: String, ocl: Option[String]) extends SemanticInfo
+case class Mapping(fromLayer: String, from: String, toLayer: String, to: String, stereotype: String, ocl: Option[String]) extends SemanticInfo
 
 sealed trait Message
 case class Init(nlp: String, fsl: String, esl: String) extends Message

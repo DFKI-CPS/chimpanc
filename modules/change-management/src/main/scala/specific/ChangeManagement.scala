@@ -108,11 +108,11 @@ object ChangeManagement  {
           case named: uml.NamedElement =>
             println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
             } ++
             mappings.values.flatMap(_.find(x => x.toLayer == layer && x.to == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedSupplier(fl,f))
             } :+ Modified(layer, named.eResource().getURIFragment(named))
           case other => Seq.empty
@@ -122,11 +122,11 @@ object ChangeManagement  {
           case named: uml.NamedElement =>
             println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
             } ++
             mappings.values.flatMap(_.find(x => x.toLayer == layer && x.to == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedSupplier(fl,f))
             } :+ Modified(layer, named.eResource().getURIFragment(named))
           case other => Seq.empty
@@ -136,11 +136,11 @@ object ChangeManagement  {
           case named: uml.NamedElement =>
             println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
             } ++
             mappings.values.flatMap(_.find(x => x.toLayer == layer && x.to == named.eResource().getURIFragment(named))).toSeq.flatMap {
-              case Mapping(fl,f,tl,t,o) =>
+              case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedSupplier(fl,f))
             } :+ Modified(layer, named.eResource().getURIFragment(named))
           case other => Seq.empty
@@ -359,6 +359,22 @@ object ChangeManagement  {
 
   def getMappings(layer: Resource): Set[Mapping] = {
     val mappings = layer.getAllContents.asScala.collect {
+      case s: uml.StateMachine =>
+        s.getRegions.asScala
+          .flatMap(_.getTransitions.asScala)
+          .flatMap(_.getTriggers.asScala.map(_.getEvent))
+          .collect {
+            case e: uml.CallEvent if e.getOperation != null =>
+              val op = e.getOperation
+              Mapping(
+                normalizeURI(op.eResource().getURI).toString,
+                op.eResource().getURIFragment(op),
+                normalizeURI(s.eResource().getURI).toString,
+                s.eResource().getURIFragment(s),
+                "uses",
+                None
+              )
+          }
       case r: uml.Realization =>
         val s = r.getSuppliers.get(0)
         val cs = r.getClients.asScala
@@ -368,6 +384,7 @@ object ChangeManagement  {
             c.eResource().getURIFragment(c),
             normalizeURI(s.eResource().getURI).toString,
             s.eResource().getURIFragment(s),
+            "realization",
             Option(r.getMapping).map(_.getBodies.asScala.mkString("\n"))
           )
         }
@@ -387,6 +404,7 @@ object ChangeManagement  {
             c.eResource().getURIFragment(c),
             normalizeURI(su.eResource().getURI).toString,
             su.eResource().getURIFragment(su),
+            "satisfy",
             None
           )
         }

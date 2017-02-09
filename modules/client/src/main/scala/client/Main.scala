@@ -185,7 +185,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
     to <- layer(mapping.toLayer).entityElements.get(mapping.to)
     from <- layer(mapping.fromLayer).entityElements.get(mapping.from)
   } {
-    to.matches += (layer(mapping.fromLayer), from.entity, mapping.ocl)
+    to.matches += (layer(mapping.fromLayer), from.entity, mapping.ocl, mapping.stereotype)
   }
 
   def removeMapping(mapping: Mapping) = for {

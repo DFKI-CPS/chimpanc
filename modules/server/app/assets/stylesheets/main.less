@@ -360,7 +360,7 @@ a {
     margin-left: 10px;
   }
 
-  .hoverMatch > .name {
+  .hoverMatch > .name, .transitiveMatch > .name {
     background: #1ba1e2;
     color: white !important;
     box-shadow: 0 0 4px gray;
@@ -474,4 +474,53 @@ body.overlay #overlay {
   -webkit-transition: opacity 0.1s ease;
   pointer-events: initial;
   opacity: 1;
+}
+
+#uml {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  #realizationMarker path {
+    stroke: black;
+    stroke-width: 1px;
+    fill: none;
+  }
+  #associationMarker path {
+    stroke: black;
+    stroke-width: 1px;
+    fill: none;
+  }
+  .association {
+    stroke:  gray;
+    stroke-width: 1.25px;
+    fill: none;
+    marker-end: url(#associationMarker);
+  }
+  .realization {
+    stroke:  black;
+    stroke-dasharray: 5,5;
+    marker-end: url(#realizationMarker);
+  }
+}
+
+@keyframes fadeIn {
+  from {opacity: 0}
+  to {opacity: 1}
+}
+@keyframes fadeOut {
+  from {opacity: 1}
+  to {opacity: 0}
+}
+.association.add {
+  opacity: 0;
+  animation: fadeIn 0.5s linear forwards;
+}
+.association.remove {
+  opacity: 1;
+  animation: fadeOut 0.5s linear forwards;
 }
