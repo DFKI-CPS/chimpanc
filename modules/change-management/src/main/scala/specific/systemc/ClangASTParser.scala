@@ -16,6 +16,7 @@ import scala.collection.mutable
 import scala.sys.process._
 import scala.collection.JavaConversions._
 import scala.util.Try
+import scala.util.parsing.input.Position
 
 object ClangASTParser {
 
@@ -104,17 +105,17 @@ object ClangASTParser {
 
   //val libs = resourceSet.createResource(URI.createFileURI(filename + ".lib.ecore"))
 
-  def parse(filename: String)(implicit resourceSet: ResourceSet): Try[Resource] = Try {
+  def parse(filename: String, target: Resource): Map[EObject,Position] = {
     val eFactory = EcoreFactory.eINSTANCE
     val factory = CppFactory.eINSTANCE
     val libs = mutable.Map.empty[String, Resource]
 
     def libraryNamespace(uri: String, pkgName: String): CppNamespace = {
-      val lib = resourceSet.createResource(URI.createFileURI(URI.decode(filename + s".lib.${pkgName}.ecore")))
+      val lib = target.getResourceSet.createResource(URI.createFileURI(URI.decode(filename + s".lib.${pkgName}.ecore")))
       libs += uri -> lib
       val pkg = factory.createCppNamespace()
       pkg.setNsURI(uri)
-      resourceSet.getPackageRegistry.put(uri, pkg)
+      target.getResourceSet.getPackageRegistry.put(uri, pkg)
       pkg.setName(pkgName)
       lib.getContents.add(pkg)
       pkg
@@ -182,9 +183,6 @@ object ClangASTParser {
       "sc_boost" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_boost", "sc_boost"),
       "sc_dt" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_dt", "sc_dt")
     )
-
-    val resource = resourceSet.createResource(URI.createFileURI(filename + ".ecore"))
-
 
     def tlqName(p: EPackage): String =
       Option(p.getESuperPackage).map(tlqName).fold(p.getName)(_ + "::" + p.getName)
@@ -326,7 +324,7 @@ object ClangASTParser {
       val result: Option[CppClass] = tpe match {
         case Type(pkg, name) =>
           for {
-            p <- findTLPackage(resource, pkg)
+            p <- findTLPackage(target, pkg)
             c <- findTLClass(p, name)
           } yield c
         case _ => None
@@ -555,12 +553,12 @@ object ClangASTParser {
       case ("LinkageSpecDecl", _) =>
         handleTopLevel
       case ("NamespaceDecl", Namespace(name)) if !name.startsWith("_") =>
-        val pkg = getTLPackage(resource, name)
+        val pkg = getTLPackage(target, name)
         handlePackage(pkg)
       case ("CXXRecordDecl", Class(name)) =>
-        handleClass(getTLClass(getTLPackage(resource,"<root>"), name))
+        handleClass(getTLClass(getTLPackage(target,"<root>"), name))
       case ("ClassTemplateDecl", Template(name)) =>
-        val clazz: CppClass = getTLClass(getTLPackage(resource,"<root>"), name)
+        val clazz: CppClass = getTLClass(getTLPackage(target,"<root>"), name)
         handle {
           case ("TemplateTypeParmDecl", TemplateTypeParam(name)) =>
             val param = eFactory.createETypeParameter()
@@ -576,13 +574,13 @@ object ClangASTParser {
             handleClass(clazz)
         }
       case ("TypedefDecl" | "TypeAliasDecl", TypedefDecl(name, tpe)) =>
-        resolve(Scope(getTLPackage(resource,"<root>")), tpe).foreach { x =>
+        resolve(Scope(getTLPackage(target,"<root>")), tpe).foreach { x =>
           val tdef = typedef(name, x)
-          getTLPackage(resource,"<root>").getTypedefs.add(tdef)
+          getTLPackage(target,"<root>").getTypedefs.add(tdef)
         }
         None
       case ("EnumDecl", Enum(name)) =>
-        val enum: EEnum = getEnum(getTLPackage(resource,"<root>"), name)
+        val enum: EEnum = getEnum(getTLPackage(target,"<root>"), name)
         handle {
           case ("EnumConstantDecl", EnumLiteral(name)) =>
             val lit = eFactory.createEEnumLiteral()
@@ -613,11 +611,6 @@ object ClangASTParser {
 
     val options = Map(XMLResource.OPTION_URI_HANDLER -> uriHandler)
 
-    timed("save") {
-      libs.values.foreach(_.save(options))
-      resource.save(options)
-    }
-
-    resource
+    Map.empty
   }
 }

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import de.dfki.cps.egraph.internal.Util._
 import de.dfki.cps.stools.editscript.{SEditScript, UpdateAnnotation}
 import org.eclipse.uml2.uml.OpaqueExpression
+import specific.systemc.ClangASTParser
 
 import scala.collection.mutable
 import scala.io.Source
@@ -199,7 +200,9 @@ object ChangeManagement  {
       Option(store.graphDb.findNode(Labels.Resource,"originalURI",uri.toString)).fold {
         // resource not existent before
         val resource = resourceSet.createResource(graphURI).asInstanceOf[GraphResource]
-        val positions = de.dfki.cps.specific.SysML.load(file,resource,includeProfileApplcations = false)
+        val positions =
+          if (uri.fileExtension() == "cpp") ClangASTParser.parse(uri.toFileString,resource)
+          else de.dfki.cps.specific.SysML.load(file,resource,includeProfileApplcations = false)
         this.positions(uri.toString) = positions.map {
           case (o,p) => resource.getURIFragment(o) -> p
         }
@@ -207,6 +210,7 @@ object ChangeManagement  {
         resource.save(new java.util.HashMap)
         resource.getContents.asScala.collectFirst {
           case m: uml.Model => m.getName
+          case n: specific.emf.cpp.CppNamespace => n.getName
         }.foreach(name => resource.root.foreach(_.setProperty("model",name)))
         resource.root.foreach(_.setProperty("originalURI",uri.toString))
         resource.root.foreach(_.setProperty("lastModified",file.lastModified()))
@@ -220,7 +224,10 @@ object ChangeManagement  {
           // wasn't modified
           if (!this.positions.isDefinedAt(uri.toString)) {
             val tempRes = resourceSet.createResource(uri.appendFileExtension("ecore"))
-            val positions = de.dfki.cps.specific.SysML.load(file, tempRes, includeProfileApplcations = false)
+            val positions =
+              if (uri.fileExtension() == "cpp") ClangASTParser.parse(uri.toFileString,tempRes)
+              else de.dfki.cps.specific.SysML.load(file,tempRes,includeProfileApplcations = false)
+
             issues(uri.toString) = Set.empty
             this.positions(uri.toString) = positions.map {
               case (o,p) => tempRes.getURIFragment(o) -> p
@@ -236,7 +243,10 @@ object ChangeManagement  {
           val oldResource =  resourceSet.createResource(graphURI).asInstanceOf[GraphResource]
           oldResource.load(new java.util.HashMap)
           val newResource = resourceSet.createResource(uri.appendFileExtension("ecore"))
-          val positions = de.dfki.cps.specific.SysML.load(file,newResource,includeProfileApplcations = false)
+          val positions =
+            if (uri.fileExtension() == "cpp") ClangASTParser.parse(uri.toFileString,newResource)
+            else de.dfki.cps.specific.SysML.load(file,newResource,includeProfileApplcations = false)
+
           this.positions(uri.toString) = positions.map {
             case (o,p) => newResource.getURIFragment(o) -> p
           }
@@ -251,6 +261,7 @@ object ChangeManagement  {
           oldResource.load(new java.util.HashMap)
           newResource.getContents.asScala.collectFirst {
             case m: uml.Model => m.getName
+            case n: specific.emf.cpp.CppNamespace => n.getName
           }.foreach(name => oldResource.root.foreach(_.setProperty("model",name)))
           oldResource.root.foreach(_.setProperty("lastModified",file.lastModified()))
           oldResource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))

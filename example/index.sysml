@@ -10,6 +10,7 @@ include
   06-fsl4.sysml
   07-fsl5.sysml
   08-fsl6.sysml
+  esl.cpp
 
 fsl0 <|- fsl1
   acs <|- acs
