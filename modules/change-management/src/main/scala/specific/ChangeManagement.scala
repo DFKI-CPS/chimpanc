@@ -73,8 +73,8 @@ object ChangeManagement  {
                 case other => other
               }
               val spec = mappedConstraints.get(c).getOrElse(c).getSpecification.asInstanceOf[OpaqueExpression].getBodies.get(0)
-              val original = c.getSpecification.asInstanceOf[OpaqueExpression].getBodies.get(0)
-              OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column,original.length)
+              val origLen = c.getSpecification.asInstanceOf[OpaqueExpression].getBodies.asScala.lastOption.map(_.trim.length).getOrElse(1)
+              OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column,origLen)
             }.toSeq
           }
           case other => Nil
@@ -102,12 +102,30 @@ object ChangeManagement  {
   val issues = mutable.Map.empty[String,Set[SemanticIssue]]
   val mappings = mutable.Map.empty[String,Set[Mapping]]
 
-  def updateIssues(layer: String, diff: SEditScript): Unit = {
-    issues(layer) = diff.entries.flatMap {
+  def resourceIssues(layer: String, res: Resource): Set[SemanticIssue] = {
+    res.getErrors.asScala.foreach(c => println(s"error: ${c.getLine}:${c.getColumn}: ${c.getMessage}"))
+    res.getWarnings.asScala.foreach(c => println(s"warn: ${c.getLine}:${c.getColumn}: ${c.getMessage}"))
+    val opt = res.getErrors.asScala.map {
+      case d =>
+        val obj = positions(layer).find(x => x._2.column == d.getColumn && x._2.line == d.getLine).map(_._1)
+        println(obj)
+        obj.map(SemanticError(layer,_,d.getMessage))
+    } ++ res.getWarnings.asScala.map {
+      case d =>
+        val obj = positions(layer).find(x => x._2.column == d.getColumn && x._2.line == d.getLine).map(_._1)
+        println(obj)
+        obj.map(SemanticWarning(layer,_,d.getMessage))
+    }
+    opt.collect {
+      case Some(x) => x
+    }.toSet
+  }
+
+  def diffIssues(layer: String, diff: SEditScript): Set[SemanticIssue] = {
+    diff.entries.flatMap {
       case (o: SAttribute, entry) =>
         o.parent.underlying match {
           case named: uml.NamedElement =>
-            println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
               case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
@@ -121,7 +139,6 @@ object ChangeManagement  {
       case (o: SObject, entry) =>
         o.underlying match {
           case named: uml.NamedElement =>
-            println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
               case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
@@ -135,7 +152,6 @@ object ChangeManagement  {
       case (o: SReference, entry) =>
         o.parent.underlying match {
           case named: uml.NamedElement =>
-            println("changed: " + named.eResource().getURIFragment(named))
             mappings.values.flatMap(_.find(x => x.fromLayer == layer && x.from == named.eResource().getURIFragment(named))).toSeq.flatMap {
               case Mapping(fl,f,tl,t,s,o) =>
                 Seq(ModifiedClient(tl,t))
@@ -148,7 +164,6 @@ object ChangeManagement  {
         }
       case other => Seq.empty
     }.toSet
-    println(layer + ": " + issues.get(layer))
   }
 
   def proven(layer: String, constr: String) = () // Semantics.proven(layer,constr)
@@ -163,7 +178,7 @@ object ChangeManagement  {
     }
     layerObjects += layer.getURI.toString -> reqs.map { r =>
       val pos = positions(layer.getURI.toString)(layer.getURIFragment(r.getBase_Class))
-      LayerObject(r.getId, r.getText,pos.line,pos.column)
+      LayerObject(r.getId, r.getText,pos.line,pos.column,false)
     }.toSet
     nlProblems = Set.empty
     val max = reqs.length
@@ -196,7 +211,6 @@ object ChangeManagement  {
     output.info(s"loading $uri")
     val file = new File(uri.toFileString)
     val graphURI = URI.createURI(s"graph://${uri.lastSegment()}") // FIXME
-    println(graphURI)
     store.graphDb.transaction {
       Option(store.graphDb.findNode(Labels.Resource,"originalURI",uri.toString)).fold {
         // resource not existent before
@@ -207,6 +221,7 @@ object ChangeManagement  {
         this.positions(uri.toString) = positions.map {
           case (o,p) => resource.getURIFragment(o) -> p
         }
+        issues(uri.toString) = resourceIssues(uri.toString,resource)
         this.mappings(uri.toString) = getMappings(resource)
         resource.save(new java.util.HashMap)
         resource.getContents.asScala.collectFirst {
@@ -228,11 +243,10 @@ object ChangeManagement  {
             val positions =
               if (uri.fileExtension() == "cpp") ClangASTParser.parse(uri.toFileString,tempRes)
               else de.dfki.cps.specific.SysML.load(file,tempRes,includeProfileApplcations = false)
-
-            issues(uri.toString) = Set.empty
             this.positions(uri.toString) = positions.map {
               case (o,p) => tempRes.getURIFragment(o) -> p
             }
+            issues(uri.toString) = resourceIssues(uri.toString,tempRes)
             this.mappings(uri.toString) = getMappings(tempRes)
             layerObjects += uri.toString -> sysml.SysML.getEntities(tempRes,positions.map {
               case (o,p) => tempRes.getURIFragment(o) -> p
@@ -251,7 +265,7 @@ object ChangeManagement  {
             case (o,p) => newResource.getURIFragment(o) -> p
           }
           val diff = de.dfki.cps.secore.stools.getSTool("specific").sdiff(new SResource(oldResource), new SResource(newResource))
-          updateIssues(uri.toString, diff)
+          issues(uri.toString) = diffIssues(uri.toString, diff) ++ resourceIssues(uri.toString,newResource)
           this.mappings(uri.toString) = getMappings(newResource)
           layerObjects += uri.toString -> sysml.SysML.getEntities(newResource,positions.map {
             case (o,p) => newResource.getURIFragment(o) -> p
@@ -305,7 +319,6 @@ object ChangeManagement  {
         resource
       } { node =>
         // was potentially modified
-        println("diff project")
         val oldResource =  resourceSet.getResource(graphURI,true).asInstanceOf[GraphResource]
         oldResource.load(new java.util.HashMap)
         val newResource = resourceSet.createResource(uri.appendFileExtension("ecore"))
@@ -346,8 +359,6 @@ object ChangeManagement  {
 
     val fromObj = f.getEObject(from.path).asInstanceOf[uml.NamedElement]
     val toObj = t.getEObject(to.path).asInstanceOf[uml.NamedElement]
-
-    println(fromObj,toObj)
   }
 
   def removeMappings(layer: String, to: LayerObject) = ()
@@ -389,15 +400,12 @@ object ChangeManagement  {
           )
         }
       case abstr: uml.Abstraction =>
-        println(abstr)
         val su = abstr.getSuppliers.get(0) match {
           case r: requirements.Requirement => r.getBase_Class
           case other => other
         }
         val cs = abstr.getClients.asScala
         cs.map { c =>
-          println(c.eResource().getURIFragment(c))
-          println(su.eResource().getURIFragment(su))
           Mapping(
             normalizeURI(c.eResource().getURI).toString,
             c.eResource().getURIFragment(c),

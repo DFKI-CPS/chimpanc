@@ -7,6 +7,8 @@ package specific
 sealed trait SemanticIssue
 case class RequirementEvaluation(layer: String, path: String, results: Seq[Option[Boolean]]) extends SemanticIssue
 case class Modified(layer: String, path: String) extends SemanticIssue
+case class SemanticError(layer: String, path: String, message: String) extends SemanticIssue
+case class SemanticWarning(layer: String, path: String, message: String) extends SemanticIssue
 case class ModifiedSupplier(layer: String, path: String) extends SemanticIssue
 case class ModifiedClient(layer: String, path: String) extends SemanticIssue
 case class UnimplementedModel(layer: String, model: LayerObject) extends SemanticIssue
@@ -19,10 +21,11 @@ case class ModifiedImplementation(layer: String, model: LayerObject, otherLayer:
 case class MismatchingBounds(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int, cLength: Int) extends SemanticIssue
 
+
 case class Spec(name: String, uri: String, content: String, mode: String)
 case class Specs(layers: Seq[Spec])
 
-case class LayerObject(path: String, name: String, line: Int, column: Int)
+case class LayerObject(path: String, name: String, line: Int, column: Int, isConstraint: Boolean)
 
 sealed trait SemanticInfo
 case class Mapping(fromLayer: String, from: String, toLayer: String, to: String, stereotype: String, ocl: Option[String]) extends SemanticInfo

@@ -89,6 +89,8 @@ satisfy isl::acs::P16
 satisfy isl::acs::P17
   <- fsl4::acs::Person::admitted
 
+-- traces
+
 trace fsl6::acs::Building <- esl::acs::Building
 trace fsl6::acs::Building::org_dom <- esl::acs::Gate::org
 trace fsl6::acs::Person <- esl::acs::Person

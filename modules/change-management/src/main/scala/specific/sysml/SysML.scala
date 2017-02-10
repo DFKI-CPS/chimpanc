@@ -20,7 +20,7 @@ object SysML {
       case e: uml.NamedElement if Try(e.getName.forall(isIdChar)).toOption.contains(true) =>
         val path = e.eResource().getURIFragment(e)
         positions(path).map { pos =>
-          LayerObject(path, e.getName, pos.line, pos.column)
+          LayerObject(path, e.getName, pos.line, pos.column, false)
         }
     }.collect {
       case Some(x: LayerObject) => x
