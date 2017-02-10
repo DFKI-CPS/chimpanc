@@ -19,8 +19,7 @@ case class ModifiedImplementation(layer: String, model: LayerObject, otherLayer:
 case class MismatchingBounds(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
 case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int) extends SemanticIssue
 
-sealed trait Spec { val uri: String; val name: String }
-case class SysML(name: String, uri: String, content: String) extends Spec
+case class Spec(name: String, uri: String, content: String, mode: String)
 case class Specs(layers: Seq[Spec])
 
 case class LayerObject(path: String, name: String, line: Int, column: Int)
@@ -52,8 +51,6 @@ case class Entities(layer: String, entities: Set[LayerObject]) extends Message
 case object CommitAll extends Message
 
 object Message {
-  import upickle._
-  
   def read(raw: String) = upickle.default.read[Message](raw)
   def write(msg: Message) = upickle.default.write(msg)
 }

@@ -8,9 +8,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.resource.{Resource, ResourceSet}
 import org.eclipse.emf.ecore.xmi.impl.{EcoreResourceFactoryImpl, URIHandlerImpl}
 import org.eclipse.emf.ecore.xmi.XMLResource
-import specific.emf.cpp._
 import specific.{ChangeManagement, Config}
 import specific.util.Helpers._
+import org.eclipse.uml2.uml
 
 import scala.collection.mutable
 import scala.sys.process._
@@ -107,10 +107,10 @@ object ClangASTParser {
 
   def parse(filename: String, target: Resource): Map[EObject,Position] = {
     val eFactory = EcoreFactory.eINSTANCE
-    val factory = CppFactory.eINSTANCE
+    val factory = uml.UMLFactory.eINSTANCE
     val libs = mutable.Map.empty[String, Resource]
 
-    def libraryNamespace(uri: String, pkgName: String): CppNamespace = {
+    /*def libraryNamespace(uri: String, pkgName: String): CppNamespace = {
       val lib = target.getResourceSet.createResource(URI.createFileURI(URI.decode(filename + s".lib.${pkgName}.ecore")))
       libs += uri -> lib
       val pkg = factory.createCppNamespace()
@@ -182,12 +182,12 @@ object ClangASTParser {
       "sc_core" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_core", "sc_core"),
       "sc_boost" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_boost", "sc_boost"),
       "sc_dt" -> libraryNamespace("http://www.dfki.de/SPECifIC/systemc/sc_dt", "sc_dt")
-    )
+    )*/
 
-    def tlqName(p: EPackage): String =
+    /*def tlqName(p: EPackage): String =
       Option(p.getESuperPackage).map(tlqName).fold(p.getName)(_ + "::" + p.getName)
 
-    def qName(c: CppClass): String =
+    def qName(c: Class): String =
       Option(c.getParentClass).map(qName).orElse(
         Option(c.getEPackage).map(tlqName)).fold(c.getName)(_ + "::" + c.getName)
 
@@ -253,75 +253,79 @@ object ClangASTParser {
           result
         }
       }
+    }*/
+
+    def findTLPackage(resource: Resource, name: String): Option[uml.Model] = resource.getContents.collectFirst {
+      case p: uml.Model if p.getName == name => p
     }
 
-    def findTLPackage(resource: Resource, name: String): Option[CppNamespace] = libraryNamespaces.get(name) orElse resource.getContents.collectFirst {
-      case p: CppNamespace if p.getName == name => p
+    def findPackage(parent: uml.Package, name: String): Option[uml.Package] = parent.getNestedPackages.collectFirst {
+      case p: uml.Package if p.getName == name => p
     }
 
-    def findPackage(parent: EPackage, name: String): Option[CppNamespace] = parent.getESubpackages.collectFirst {
-      case p: CppNamespace if p.getName == name => p
-    }
-
-    def getTLPackage(resource: Resource, name: String): CppNamespace = {
+    def getTLPackage(resource: Resource, name: String): uml.Model = {
       findTLPackage(resource, name).getOrElse {
-        val pkg = factory.createCppNamespace()
+        val pkg = factory.createModel()
         pkg.setName(name)
         resource.getContents.add(pkg)
         pkg
       }
     }
 
-    def getPackage(parent: CppNamespace, name: String): CppNamespace = {
+    def getPackage(parent: uml.Package, name: String): uml.Package = {
       findPackage(parent, name).getOrElse {
-        val pkg = factory.createCppNamespace()
+        val pkg = factory.createPackage()
         pkg.setName(name)
-        parent.getESubpackages.add(pkg)
+        parent.getPackagedElements.add(pkg)
         pkg
       }
     }
 
-    def findTLClass(pkg: EPackage, name: String): Option[CppClass] = {
-      pkg.getEClassifiers.collectFirst { case c: CppClass if c.getName == name => c }
+
+    def findTLClass(pkg: uml.Package, name: String): Option[uml.Class] = {
+      pkg.getPackagedElements.collectFirst { case c: uml.Class if c.getName == name => c }
     }
 
-    def findEnum(pkg: EPackage, name: String): Option[EEnum] = {
-      Option(pkg.getEClassifier(name)).filter(_.isInstanceOf[EEnum]).map(_.asInstanceOf[EEnum])
+
+    def findEnum(pkg: uml.Package, name: String): Option[uml.Enumeration] = {
+      Option(pkg.getPackagedElement(name)).filter(_.isInstanceOf[uml.Enumeration]).map(_.asInstanceOf[uml.Enumeration])
     }
 
-    def findClass(parent: CppClass, name: String): Option[CppClass] = {
-      parent.getNestedClasses.find(_.getName == name)
+    def findClass(parent: uml.Class, name: String): Option[uml.Class] = {
+      parent.getNestedClassifiers.collectFirst {
+        case c: uml.Class if c.getName == name => c
+      }
     }
 
-    def getClass(parent: CppClass, name: String): CppClass = {
+    def getClass(parent: uml.Class, name: String): uml.Class = {
       findClass(parent, name).getOrElse {
-        val c = factory.createCppClass()
+        val c = factory.createClass()
         c.setName(name)
-        parent.getNestedClasses.add(c)
+        parent.getNestedClassifiers.add(c)
         c
       }
     }
 
-    def getTLClass(pkg: EPackage, name: String): CppClass = {
+    def getTLClass(pkg: uml.Package, name: String): uml.Class = {
       findTLClass(pkg, name).getOrElse {
-        val c = factory.createCppClass()
+        val c = factory.createClass()
         c.setName(name)
-        pkg.getEClassifiers.add(c)
+        pkg.getPackagedElements.add(c)
         c
       }
     }
 
-    def getEnum(pkg: EPackage, name: String): EEnum = {
+    def getEnum(pkg: uml.Package, name: String): uml.Enumeration = {
       findEnum(pkg, name).getOrElse {
-        val c = eFactory.createEEnum()
+        val c = factory.createEnumeration()
         c.setName(name)
-        pkg.getEClassifiers.add(c)
+        pkg.getPackagedElements.add(c)
         c
       }
     }
 
-    def resolveClass(tpe: String): Option[CppClass] = {
-      val result: Option[CppClass] = tpe match {
+    def resolveClass(tpe: String): Option[uml.Class] = {
+      val result: Option[uml.Class] = tpe match {
         case Type(pkg, name) =>
           for {
             p <- findTLPackage(target, pkg)
@@ -337,7 +341,8 @@ object ClangASTParser {
       gt.setEClassifier(c)
       gt
     }
-    
+
+    /*
     var unresolved = 0
     def resolveTypeName(scope: Scope, tname: String, originalScope: Option[Scope] = None): Option[Either[EClassifier, EGenericType]] = {
       //println(s"LOOKING FOR $tname in ${pkge.getName} and ${clazz.map(_.getName)}")
@@ -440,19 +445,19 @@ object ClangASTParser {
       case (e: EAttribute, Right(t)) => e.setEGenericType(t)
       case (e: EOperation, Right(t)) => e.setEGenericType(t)
       case (e: EParameter, Right(t)) => e.setEGenericType(t)
-    })
+    })*/
 
-    def handlePackage(pkg: CppNamespace): Option[Handler] = handle {
-      case ("NamespaceDecl", Namespace(name)) =>
+    def handlePackage(pkg: uml.Package): Option[Handler] = handle {
+      case ("NamespaceDecl", Namespace(name)) if name == "acs" =>
         val subpkg = getPackage(pkg, name)
         handlePackage(subpkg)
       case ("ClassTemplateDecl", Template(name)) =>
-        val clazz: CppClass = getTLClass(pkg, name)
+        val clazz: uml.Class = getTLClass(pkg, name)
         handle {
           case ("TemplateTypeParmDecl", TemplateTypeParam(name)) =>
-            val param = eFactory.createETypeParameter()
+            /*val param = factory..createETypeParameter()
             param.setName(name)
-            clazz.getETypeParameters.add(param)
+            clazz.getETypeParameters.add(param)*/
             /*handle {
                 case ("TemplateArgument", x) if x.startsWith("type") =>
                   clazz.getETypeParameters.remove(param)
@@ -463,10 +468,10 @@ object ClangASTParser {
             handleClass(clazz)
         }
       case ("FunctionDecl", Method(name, tpe, _)) =>
-        val op = factory.createCppOperation()
+        /*val op = factory.createOperation()
         op.setName(name)
-        op.setStatic(true)
-        pkg.getOperations.add(op)
+        op.setIsStatic(true)
+        pkg.getPackagedElements.add(op)
         setType(op, resolve(Scope(pkg), tpe))
         handle {
           case ("ParmVarDecl", Parameter(name, tpe)) =>
@@ -475,76 +480,81 @@ object ClangASTParser {
             op.getEParameters.add(parm)
             setType(parm, resolve(Scope(pkg), tpe))
             None
-        }
+        }*/
+        None
       case ("TypedefDecl" | "TypeAliasDecl", TypedefDecl(name, tpe)) =>
-        resolve(Scope(pkg), tpe).foreach { x =>
+        val c = factory.createClass()
+        c.setName(name)
+        pkg.getPackagedElements.add(c)
+        /*resolve(Scope(pkg), tpe).foreach { x =>
           val tdef = typedef(name, x)
           pkg.getTypedefs.add(tdef)
-        }
+        }*/
         None
       case ("EnumDecl", Enum(name)) =>
-        val enum: EEnum = getEnum(pkg, name)
+        val enum: uml.Enumeration = getEnum(pkg, name)
         handle {
           case ("EnumConstantDecl", EnumLiteral(name)) =>
-            val lit = eFactory.createEEnumLiteral()
+            val lit = factory.createEnumerationLiteral()
             lit.setName(name)
-            enum.getELiterals.add(lit)
+            enum.getOwnedLiterals.add(lit)
             None
         }
       case ("CXXRecordDecl", Class(name)) =>
         handleClass(getTLClass(pkg, name))
     }
 
-    def handleClass(clazz: CppClass): Option[Handler] = {
-      var visibility: CppVisibility = CppVisibility.DEFAULT
+    def handleClass(clazz: uml.Class): Option[Handler] = {
+      var visibility: uml.VisibilityKind = uml.VisibilityKind.PROTECTED_LITERAL
       handle {
         case ("public", tpe) =>
-          resolveClass(tpe).foreach(clazz.getESuperTypes.add)
+          resolveClass(tpe).foreach(clazz.getSuperClasses.add(_))
           None
         case ("FieldDecl" | "VarDecl", Field(name, tpe, static)) =>
-          val f = factory.createCppAttribute()
+          val f = factory.createProperty()
           f.setName(name)
-          f.setStatic(static.nonEmpty)
+          f.setIsStatic(static.nonEmpty)
           f.setVisibility(visibility)
-          clazz.getEStructuralFeatures.add(f)
-          val res = resolve(Scope(clazz), tpe)
-          setType(f, res)
+          clazz.getMembers.add(f)
+          //val res = resolve(Scope(clazz), tpe)
+          //setType(f, res)
           None
         case ("CXXMethodDecl", Method(name, tpe, static)) =>
-          val op = factory.createCppOperation()
+          val op = factory.createOperation()
           op.setName(name)
-          op.setStatic(static.nonEmpty)
+          op.setIsStatic(static.nonEmpty)
           op.setVisibility(visibility)
-          clazz.getEOperations.add(op)
-          val x = resolve(Scope(clazz), tpe)
-          setType(op, x)
+          clazz.getMembers.add(op)
+          //val x = resolve(Scope(clazz), tpe)
+          //setType(op, x)
           handle {
             case ("ParmVarDecl", Parameter(name, tpe)) =>
-              val parm = factory.createCppParameter()
+              val parm = factory.createParameter()
               parm.setName(name)
-              op.getEParameters.add(parm)
-              setType(parm, resolve(Scope(clazz), tpe))
+              op.getOwnedParameters.add(parm)
+              //setType(parm, resolve(Scope(clazz), tpe))
               None
           }
         case ("TypedefDecl" | "TypeAliasDecl", TypedefDecl(name, tpe)) =>
-          resolve(Scope(clazz), tpe).foreach { x =>
+          //val n =
+          /*resolve(Scope(clazz), tpe).foreach { x =>
             val tdef = typedef(name, x)
             tdef.setVisibility(visibility)
             clazz.getTypedefs.add(tdef)
-          }
+          }*/
           None
         case ("CXXRecordDecl", Class(name)) =>
           val c = getClass(clazz, name)
           c.setVisibility(visibility)
           handleClass(c)
         case ("AccessSpecDecl", Visibility("default")) =>
-          visibility = CppVisibility.DEFAULT
+          visibility = uml.VisibilityKind.PROTECTED_LITERAL
           None
         case ("AccessSpecDecl", Visibility("private")) =>
-          visibility = CppVisibility.PRIVATE
+          visibility = uml.VisibilityKind.PRIVATE_LITERAL
           None
         case ("AccessSpecDecl", Visibility("public")) =>
-          visibility = CppVisibility.PUBLIC
+          visibility = uml.VisibilityKind.PUBLIC_LITERAL
           None
       }
     }
@@ -556,36 +566,39 @@ object ClangASTParser {
         val pkg = getTLPackage(target, name)
         handlePackage(pkg)
       case ("CXXRecordDecl", Class(name)) =>
-        handleClass(getTLClass(getTLPackage(target,"<root>"), name))
+        handleClass(getTLClass(getTLPackage(target,"esl"), name))
       case ("ClassTemplateDecl", Template(name)) =>
-        val clazz: CppClass = getTLClass(getTLPackage(target,"<root>"), name)
+        val clazz: uml.Class = getTLClass(getTLPackage(target,"esl"), name)
         handle {
           case ("TemplateTypeParmDecl", TemplateTypeParam(name)) =>
-            val param = eFactory.createETypeParameter()
+            /*val param = eFactory.createETypeParameter()
             param.setName(name)
-            clazz.getETypeParameters.add(param)
+            clazz..add(param)
             /*handle {
                 case ("TemplateArgument", x) if x.startsWith("type") =>
                   clazz.getETypeParameters.remove(param)
                   None
-              }*/
+              }*/*/
             None
           case ("CXXRecordDecl", Class(cname)) if name == cname =>
             handleClass(clazz)
         }
       case ("TypedefDecl" | "TypeAliasDecl", TypedefDecl(name, tpe)) =>
-        resolve(Scope(getTLPackage(target,"<root>")), tpe).foreach { x =>
+        val tdef = factory.createClass()
+        tdef.setName(name)
+        getTLPackage(target,"esl").getPackagedElements.add(tdef)
+        /*resolve(Scope(getTLPackage(target,"<root>")), tpe).foreach { x =>
           val tdef = typedef(name, x)
           getTLPackage(target,"<root>").getTypedefs.add(tdef)
-        }
+        }*/
         None
       case ("EnumDecl", Enum(name)) =>
-        val enum: EEnum = getEnum(getTLPackage(target,"<root>"), name)
+        val enum: uml.Enumeration = getEnum(getTLPackage(target,"esl"), name)
         handle {
           case ("EnumConstantDecl", EnumLiteral(name)) =>
-            val lit = eFactory.createEEnumLiteral()
+            val lit = factory.createEnumerationLiteral()
             lit.setName(name)
-            enum.getELiterals.add(lit)
+            enum.getOwnedLiterals.add(lit)
             None
         }
     }
@@ -598,7 +611,7 @@ object ClangASTParser {
 
     println(s"processed $nodes nodes")
     nodes = 0
-    println(unresolved + " unresolved types")
+    //println(unresolved + " unresolved types")
 
     val uriHandler = new URIHandlerImpl {
       override def deresolve(uri: URI): URI =

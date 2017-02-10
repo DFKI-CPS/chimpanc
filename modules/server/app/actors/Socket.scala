@@ -46,7 +46,7 @@ class Socket(out: ActorRef) extends Actor {
     case MSG(Proven(layer,constr)) =>
       CM.proven(layer,constr)
       CM.listIssues()
-    case MSG(Evaluate(SysML(name,uri,content))) =>
+    case MSG(Evaluate(Spec(name,uri,content,mode))) =>
       /*val layer = CM.project.nl.find(_.name == name).get
       layer.source = content
       CM.evaluateNL(layer)

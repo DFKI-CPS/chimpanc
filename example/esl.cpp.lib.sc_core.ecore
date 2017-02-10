@@ -1,0 +1,2912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpp:CppNamespace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cpp="http://www.dfki.de/SPECifIC/emf/2015/cpp" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="sc_core" nsURI="http://www.dfki.de/SPECifIC/systemc/sc_core">
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_user"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_halt"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_kill"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_unwind_exception" eSuperTypes="http://www.dfki.de/SPECifIC/cpp/std#//exception">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_proc_p" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_is_reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_severity">
+    <eLiterals name="SC_INFO"/>
+    <eLiterals name="SC_WARNING"/>
+    <eLiterals name="SC_ERROR"/>
+    <eLiterals name="SC_FATAL"/>
+    <eLiterals name="SC_MAX_SEVERITY"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_verbosity">
+    <eLiterals name="SC_NONE"/>
+    <eLiterals name="SC_LOW"/>
+    <eLiterals name="SC_MEDIUM"/>
+    <eLiterals name="SC_HIGH"/>
+    <eLiterals name="SC_FULL"/>
+    <eLiterals name="SC_DEBUG"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_report" eSuperTypes="http://www.dfki.de/SPECifIC/cpp/std#//exception">
+    <eOperations xsi:type="cpp:CppOperation" name="swap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="is_suppressed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="make_warnings_errors" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="register_id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eParameters xsi:type="cpp:CppParameter" name="msg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="suppress_id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="suppress_infos" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="suppress_warnings" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="severity" eType="#//sc_severity"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="md" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="msg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="line" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="timestamp" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="process" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_verbosity_level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_what" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_msg_def">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="actions" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_actions" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="limit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_limit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="limit_mask" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="call_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_call_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="msg_type_data" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_report_handler">
+    <eOperations xsi:type="cpp:CppOperation" name="report" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="msg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="line" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="report" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="msg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="verbosity" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eParameters xsi:type="cpp:CppParameter" name="file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="line" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set_actions" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_actions" visibility="public"
+        static="true" typedef="#//sc_actions">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set_actions" visibility="public"
+        static="true" typedef="#//sc_actions">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="stop_after" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="stop_after" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="stop_after" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="suppress" visibility="public" static="true"
+        typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="suppress" visibility="public" static="true"
+        typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="force" visibility="public" static="true"
+        typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="force" visibility="public" static="true"
+        typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="get_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="severity_" eType="#//sc_severity"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="get_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type_" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="get_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="msg_type_" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="severity_" eType="#//sc_severity"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="get_verbosity_level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_verbosity_level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="initialize" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="release" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_handler" visibility="public"
+        static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="get_handler" visibility="public"
+        static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="default_handler" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="get_new_action_id" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="clear_cached_report" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_log_file_name" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="filename" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="add_static_msg_types" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="cache_report" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="execute" visibility="public" static="true"
+        typedef="#//sc_actions"/>
+    <eOperations xsi:type="cpp:CppOperation" name="report" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eParameters xsi:type="cpp:CppParameter" name="add_msg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="line" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="suppress_mask" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="force_mask" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_actions" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_limit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sev_call_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="last_global_report" eType="#//sc_report"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="available_actions" visibility="public"
+        static="true" typedef="#//sc_actions"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="log_file_name" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="verbosity_level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="messages" eType="#//sc_report_handler/msg_def_items"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="msg_terminator" eType="#//sc_report_handler/msg_def_items"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="handler" visibility="public"
+        static="true"/>
+    <nestedClasses name="msg_def_items" visibility="public">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="md" eType="#//sc_msg_def"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="allocated" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="next" eType="#//sc_report_handler/msg_def_items"/>
+    </nestedClasses>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_attr_base">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_attr_cltn">
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_all" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="begin" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//iterator"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//iterator"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_cltn" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_attr_base"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_attr_base" name="elem_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_attribute" eSuperTypes="#//sc_attr_base">
+    <eTypeParameters name="T"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="value" visibility="public">
+      <eGenericType eTypeParameter="#//sc_attribute/T"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="add_attribute" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_all_attributes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="register_simulation_phase_callback"
+        visibility="public" typedef="#//sc_object/phase_cb_mask"/>
+    <eOperations xsi:type="cpp:CppOperation" name="unregister_simulation_phase_callback"
+        visibility="public" typedef="#//sc_object/phase_cb_mask"/>
+    <eOperations xsi:type="cpp:CppOperation" name="do_simulation_phase_callback" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="detach" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="sc_object_init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private">
+      <eParameters xsi:type="cpp:CppParameter" name="nm" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_attr_cltn_p" eType="#//sc_attr_cltn"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_child_events" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_child_objects" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_object"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_parent" eType="#//sc_object"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" visibility="private"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="phase_cb_mask" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_interface">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_never_notified" visibility="private"
+        static="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_export_base" eSuperTypes="#//sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <typedefs eClassifier="#//sc_export_base" name="this_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_export" eSuperTypes="#//sc_export_base">
+    <eTypeParameters name="IF"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_interface_p" visibility="private">
+      <eGenericType eTypeParameter="#//sc_export/IF"/>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_export" name="this_type">
+      <eTypeArguments eTypeParameter="#//sc_export/IF"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_export_registry">
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_export_vec" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_export_base"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_curr_proc_kind">
+    <eLiterals name="SC_NO_PROC_"/>
+    <eLiterals name="SC_METHOD_PROC_"/>
+    <eLiterals name="SC_THREAD_PROC_"/>
+    <eLiterals name="SC_CTHREAD_PROC_"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_descendant_inclusion_info">
+    <eLiterals name="SC_NO_DESCENDANTS"/>
+    <eLiterals name="SC_INCLUDE_DESCENDANTS"/>
+    <eLiterals name="SC_INVALID_DESCENDANTS"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_process_host">
+    <eOperations xsi:type="cpp:CppOperation" name="defunct" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_process_monitor"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_throw_it_helper"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_throw_it" eSuperTypes="#//sc_throw_it_helper">
+    <eTypeParameters name="EXCEPT"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_value" visibility="public">
+      <eGenericType eTypeParameter="#//sc_throw_it/EXCEPT"/>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_throw_it" name="this_type">
+      <eTypeArguments eTypeParameter="#//sc_throw_it/EXCEPT"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_process_b" eSuperTypes="#//sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="add_static_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_dynamic_events" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_static_events" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="disconnect_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_changed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="async" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+      <eParameters xsi:type="cpp:CppParameter" name="asserted" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="rt"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="trigger_reset_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="delete_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="lineno" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="proc_id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_active_areset_n" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_active_reset_n" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_dont_init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_dynamic_proc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_event_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_event_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_event_list_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_exist_p" eType="#//sc_process_b"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_free_host" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_has_reset_signal" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_has_stack" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_is_thread" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_last_report_p" eType="#//sc_report"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name_gen_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_process_kind" eType="#//sc_curr_proc_kind"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_references_n" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_resets" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_reset_event_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_resume_event_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_runnable_p" eType="#//sc_process_b"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_semantics_host_p" eType="#//sc_process_host"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_semantics_method_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_state" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_static_events" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_sticky_reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_term_event_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_throw_helper_p" eType="#//sc_throw_it_helper"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_throw_status" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_timed_out" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_timeout_event_p" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_trigger_type" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_unwinding" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_last_created_process_p"
+        eType="#//sc_process_b" visibility="public" static="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="scoped_flag">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ref" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_module_name">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module_p" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_next" eType="#//sc_module_name"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_pushed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_in">
+    <eTypeParameters name="T"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_traces" visibility="public"
+        typedef="#//sc_trace_params_vec"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_finder_p" eType="#//sc_event_finder"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="dummy" visibility="private"
+        static="true" typedef="#//sc_in/data_type"/>
+    <typedefs eTypeParameter="#//sc_in/T" name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="base_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="this_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_inout">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_inout/data_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="initialize" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_inout/data_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="initialize" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="interface_" typedef="#//sc_inout/in_if_type"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_init_val" visibility="public"
+        typedef="#//sc_inout/data_type"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_traces" visibility="public"
+        typedef="#//sc_trace_params_vec"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_finder_p" eType="#//sc_event_finder"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="dummy" visibility="private"
+        static="true" typedef="#//sc_inout/data_type"/>
+    <typedefs eTypeParameter="#//sc_inout/T" name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="base_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="this_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal_in_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_sensitive">
+    <eOperations xsi:type="cpp:CppOperation" name="make_static_sensitivity" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="make_static_sensitivity" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="make_static_sensitivity" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="make_static_sensitivity" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_mode" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_handle" visibility="private"
+        typedef="#//sc_process_b.1"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="in_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_in" name="in_port_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_l_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_sensitive_pos">
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_mode" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_handle" visibility="private"
+        typedef="#//sc_process_b.1"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="in_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_in" name="in_port_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_l_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_sensitive_neg">
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_mode" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_handle" visibility="private"
+        typedef="#//sc_process_b.1"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="in_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_in" name="in_port_l_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_b_type" visibility="public">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_inout" name="inout_port_l_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_time_unit">
+    <eLiterals name="SC_FS"/>
+    <eLiterals name="SC_PS"/>
+    <eLiterals name="SC_NS"/>
+    <eLiterals name="SC_US"/>
+    <eLiterals name="SC_MS"/>
+    <eLiterals name="SC_SEC"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_time">
+    <eOperations xsi:type="cpp:CppOperation" name="from_value" eType="#//sc_time"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_value" visibility="private"
+        typedef="#//sc_time/value_type"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20long%20int"
+        name="value_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_time_params">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="time_resolution" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="time_resolution_specified"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="time_resolution_fixed"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="default_time_unit" typedef="#//sc_time/value_type"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="default_time_unit_specified"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_status">
+    <eLiterals name="SC_UNITIALIZED"/>
+    <eLiterals name="SC_ELABORATION"/>
+    <eLiterals name="SC_BEFORE_END_OF_ELABORATION"/>
+    <eLiterals name="SC_END_OF_ELABORATION"/>
+    <eLiterals name="SC_START_OF_SIMULATION"/>
+    <eLiterals name="SC_RUNNING"/>
+    <eLiterals name="SC_PAUSED"/>
+    <eLiterals name="SC_STOPPED"/>
+    <eLiterals name="SC_END_OF_SIMULATION"/>
+    <eLiterals name="SC_END_OF_INITIALIZATION"/>
+    <eLiterals name="SC_END_OF_UPDATE"/>
+    <eLiterals name="SC_BEFORE_TIMESTEP"/>
+    <eLiterals name="SC_STATUS_LAST"/>
+    <eLiterals name="SC_STATUS_ANY"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_pdhash_iter" eSuperTypes="#//sc_phash_base_iter">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_pdhash">
+          <eTypeArguments eTypeParameter="#//sc_pdhash_iter/K"/>
+          <eTypeArguments eTypeParameter="#//sc_pdhash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_pdhash">
+          <eTypeArguments eTypeParameter="#//sc_pdhash_iter/K"/>
+          <eTypeArguments eTypeParameter="#//sc_pdhash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_contents" visibility="public">
+      <eGenericType eTypeParameter="#//sc_pdhash_iter/C"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_pdhash_iter/C"/>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_phash_base">
+    <eOperations xsi:type="cpp:CppOperation" name="rehash" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_cmpr_fn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_hash_fn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="erase" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="erase" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b" eType="#//sc_phash_base"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b" eType="#//sc_phash_base"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="pk" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="pc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="default_value" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="num_bins" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="num_entries" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="max_density" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="reorder_flag" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="grow_factor" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="bins" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="hash" visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="cmpr" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_phash_base_iter">
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_phash_base"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_phash_base"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="step" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="table" eType="#//sc_phash_base"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="entry"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="next"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="last"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="index" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_phash_iter" eSuperTypes="#//sc_phash_base_iter">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_phash">
+          <eTypeArguments eTypeParameter="#//sc_phash_iter/K"/>
+          <eTypeArguments eTypeParameter="#//sc_phash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_phash">
+          <eTypeArguments eTypeParameter="#//sc_phash_iter/K"/>
+          <eTypeArguments eTypeParameter="#//sc_phash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set_contents" visibility="public">
+      <eGenericType eTypeParameter="#//sc_phash_iter/C"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash_iter/C"/>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_phash" eSuperTypes="#//sc_phash_base">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_phash">
+          <eTypeArguments eTypeParameter="#//sc_phash/K"/>
+          <eTypeArguments eTypeParameter="#//sc_phash/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_phash">
+          <eTypeArguments eTypeParameter="#//sc_phash/K"/>
+          <eTypeArguments eTypeParameter="#//sc_phash/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_phash">
+          <eTypeArguments eTypeParameter="#//sc_phash/K"/>
+          <eTypeArguments eTypeParameter="#//sc_phash/C"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="kdup"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="pk">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="pc">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_phash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_phash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="kfree"/>
+    </eOperations>
+    <typedefs eClassifier="#//sc_phash_iter" name="iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_phash/K"/>
+      <eTypeArguments eTypeParameter="#//sc_phash/C"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_pdhash" eSuperTypes="#//sc_phash_base">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="erase" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_pdhash">
+          <eTypeArguments eTypeParameter="#//sc_pdhash/K"/>
+          <eTypeArguments eTypeParameter="#//sc_pdhash/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_pdhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_pdhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="pk">
+        <eGenericType eTypeParameter="#//sc_pdhash/K"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="pc">
+        <eGenericType eTypeParameter="#//sc_pdhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_pdhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="kdup" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="kfree" visibility="private"/>
+    <typedefs eClassifier="#//sc_pdhash_iter" name="iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_pdhash/K"/>
+      <eTypeArguments eTypeParameter="#//sc_pdhash/C"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_strhash_iter" eSuperTypes="#//sc_phash_base_iter">
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_strhash">
+          <eTypeArguments eTypeParameter="#//sc_strhash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t">
+        <eGenericType eClassifier="#//sc_strhash">
+          <eTypeArguments eTypeParameter="#//sc_strhash_iter/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="contents" visibility="public">
+      <eGenericType eTypeParameter="#//sc_strhash_iter/C"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set_contents" visibility="public">
+      <eGenericType eTypeParameter="#//sc_strhash_iter/C"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_strhash_iter/C"/>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_strhash" eSuperTypes="#//sc_phash_base">
+    <eTypeParameters name="C"/>
+    <eOperations xsi:type="cpp:CppOperation" name="erase" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_strhash">
+          <eTypeArguments eTypeParameter="#//sc_strhash/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="copy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="b">
+        <eGenericType eClassifier="#//sc_strhash">
+          <eTypeArguments eTypeParameter="#//sc_strhash/C"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_strhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_strhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_if_not_exists" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="pk" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="pc">
+        <eGenericType eTypeParameter="#//sc_strhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="c">
+        <eGenericType eTypeParameter="#//sc_strhash/C"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_by_contents" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="predicate"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <typedefs eClassifier="#//sc_strhash_iter" name="iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_strhash/C"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_ppq_base">
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="elem" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="heapify" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="i" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_heap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_size_alloc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_heap_size" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_compar" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_ppq" eSuperTypes="#//sc_ppq_base">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="extract_top" visibility="public">
+      <eGenericType eTypeParameter="#//sc_ppq/T"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="elem">
+        <eGenericType eTypeParameter="#//sc_ppq/T"/>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_plist" eSuperTypes="#//sc_plist_base">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist/T"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="push_front" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist/T"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="pop_back" visibility="public">
+      <eGenericType eTypeParameter="#//sc_plist/T"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="pop_front" visibility="public">
+      <eGenericType eTypeParameter="#//sc_plist/T"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_before" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist/T"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_after" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist/T"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" visibility="public">
+      <eGenericType eTypeParameter="#//sc_plist/T"/>
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist/T"/>
+      </eParameters>
+    </eOperations>
+    <typedefs eClassifier="#//sc_plist_iter" name="iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_plist/T"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_curr_proc_info">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="process_handle" typedef="#//sc_process_b.1"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="kind" eType="#//sc_curr_proc_kind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_stop_mode">
+    <eLiterals name="SC_STOP_FINISH_DELTA"/>
+    <eLiterals name="SC_STOP_IMMEDIATE"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_starvation_policy">
+    <eLiterals name="SC_EXIT_ON_STARVATION"/>
+    <eLiterals name="SC_RUN_TO_TIME"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_simcontext">
+    <eOperations xsi:type="cpp:CppOperation" name="init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    <eOperations xsi:type="cpp:CppOperation" name="clean" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    <eOperations xsi:type="cpp:CppOperation" name="initialize" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="cycle" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="duration" eType="#//sc_time"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="stop" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="hierarchy_push" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="create_cthread_process" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="name_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="free_host" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+      <eParameters xsi:type="cpp:CppParameter" name="method_p"/>
+      <eParameters xsi:type="cpp:CppParameter" name="host_p" eType="#//sc_process_host"/>
+      <eParameters xsi:type="cpp:CppParameter" name="opt_p"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="create_method_process" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="name_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="free_host" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+      <eParameters xsi:type="cpp:CppParameter" name="method_p"/>
+      <eParameters xsi:type="cpp:CppParameter" name="host_p" eType="#//sc_process_host"/>
+      <eParameters xsi:type="cpp:CppParameter" name="opt_p"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="create_thread_process" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="name_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="free_host" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+      <eParameters xsi:type="cpp:CppParameter" name="method_p"/>
+      <eParameters xsi:type="cpp:CppParameter" name="host_p" eType="#//sc_process_host"/>
+      <eParameters xsi:type="cpp:CppParameter" name="opt_p"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="get_curr_proc_info" visibility="public"
+        typedef="#//sc_curr_proc_handle"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_curr_proc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_curr_proc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="next_proc_id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="add_trace_file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_trace_file" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="get_error" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_error" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaborate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="prepare_to_simulate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="add_child_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="add_child_object" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_child_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_child_object" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="crunch" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="add_delta_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_delta_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="add_timed_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="trace_cycle" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private">
+      <eParameters xsi:type="cpp:CppParameter" name="delta_cycle" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="execute_method_next" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="execute_thread_next" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="pop_runnable_method" visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="pop_runnable_thread" visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="preempt_with" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_runnable_method" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_runnable_thread" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_runnable_method_front" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_runnable_thread_front" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_runnable_method" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove_runnable_thread" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="requeue_current_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="suspend_current_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="do_sc_stop_action" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="mark_to_collect_process" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private">
+      <eParameters xsi:type="cpp:CppParameter" name="zombie_p" typedef="#//sc_process_b.1"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_object_manager" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module_registry" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_port_registry" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_export_registry" eType="#//sc_export_registry"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_prim_channel_registry"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_phase_cb_registry" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name_gen" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_process_table" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_curr_proc_info" eType="#//sc_curr_proc_info"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_current_writer" eType="#//sc_object"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_write_check" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_next_proc_id" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_active_invokers" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_child_events" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_child_objects" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_object"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_delta_events" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_timed_events" eType="#//sc_ppq"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_trace_files" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_something_to_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_runnable" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_collectable" visibility="private"
+        typedef="#//sc_process_list"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_time_params" eType="#//sc_time_params"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_curr_time" eType="#//sc_time"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_max_time" eType="#//sc_time"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_method_invoker_p" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_stamp" visibility="private"
+        typedef="http://www.dfki.de/SPECifIC/systemc/sc_dt#//uint64"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_delta_count" visibility="private"
+        typedef="http://www.dfki.de/SPECifIC/systemc/sc_dt#//uint64"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_forced_stop" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_paused" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_ready_to_simulate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_execution_phase" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_error" eType="#//sc_report"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_in_simulator_control"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_end_of_simulation_called"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simulation_status" eType="#//sc_status"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_start_of_simulation_called"
+        eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_cor_pkg" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_cor" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_mempool">
+    <eOperations xsi:type="cpp:CppOperation" name="release" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eParameters xsi:type="cpp:CppParameter" name="sz" typedef="http://www.dfki.de/SPECifIC/cpp/std#//size_t"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="display_statistics" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_mpobject"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_writer_policy">
+    <eLiterals name="SC_ONE_WRITER"/>
+    <eLiterals name="SC_MANY_WRITERS"/>
+    <eLiterals name="SC_UNCHECKED_WRITERS"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal" eSuperTypes="#//sc_prim_channel">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="do_update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_event_p" eType="#//sc_event"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_cur_val" visibility="public">
+      <eGenericType eTypeParameter="#//sc_signal/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_stamp" visibility="public"
+        typedef="http://www.dfki.de/SPECifIC/systemc/sc_dt#//uint64"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_new_val" visibility="public">
+      <eGenericType eTypeParameter="#//sc_signal/T"/>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="if_type">
+      <eTypeArguments eTypeParameter="#//sc_signal/T"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal" name="this_type">
+      <eTypeArguments eTypeParameter="#//sc_signal/T"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_writer_policy_check" name="policy_type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_check"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_nocheck_write">
+    <eOperations xsi:type="cpp:CppOperation" name="check_write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    <eOperations xsi:type="cpp:CppOperation" name="update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_check_write">
+    <eOperations xsi:type="cpp:CppOperation" name="check_write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool">
+      <eParameters xsi:type="cpp:CppParameter" name="target" eType="#//sc_object"/>
+      <eParameters xsi:type="cpp:CppParameter" name="value_changed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_check_delta" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_writer_p" eType="#//sc_object"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_check_delta" eSuperTypes="#//sc_writer_policy_check_write">
+    <eOperations xsi:type="cpp:CppOperation" name="check_write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool">
+      <eParameters xsi:type="cpp:CppParameter" name="target" eType="#//sc_object"/>
+      <eParameters xsi:type="cpp:CppParameter" name="value_changed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_nocheck_port">
+    <eOperations xsi:type="cpp:CppOperation" name="check_port" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_writer_policy_check_port">
+    <eOperations xsi:type="cpp:CppOperation" name="check_port" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool">
+      <eParameters xsi:type="cpp:CppParameter" name="target" eType="#//sc_object"/>
+      <eParameters xsi:type="cpp:CppParameter" name="port"/>
+      <eParameters xsi:type="cpp:CppParameter" name="is_output" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_output"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal_write_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal_inout_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_process_handle">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_target_p" visibility="public"
+        typedef="#//sc_process_b.1"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="empty_event_vector" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="public" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="empty_object_vector" visibility="public"
+        static="true">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_object"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="non_event" visibility="public"
+        static="true"/>
+    <typedefs eClassifier="#//sc_process_handle" name="this_type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_plist_iter" eSuperTypes="#//sc_plist_base_iter">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="l">
+        <eGenericType eClassifier="#//sc_plist">
+          <eTypeArguments eTypeParameter="#//sc_plist_iter/T"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="l">
+        <eGenericType eClassifier="#//sc_plist">
+          <eTypeArguments eTypeParameter="#//sc_plist_iter/T"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d">
+        <eGenericType eTypeParameter="#//sc_plist_iter/T"/>
+      </eParameters>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_plist_base">
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="push_front" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_before" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_after" visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="mapcar" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="f"/>
+      <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="erase_all" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="head" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tail" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_plist_base_iter">
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="l" eType="#//sc_plist_base"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="d" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="direction" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="set_handle" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="h"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="lst" eType="#//sc_plist_base"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ptr" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_out">
+    <eTypeParameters name="T"/>
+    <typedefs eTypeParameter="#//sc_out/T" name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_out" name="this_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_out/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_inout" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_out/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout/in_if_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout/if_type"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_bind_proxy">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="iface" eType="#//sc_interface"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="port"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_module" eSuperTypes="#//sc_object #//sc_process_host">
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="sc_module_init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end_module" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="dont_initialize" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="positional_bind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="positional_bind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="async_reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="async_reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_inout">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="async_reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="async_reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="iface">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_inout">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="port">
+        <eGenericType eClassifier="#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset_signal_is" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="iface">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="level" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="timed_out" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="halt" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="n" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="at_posedge" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="s">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="at_posedge" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="s">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="at_negedge" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="s">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="at_negedge" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="s">
+        <eGenericType eClassifier="#//sc_signal_in_if">
+          <eTypeArguments eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="watching" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="set_stack_size" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="append_port" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="defunct" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sensitive" eType="#//sc_sensitive"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sensitive_pos" eType="#//sc_sensitive_pos"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sensitive_neg" eType="#//sc_sensitive_neg"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_end_module_called" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_port_vec" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_port_index" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name_gen" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_module_name_p" eType="#//sc_module_name"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_api_version_2_3_1"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_expr">
+    <eTypeParameters name="T"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_expr" visibility="private"
+        typedef="#//sc_event_expr/type"/>
+    <typedefs eTypeParameter="#//sc_event_expr/T" name="type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_list">
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="swap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="move_from" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_events" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_and_list" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_auto_delete" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_busy" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_and_list" eSuperTypes="#//sc_event_list">
+    <eOperations xsi:type="cpp:CppOperation" name="swap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_or_list" eSuperTypes="#//sc_event_list">
+    <eOperations xsi:type="cpp:CppOperation" name="swap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event">
+    <eOperations xsi:type="cpp:CppOperation" name="cancel" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify_delayed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify_delayed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify_delayed" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify_internal" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="notify_next_delta" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="register_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private">
+      <eParameters xsi:type="cpp:CppParameter" name="name" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="reset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_name" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_parent_p" eType="#//sc_object"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" eType="#//sc_simcontext"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_notify_type" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_delta_event_index" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_timed" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_methods_static" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_methods_dynamic" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_threads_static" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_threads_dynamic" eType="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_timed">
+    <eOperations xsi:type="cpp:CppOperation" name="deallocate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_event" eType="#//sc_event"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_notify_time" eType="#//sc_time"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="sc_port_policy">
+    <eLiterals name="SC_ONE_OR_MORE_BOUND"/>
+    <eLiterals name="SC_ZERO_OR_MORE_BOUND"/>
+    <eLiterals name="SC_ALL_BOUND"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_port_base" eSuperTypes="#//sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="bind_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="bind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="interface_" eType="#//sc_interface"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="bind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="parent_" typedef="#//sc_port_base/this_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="pbind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="pbind" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="first_parent" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="insert_parent" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="complete_binding" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_bind_info" visibility="private"/>
+    <typedefs eClassifier="#//sc_port_base" name="this_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_port_registry">
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="complete_binding" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="replace_port" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private" static="true"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_port_vec" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_port_base"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" eType="#//sc_simcontext"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_port_b" eSuperTypes="#//sc_port_base">
+    <eTypeParameters name="IF"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_interface" visibility="private">
+      <eGenericType eTypeParameter="#//sc_port_b/IF"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_interface_vec" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eTypeParameter="#//sc_port_b/IF"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_port_base" name="base_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port_b" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port_b" name="port_type" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_port_b/IF"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_port">
+    <eTypeParameters name="IF"/>
+    <typedefs eClassifier="#//sc_port_b" name="base_type">
+      <eTypeArguments eTypeParameter="#//sc_port/IF"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="this_type">
+      <eTypeArguments eTypeParameter="#//sc_port/IF"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_prim_channel" eSuperTypes="#//sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="async_request_update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="wait" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="n" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="e" eType="#//sc_event"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_or_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="t" eType="#//sc_time"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="next_trigger" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="v" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eParameters xsi:type="cpp:CppParameter" name="tu" eType="#//sc_time_unit"/>
+      <eParameters xsi:type="cpp:CppParameter" name="el" eType="#//sc_event_and_list"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="timed_out" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="perform_update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_registry" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_update_next_p" eType="#//sc_prim_channel"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_prim_channel_registry">
+    <eOperations xsi:type="cpp:CppOperation" name="insert" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="remove" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="async_request_update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="perform_update" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="elaboration_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="start_simulation" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eOperations xsi:type="cpp:CppOperation" name="simulation_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_async_update_list_p"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_construction_done" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_prim_channel_vec" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_prim_channel"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_simc" eType="#//sc_simcontext"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_update_list_p" eType="#//sc_prim_channel"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_trace_file"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_buffer">
+    <eTypeParameters name="T"/>
+    <typedefs eClassifier="#//sc_buffer" name="this_type" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_buffer/T"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal" name="base_type" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_buffer/T"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_clock" eSuperTypes="#//sc_signal">
+    <eOperations xsi:type="cpp:CppOperation" name="before_end_of_elaboration" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="posedge_action" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="negedge_action" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_period" eType="#//sc_time"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_duty_cycle" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_start_time" eType="#//sc_time"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_posedge_first" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_posedge_time" eType="#//sc_time"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_negedge_time" eType="#//sc_time"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_next_posedge_event" eType="#//sc_event"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_next_negedge_event" eType="#//sc_event"
+        visibility="public"/>
+    <typedefs eClassifier="#//sc_signal" name="base_type">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_clock_posedge_callback">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_target_p" eType="#//sc_clock"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_clock_negedge_callback">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_target_p" eType="#//sc_clock"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_finder">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_port" eType="#//sc_port_base"
+        visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_finder_t" eSuperTypes="#//sc_event_finder">
+    <eTypeParameters name="IF"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_event_method" visibility="private"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_trace_params">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tf" eType="#//sc_trace_file"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="name"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_queue_if"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_event_queue" eSuperTypes="#//sc_event_queue_if #//sc_module">
+    <eOperations xsi:type="cpp:CppOperation" name="fire_event" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_ppq" visibility="private">
+      <eGenericType eClassifier="#//sc_ppq">
+        <eTypeArguments eClassifier="#//sc_time"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_e" eType="#//sc_event"
+        visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_change_stamp" visibility="private"
+        typedef="http://www.dfki.de/SPECifIC/systemc/sc_dt#//uint64"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_pending_delta" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        visibility="private"/>
+    <typedefs eClassifier="#//sc_event_queue" name="SC_CURRENT_USER_MODULE" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_nonblocking_in_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_blocking_in_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_in_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_nonblocking_out_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_blocking_out_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_out_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo" eSuperTypes="#//sc_prim_channel">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="buf_init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="buf_write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="buf_read" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_size" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_buf" visibility="public">
+      <eGenericType eTypeParameter="#//sc_fifo/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_free" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_ri" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_wi" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_reader" eType="#//sc_port_base"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_writer" eType="#//sc_port_base"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_num_readable" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_num_read" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_num_written" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_data_read_event" eType="#//sc_event"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_data_written_event" eType="#//sc_event"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_in">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="read" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_fifo_in/data_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="read" visibility="public" typedef="#//sc_fifo_in/data_type"/>
+    <eOperations xsi:type="cpp:CppOperation" name="nb_read" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_fifo_in/data_type"/>
+    </eOperations>
+    <typedefs eTypeParameter="#//sc_fifo_in/T" name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_fifo_in_if" name="if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_in/if_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_fifo_in" name="this_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_in/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_fifo_in_if" name="in_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_in/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port_b" name="in_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_in/in_if_type"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_fifo_out">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_fifo_out/data_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="nb_write" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="value_" typedef="#//sc_fifo_out/data_type"/>
+    </eOperations>
+    <typedefs eTypeParameter="#//sc_fifo_out/T" name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_fifo_out_if" name="if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_out/if_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_fifo_out" name="this_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_out/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_fifo_out_if" name="out_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_out/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port_b" name="out_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_fifo_out/out_if_type"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_mutex_if"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_scoped_lock">
+    <eOperations xsi:type="cpp:CppOperation" name="release" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_ref" visibility="private"
+        typedef="#//sc_scoped_lock/lockable_type"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_active" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        visibility="private"/>
+    <typedefs eClassifier="#//sc_mutex_if" name="lockable_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_mutex" eSuperTypes="#//sc_mutex_if #//sc_object">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_owner" visibility="public"
+        typedef="#//sc_process_b.1"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_free" eType="#//sc_event"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_semaphore_if"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_semaphore" eSuperTypes="#//sc_semaphore_if #//sc_object">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_free" eType="#//sc_event"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_value" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal_resolved" eSuperTypes="#//sc_signal">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_proc_vec" visibility="public">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_process_b.1"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_val_vec" visibility="public">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_signal_resolved/data_type"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_signal_resolved" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal" name="base_type" visibility="public">
+      <eTypeArguments eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"/>
+    </typedefs>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"
+        name="data_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_in_resolved" eSuperTypes="#//sc_in">
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in_resolved" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in_resolved/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in/if_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in/inout_if_type"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_inout_resolved" eSuperTypes="#//sc_inout">
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout_resolved" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout_resolved/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_out_resolved" eSuperTypes="#//sc_inout_resolved">
+    <typedefs eClassifier="#//sc_out_resolved" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout_resolved" name="base_type" visibility="public"/>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_byte_heap">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_bgn_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_end_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_next_p" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_vpool">
+    <eTypeParameters name="T"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_pool_i" typedef="http://www.dfki.de/SPECifIC/cpp/std#//size_t"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_pool_p">
+      <eGenericType eTypeParameter="#//sc_vpool/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_wrap" typedef="http://www.dfki.de/SPECifIC/cpp/std#//size_t"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_lv_resolve">
+    <eOperations xsi:type="cpp:CppOperation" name="resolve" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public" static="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_signal_rv">
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_proc_vec" visibility="public">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_process_b.1"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_val_vec" visibility="public">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_signal_rv/data_type"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_signal_rv" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal" name="base_type" visibility="public">
+      <eTypeArguments eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_lv"/>
+    </typedefs>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_lv"
+        name="data_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_in_rv">
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_lv"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in_rv" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_in" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_in_rv/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_inout_rv">
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_lv"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout_rv" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout" name="base_type" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_inout_rv/data_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_out_rv">
+    <typedefs eClassifier="#//sc_out_rv" name="this_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_inout_rv" name="base_type" visibility="public"/>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_lv"
+        name="data_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_in_if" name="in_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="in_port_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_signal_inout_if" name="inout_if_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_port" name="inout_port_type" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_pvector">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="begin" visibility="public" typedef="#//sc_pvector/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" visibility="public" typedef="#//sc_pvector/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="item">
+        <eGenericType eTypeParameter="#//sc_pvector/T"/>
+      </eParameters>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="erase_all" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="sort" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="compar"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="put" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="item">
+        <eGenericType eTypeParameter="#//sc_pvector/T"/>
+      </eParameters>
+      <eParameters xsi:type="cpp:CppParameter" name="i" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="decr_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="decr_count" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="k" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="m_vector" visibility="public">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eTypeParameter="#//sc_pvector/T"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eTypeParameter="#//sc_pvector/T" name="const_iterator" visibility="public"/>
+    <typedefs eTypeParameter="#//sc_pvector/T" name="iterator" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_vector" eSuperTypes="#//sc_vector_base">
+    <eTypeParameters name="T"/>
+    <eOperations xsi:type="cpp:CppOperation" name="init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="n" typedef="#//sc_vector_base/size_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="begin" visibility="public" typedef="#//sc_vector/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" visibility="public" typedef="#//sc_vector/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="clear" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <typedefs eClassifier="#//sc_vector_base" name="base_type"/>
+    <typedefs eClassifier="#//sc_vector" name="this_type">
+      <eTypeArguments eTypeParameter="#//sc_vector/T"/>
+    </typedefs>
+    <typedefs eTypeParameter="#//sc_vector/T" name="element_type" visibility="public"/>
+    <typedefs eClassifier="#//sc_vector_iter" name="iterator" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_vector/element_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_vector_iter" name="const_iterator" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_vector/element_type"/>
+    </typedefs>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_vector_assembly">
+    <eTypeParameters name="T"/>
+    <eTypeParameters name="MT"/>
+    <eOperations xsi:type="cpp:CppOperation" name="begin" visibility="public" typedef="#//sc_vector_assembly/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" visibility="public" typedef="#//sc_vector_assembly/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="at" visibility="public" typedef="#//sc_vector_assembly/reference">
+      <eParameters xsi:type="cpp:CppParameter" name="idx" typedef="#//sc_vector_assembly/size_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="swap" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="that">
+        <eGenericType eClassifier="#//sc_vector_assembly">
+          <eTypeArguments eTypeParameter="#//sc_vector_assembly/T"/>
+          <eTypeArguments eTypeParameter="#//sc_vector_assembly/MT"/>
+        </eGenericType>
+      </eParameters>
+    </eOperations>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="vec_" visibility="private"
+        typedef="#//sc_vector_assembly/base_type"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ptr_" visibility="private"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="child_vec_" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_object"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="#//sc_vector" name="base_type" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_vector_assembly/T"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_vector_iter" name="iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_vector_assembly/T"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_vector_iter" name="const_iterator" visibility="public">
+      <eTypeArguments eTypeParameter="#//sc_vector_assembly/T"/>
+    </typedefs>
+    <typedefs eTypeParameter="#//sc_vector_assembly/T" name="element_type" visibility="public"/>
+    <typedefs eTypeParameter="#//sc_vector_assembly/MT" name="access_type" visibility="public"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="size_type" visibility="public"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="difference_type" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Reference"
+        name="reference" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Pointer"
+        name="pointer" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Reference"
+        name="const_reference" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Pointer"
+        name="const_pointer" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_vector_iter">
+    <eTypeParameters name="ElementType"/>
+    <eTypeParameters name="AccessPolicy"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="it_"/>
+    <typedefs eTypeParameter="#//sc_vector_iter/ElementType" name="element_type"/>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//iterator"
+        name="base_type">
+      <eTypeArguments eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//random_access_iterator_tag"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_vector_iter" name="this_type"/>
+    <typedefs eClassifier="#//sc_vector" name="vector_type"/>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        name="storage_type">
+      <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_vector_iter" name="const_iterator"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Distance"
+        name="difference_type" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Reference"
+        name="reference" visibility="public"/>
+    <typedefs eTypeParameter="http://www.dfki.de/SPECifIC/cpp/std#//iterator/_Pointer"
+        name="pointer" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_vector_base" eSuperTypes="#//sc_object">
+    <eOperations xsi:type="cpp:CppOperation" name="reserve" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="n" typedef="#//sc_vector_base/size_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="clear" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public"/>
+    <eOperations xsi:type="cpp:CppOperation" name="push_back" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        visibility="public">
+      <eParameters xsi:type="cpp:CppParameter" name="item" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="make_name" visibility="public"
+        static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="prefix" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eParameters xsi:type="cpp:CppParameter" name="index" typedef="#//sc_vector_base/size_type"/>
+    </eOperations>
+    <eOperations xsi:type="cpp:CppOperation" name="begin" visibility="public" typedef="#//sc_vector_base/iterator"/>
+    <eOperations xsi:type="cpp:CppOperation" name="end" visibility="public" typedef="#//sc_vector_base/iterator"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="vec_" visibility="private"
+        typedef="#//sc_vector_base/storage_type"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="objs_vec_" visibility="private">
+      <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector">
+        <eTypeArguments eClassifier="#//sc_object"/>
+      </eGenericType>
+    </eStructuralFeatures>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+        name="storage_type" visibility="public"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="size_type" visibility="public"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="difference_type" visibility="public"/>
+    <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//iterator"
+        name="iterator" visibility="public"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_direct_access">
+    <eTypeParameters name="ElementType"/>
+    <typedefs eTypeParameter="#//sc_direct_access/ElementType" name="element_type"/>
+    <typedefs eTypeParameter="#//sc_direct_access/ElementType" name="type"/>
+    <typedefs eClassifier="#//sc_direct_access" name="policy">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_direct_access/type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_direct_access" name="non_const_policy"/>
+    <typedefs eClassifier="#//sc_direct_access" name="const_policy"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="sc_member_access">
+    <eTypeParameters name="ElementType"/>
+    <eTypeParameters name="AccessType"/>
+    <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ptr_" visibility="private"/>
+    <typedefs eTypeParameter="#//sc_member_access/ElementType" name="element_type"
+        visibility="public"/>
+    <typedefs eTypeParameter="#//sc_member_access/AccessType" name="access_type" visibility="public"/>
+    <typedefs eTypeParameter="#//sc_member_access/AccessType" name="type" visibility="public"/>
+    <typedefs eClassifier="#//sc_member_access" name="policy" visibility="public">
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_member_access/element_type"/>
+      <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_member_access/access_type"/>
+    </typedefs>
+    <typedefs eClassifier="#//sc_member_access" name="non_const_policy" visibility="public"/>
+    <typedefs eClassifier="#//sc_member_access" name="const_policy" visibility="public"/>
+  </eClassifiers>
+  <eSubpackages xsi:type="cpp:CppNamespace" name="sc_meta">
+    <eClassifiers xsi:type="cpp:CppClass" name="remove_const">
+      <eTypeParameters name="T"/>
+      <typedefs eTypeParameter="#//sc_meta/remove_const/T" name="type"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="is_same">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="value" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+          static="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="is_const">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="value" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+          static="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="is_more_const">
+      <eTypeParameters name="CT"/>
+      <eTypeParameters name="T"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="value" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+          static="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="special_result"/>
+    <eClassifiers xsi:type="cpp:CppClass" name="remove_special_fptr"/>
+  </eSubpackages>
+  <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+      name="sc_actions"/>
+  <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//exception"
+      name="sc_exception"/>
+  <typedefs eClassifier="#//sc_process_b" name="sc_process_b"/>
+  <typedefs eClassifier="#//sc_plist" name="sc_process_list">
+    <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#//sc_process_b.1"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_curr_proc_info" name="sc_curr_proc_handle"/>
+  <typedefs eClassifier="#//sc_module" name="sc_channel"/>
+  <typedefs eClassifier="#//sc_module" name="sc_behavior"/>
+  <typedefs eClassifier="#//sc_event_expr" name="sc_event_and_expr">
+    <eTypeArguments eClassifier="#//sc_event_and_list"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_event_expr" name="sc_event_or_expr">
+    <eTypeArguments eClassifier="#//sc_event_or_list"/>
+  </typedefs>
+  <typedefs eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//vector"
+      name="sc_trace_params_vec">
+    <eTypeArguments eClassifier="#//sc_trace_params"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_in" name="sc_in_clk">
+    <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_inout" name="sc_inout_clk">
+    <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_out" name="sc_out_clk">
+    <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+  </typedefs>
+  <typedefs eClassifier="#//sc_port" name="sc_event_queue_port">
+    <eTypeArguments eClassifier="#//sc_event_queue_if"/>
+  </typedefs>
+  <operations name="sc_thread_cor_fn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+  </operations>
+  <operations name="sc_report_compose_message" static="true"/>
+  <operations name="sc_get_current_process_handle" static="true"/>
+  <operations name="sc_thread_cor_fn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+  </operations>
+  <operations name="timed_out" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_delta_count" static="true" typedef="http://www.dfki.de/SPECifIC/systemc/sc_dt#//uint64"/>
+  <operations name="sc_is_running" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="simc_p"/>
+  </operations>
+  <operations name="sc_pause" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true"/>
+  <operations name="sc_end_of_simulation_invoked" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_start" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true"/>
+  <operations name="sc_start_of_simulation_invoked" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_set_time_resolution" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true"/>
+  <operations name="sc_get_time_resolution" eType="#//sc_time" static="true"/>
+  <operations name="sc_set_default_time_unit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true"/>
+  <operations name="sc_get_default_time_unit" eType="#//sc_time" static="true"/>
+  <operations name="sc_pending_activity_at_current_time" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_pending_activity_at_future_time" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_time_to_pending_activity" eType="#//sc_time" static="true"/>
+  <operations name="sc_get_current_process_handle" static="true"/>
+  <operations name="sc_is_unwinding" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+      static="true"/>
+  <operations name="sc_time_to_pending_activity" eType="#//sc_time" static="true"/>
+  <operations name="sc_notify_time_compare" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+      static="true"/>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object" eType="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_bit"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object" eType="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_bit"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object" eType="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object" eType="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_dt#//sc_logic"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object">
+      <eGenericType eClassifier="#//sc_signal_in_if">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      </eGenericType>
+    </eParameters>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+    <eParameters xsi:type="cpp:CppParameter" name="width" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object">
+      <eGenericType eClassifier="#//sc_signal_in_if">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//short%20int"/>
+      </eGenericType>
+    </eParameters>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+    <eParameters xsi:type="cpp:CppParameter" name="width" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object">
+      <eGenericType eClassifier="#//sc_signal_in_if">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      </eGenericType>
+    </eParameters>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+    <eParameters xsi:type="cpp:CppParameter" name="width" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object">
+      <eGenericType eClassifier="#//sc_signal_in_if">
+        <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"/>
+      </eGenericType>
+    </eParameters>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+    <eParameters xsi:type="cpp:CppParameter" name="width" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+  </operations>
+  <operations name="sc_trace" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="object" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+    <eParameters xsi:type="cpp:CppParameter" name="name"/>
+    <eParameters xsi:type="cpp:CppParameter" name="enum_literals" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+  </operations>
+  <operations name="tprintf" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+      static="true">
+    <eParameters xsi:type="cpp:CppParameter" name="tf" eType="#//sc_trace_file"/>
+    <eParameters xsi:type="cpp:CppParameter" name="format" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+  </operations>
+</cpp:CppNamespace>

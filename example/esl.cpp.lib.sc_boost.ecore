@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpp:CppNamespace xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cpp="http://www.dfki.de/SPECifIC/emf/2015/cpp" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    name="sc_boost" nsURI="http://www.dfki.de/SPECifIC/systemc/sc_boost">
+  <eClassifiers xsi:type="cpp:CppClass" name="enable_if_c">
+    <eTypeParameters name="T"/>
+    <typedefs eTypeParameter="#//enable_if_c/T" name="type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="enable_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="lazy_enable_if_c"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="lazy_enable_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="disable_if_c">
+    <eTypeParameters name="T"/>
+    <typedefs eTypeParameter="#//disable_if_c/T" name="type"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="disable_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="cpp:CppClass" name="lazy_disable_if_c"/>
+  <eClassifiers xsi:type="cpp:CppClass" name="lazy_disable_if">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
+  <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20long%20int"
+      name="long_long_type"/>
+  <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20long%20int"
+      name="ulong_long_type"/>
+</cpp:CppNamespace>

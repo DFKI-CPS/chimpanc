@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:cpp="http://www.dfki.de/SPECifIC/emf/2015/cpp" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <cpp:CppNamespace name="&lt;root>">
+    <eClassifiers xsi:type="cpp:CppClass" name="__exception">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="name" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="arg1" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="arg2" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="retval" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="_IO_marker">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_next" eType="#/0/_IO_marker"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_sbuf"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_pos" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EEnum" name="__codecvt_result">
+      <eLiterals name="__codecvt_ok"/>
+      <eLiterals name="__codecvt_partial"/>
+      <eLiterals name="__codecvt_error"/>
+      <eLiterals name="__codecvt_noconv"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="_IO_FILE">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_flags" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_read_ptr" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_read_end" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_read_base" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_write_base" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_write_ptr" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_write_end" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_buf_base" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_buf_end" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_save_base" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_backup_base" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_IO_save_end" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_markers" eType="#/0/_IO_marker"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_chain" eType="#/0/_IO_FILE"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_fileno" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_flags2" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_old_offset" typedef="#/0/__off_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_cur_column" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_vtable_offset" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//signed%20char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_shortbuf" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_lock" typedef="#/0/_IO_lock_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_offset" typedef="#/0/__off64_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__pad1" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__pad2" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__pad3" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__pad4" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__pad5" typedef="#/0/size_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_mode" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="_unused2" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="__locale_struct">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__locales"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__ctype_b" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__ctype_tolower" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__ctype_toupper" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__names" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="timespec">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tv_sec" typedef="#/0/__time_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tv_nsec" typedef="#/0/__syscall_slong_t"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="timeval">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tv_sec" typedef="#/0/__time_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tv_usec" typedef="#/0/__suseconds_t"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="__pthread_internal_list">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__prev" eType="#/0/__pthread_internal_list"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__next" eType="#/0/__pthread_internal_list"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="random_data">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="fptr" typedef="#/0/int32_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="rptr" typedef="#/0/int32_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="state" typedef="#/0/int32_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="rand_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="rand_deg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="rand_sep" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="end_ptr" typedef="#/0/int32_t"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="drand48_data">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__x" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__old_x" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__c" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__init" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__a" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20long%20int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="lconv">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="decimal_point" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="thousands_sep" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="grouping" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_curr_symbol" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="currency_symbol" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="mon_decimal_point" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="mon_thousands_sep" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="mon_grouping" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="positive_sign" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="negative_sign" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_frac_digits" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="frac_digits" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="p_cs_precedes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="p_sep_by_space" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="n_cs_precedes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="n_sep_by_space" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="p_sign_posn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="n_sign_posn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_p_cs_precedes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_p_sep_by_space" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_n_cs_precedes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_n_sep_by_space" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_p_sign_posn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="int_n_sign_posn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="sched_param">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__sched_priority" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="__sched_param">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__sched_priority" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="timex">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="modes" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="offset" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="freq" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="maxerror" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="esterror" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="status" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="constant" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="precision" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tolerance" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="time" eType="#/0/timeval"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tick" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ppsfreq" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="jitter" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="shift" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="stabil" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="jitcnt" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="calcnt" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="errcnt" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="stbcnt" typedef="#/0/__syscall_slong_t"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tai" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="tm">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_sec" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_min" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_hour" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_mday" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_mon" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_year" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_wday" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_yday" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_isdst" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_gmtoff" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="tm_zone" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="itimerspec">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="it_interval" eType="#/0/timespec"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="it_value" eType="#/0/timespec"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="_pthread_cleanup_buffer">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__routine"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__canceltype" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__prev" eType="#/0/_pthread_cleanup_buffer"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="__pthread_cleanup_frame">
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_routine"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__do_it" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="__pthread_cleanup_class">
+      <eOperations xsi:type="cpp:CppOperation" name="__setdoit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public">
+        <eParameters xsi:type="cpp:CppParameter" name="__newval" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      </eOperations>
+      <eOperations xsi:type="cpp:CppOperation" name="__defer" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_routine"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_arg" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__do_it" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="__cancel_type" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+    </eClassifiers>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        name="__builtin_ms_va_list"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//float"
+        name="float_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//double"
+        name="double_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="ptrdiff_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="size_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="__u_char"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="__u_short"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__u_int"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__u_long"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//signed%20char"
+        name="__int8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="__uint8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//short%20int"
+        name="__int16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="__uint16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__int32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__uint32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__int64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__uint64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__quad_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__u_quad_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__dev_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__uid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__gid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__ino_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__ino64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__mode_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__nlink_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__off_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__off64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__pid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__clock_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__rlim_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__rlim64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__id_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__time_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__useconds_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__suseconds_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__daddr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__key_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__clockid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        name="__timer_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__blksize_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__blkcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__blkcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__fsblkcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__fsblkcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__fsfilcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__fsfilcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__fsword_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__ssize_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__syscall_slong_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__syscall_ulong_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__loff_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__qaddr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        name="__caddr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__intptr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__socklen_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        name="_IO_lock_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="off_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="off64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="ssize_t"/>
+    <typedefs eClassifier="#/0/__locale_struct" name="__locale_t"/>
+    <typedefs eClassifier="#/0/__locale_struct" name="locale_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="u_char"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="u_short"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="u_int"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="u_long"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="quad_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="u_quad_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="loff_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="ino_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="ino64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="dev_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="gid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="mode_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="nlink_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="uid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="pid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="id_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="daddr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"
+        name="caddr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="key_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="clock_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="time_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="clockid_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+        name="timer_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="useconds_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="suseconds_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="ulong"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="ushort"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="uint"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//signed%20char"
+        name="int8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//short%20int"
+        name="int16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="int32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="int64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="u_int8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="u_int16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="u_int32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="u_int64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="register_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__sig_atomic_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__fd_mask"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="fd_mask"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="blksize_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="blkcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="fsblkcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="fsfilcnt_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="blkcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="fsblkcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="fsfilcnt64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="pthread_t"/>
+    <typedefs eClassifier="#/0/__pthread_internal_list" name="__pthread_list_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="pthread_key_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="pthread_once_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="wint_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="uint8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="uint16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="uint32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uint64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//signed%20char"
+        name="int_least8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//short%20int"
+        name="int_least16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="int_least32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="int_least64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="uint_least8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20short%20int"
+        name="uint_least16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="uint_least32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uint_least64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//signed%20char"
+        name="int_fast8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="int_fast16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="int_fast32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="int_fast64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20char"
+        name="uint_fast8_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uint_fast16_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uint_fast32_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uint_fast64_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="intptr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uintptr_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="intmax_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="uintmax_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__cpu_mask"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//long%20int"
+        name="__jmp_buf"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="__gthread_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="__gthread_key_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="__gthread_once_t"/>
+    <typedefs eClassifier="#/0/timespec" name="__gthread_time_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="_Atomic_word"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="error_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20long%20int"
+        name="wctype_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="wctrans_t"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//unsigned%20int"
+        name="socklen_t"/>
+  </cpp:CppNamespace>
+  <cpp:CppNamespace name="esl">
+    <eClassifiers xsi:type="cpp:CppClass" name="Users">
+      <eOperations xsi:type="cpp:CppOperation" name="admitted" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+          visibility="public" static="true">
+        <eParameters xsi:type="cpp:CppParameter" name="p" typedef="#/1/Person"/>
+        <eParameters xsi:type="cpp:CppParameter" name="b" typedef="#/1/Building"/>
+      </eOperations>
+      <eOperations xsi:type="cpp:CppOperation" name="set_sit" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public" static="true">
+        <eParameters xsi:type="cpp:CppParameter" name="p" typedef="#/1/Person"/>
+        <eParameters xsi:type="cpp:CppParameter" name="b" typedef="#/1/Building"/>
+      </eOperations>
+      <eOperations xsi:type="cpp:CppOperation" name="get_sit" visibility="public"
+          static="true" typedef="#/1/Building">
+        <eParameters xsi:type="cpp:CppParameter" name="b" typedef="#/1/Person"/>
+      </eOperations>
+      <eOperations xsi:type="cpp:CppOperation" name="add_aut" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public" static="true">
+        <eParameters xsi:type="cpp:CppParameter" name="p" typedef="#/1/Person"/>
+        <eParameters xsi:type="cpp:CppParameter" name="b" typedef="#/1/Building"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="aut" visibility="private"
+          static="true">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/cpp/std#//unordered_set">
+          <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#/1/Building"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="sit" visibility="private"
+          static="true" typedef="#/1/Building"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="LED" eSuperTypes="http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_module">
+      <eOperations xsi:type="cpp:CppOperation" name="blink" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="in">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="in2">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <typedefs eClassifier="#/1/LED" name="SC_CURRENT_USER_MODULE"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="Gate" eSuperTypes="http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_module">
+      <eOperations xsi:type="cpp:CppOperation" name="accept" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="pass_thru" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="off_grn" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="refuse" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="off_red" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="operate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="card">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_in">
+          <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#/1/Person"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="passed">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="unlock">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="green">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="red">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="org" visibility="public"
+          typedef="#/1/Building"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="dest" visibility="public"
+          typedef="#/1/Building"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="dap" visibility="private"
+          typedef="#/1/Person"/>
+      <typedefs eClassifier="#/1/Gate" name="SC_CURRENT_USER_MODULE" visibility="public"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="turnstile" eSuperTypes="http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_module">
+      <eOperations xsi:type="cpp:CppOperation" name="operate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="unlock">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_in">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="passed">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_out">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <typedefs eClassifier="#/1/turnstile" name="SC_CURRENT_USER_MODULE"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="Door" eSuperTypes="http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_module">
+      <eOperations xsi:type="cpp:CppOperation" name="setOrgDest" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public">
+        <eParameters xsi:type="cpp:CppParameter" name="org" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+        <eParameters xsi:type="cpp:CppParameter" name="dest" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      </eOperations>
+      <eOperations xsi:type="cpp:CppOperation" name="operate" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public"/>
+      <eOperations xsi:type="cpp:CppOperation" name="approach" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"
+          visibility="public">
+        <eParameters xsi:type="cpp:CppParameter" name="p" typedef="#/1/Person"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="card">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_out">
+          <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#/1/Person"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="green_sig" visibility="private">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_signal">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="red_sig" visibility="private">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_signal">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="unlock_sig" visibility="private">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_signal">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="pass_sig" visibility="private">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_signal">
+          <eTypeArguments eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="card_sig" visibility="private">
+        <eGenericType eClassifier="cpp:CppClass http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_signal">
+          <eTypeArguments xsi:type="cpp:CppTypedefRef" typedef="#/1/Person"/>
+        </eGenericType>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="grn" eType="#/1/LED"
+          visibility="private"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="red" eType="#/1/LED"
+          visibility="private"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="ts" eType="#/1/turnstile"
+          visibility="private"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="gc" eType="#/1/Gate"
+          visibility="private"/>
+      <typedefs eClassifier="#/1/Door" name="SC_CURRENT_USER_MODULE" visibility="public"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="cpp:CppClass" name="testGen" eSuperTypes="http://www.dfki.de/SPECifIC/systemc/sc_core#//sc_module">
+      <eOperations xsi:type="cpp:CppOperation" name="driver" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//void"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="doors" eType="#/1/Door"/>
+      <eStructuralFeatures xsi:type="cpp:CppAttribute" name="num_steps" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <typedefs eClassifier="#/1/testGen" name="SC_CURRENT_USER_MODULE"/>
+    </eClassifiers>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="Building"/>
+    <typedefs eClassifier="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        name="Person"/>
+    <operations name="log_time" static="true"/>
+    <operations name="pick_bool" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//bool"
+        static="true"/>
+    <operations name="sc_main" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"
+        static="true">
+      <eParameters xsi:type="cpp:CppParameter" name="argc" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//int"/>
+      <eParameters xsi:type="cpp:CppParameter" name="argv" eType="ecore:EDataType http://www.dfki.de/SPECifIC/cpp#//char"/>
+    </operations>
+  </cpp:CppNamespace>
+</xmi:XMI>

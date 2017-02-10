@@ -56,15 +56,14 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
 
   lazy val layers: RBuffer[Layer] = RBuffer[Layer](query("#main"), { (layer: Layer) =>
     layer.content() match {
-      case SysML(layerName, uri, sysml) =>
+      case Spec(layerName, uri, sysml, mode) =>
         (HTML(
           s"""<div class="layer sysml" id="${layer.id}
 -container">
                  |  <div class="content">
                  |  <div class="card">
                  |    <div class="card-content">
-                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.title.toUpperCase}
-: Formal Specification Level</span>
+                 |      <span id="${layer.id}-title" class="card-title truncate">${layer.title.toUpperCase}</span>
                  |      <div id="${layer.id}"></div>
                  |    </div>
                  |  </div>
@@ -75,7 +74,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
             case false => query(s"#${layer.id}-container").classes -= "active"
           }
           val sysmlEditor = CodeMirror(document.getElementById(layer.id))
-          sysmlEditor.setOption("mode", "sysml")
+          sysmlEditor.setOption("mode", mode)
           sysmlEditor.setOption("readOnly", true)
           sysmlEditor.setOption("autoRefresh",true)
           sysmlEditor.getDoc().setValue(sysml)

@@ -210,9 +210,9 @@ object ChangeManagement  {
         resource.save(new java.util.HashMap)
         resource.getContents.asScala.collectFirst {
           case m: uml.Model => m.getName
-          case n: specific.emf.cpp.CppNamespace => n.getName
         }.foreach(name => resource.root.foreach(_.setProperty("model",name)))
         resource.root.foreach(_.setProperty("originalURI",uri.toString))
+        resource.root.foreach(_.setProperty("mode",if (uri.fileExtension() == "cpp") "text/x-c++src" else "sysml"))
         resource.root.foreach(_.setProperty("lastModified",file.lastModified()))
         resource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
         layerObjects += uri.toString -> sysml.SysML.getEntities(resource,positions.map {
@@ -246,7 +246,6 @@ object ChangeManagement  {
           val positions =
             if (uri.fileExtension() == "cpp") ClangASTParser.parse(uri.toFileString,newResource)
             else de.dfki.cps.specific.SysML.load(file,newResource,includeProfileApplcations = false)
-
           this.positions(uri.toString) = positions.map {
             case (o,p) => newResource.getURIFragment(o) -> p
           }
@@ -261,7 +260,6 @@ object ChangeManagement  {
           oldResource.load(new java.util.HashMap)
           newResource.getContents.asScala.collectFirst {
             case m: uml.Model => m.getName
-            case n: specific.emf.cpp.CppNamespace => n.getName
           }.foreach(name => oldResource.root.foreach(_.setProperty("model",name)))
           oldResource.root.foreach(_.setProperty("lastModified",file.lastModified()))
           oldResource.root.foreach(_.setProperty("content",Source.fromFile(file).mkString))
@@ -273,10 +271,11 @@ object ChangeManagement  {
 
   def layers = store.graphDb.transaction {
     Specs(store.graphDb.findNodes(Labels.Resource).asScala.filter(_.hasProperty("model")).map { node =>
-      SysML(
+      Spec(
         node.getProperty("model").asInstanceOf[String],
         node.getProperty("originalURI").asInstanceOf[String],
-        node.getProperty("content").asInstanceOf[String]
+        node.getProperty("content").asInstanceOf[String],
+        node.getProperty("mode").asInstanceOf[String]
       )
     }.toList)
   }.get
