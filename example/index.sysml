@@ -12,6 +12,8 @@ include
   08-fsl6.sysml
   esl.cpp
 
+-- realizations
+
 fsl0 <|- fsl1
   acs <|- acs
     Person <|- Person
@@ -42,6 +44,8 @@ fsl5 <|- fsl6
         p <|- self.dap
       refuse <|- refuse()
         p <|- self.dap
+
+-- satisfy abstractions
 
 satisfy isl::acs::P1
   <- fsl0::acs::Building
@@ -84,3 +88,23 @@ satisfy isl::acs::P16
   <- fsl4::acs::Door::P16
 satisfy isl::acs::P17
   <- fsl4::acs::Person::admitted
+
+trace fsl6::acs::Building <- esl::acs::Building
+trace fsl6::acs::Building::org_dom <- esl::acs::Gate::org
+trace fsl6::acs::Person <- esl::acs::Person
+trace fsl6::acs::Person::admitted <- esl::acs::Users::admitted
+trace fsl6::acs::Person::admitted::q <- esl::acs::Users::admitted::b
+trace fsl6::acs::Person::aut <- esl::acs::Users::aut
+trace fsl6::acs::Person::sit <- esl::acs::Users::sit
+trace fsl6::acs::Person::dap_dom <- esl::acs::Gate::dap
+trace fsl6::acs::Door <- esl::acs::Gate
+trace fsl6::acs::Door::green <- esl::acs::Gate::green
+trace fsl6::acs::Door::red <- esl::acs::Gate::red
+trace fsl6::acs::Door::accept <- esl::acs::Gate::accept
+trace fsl6::acs::Door::refuse <- esl::acs::Gate::refuse
+trace fsl6::acs::Door::pass_thru <- esl::acs::Gate::pass_thru
+trace fsl6::acs::Door::off_grn <- esl::acs::Gate::off_grn
+trace fsl6::acs::Door::off_red <- esl::acs::Gate::off_red
+trace fsl6::acs::Door::org <- esl::acs::Gate::org
+trace fsl6::acs::Door::dest <- esl::acs::Gate::dest
+trace fsl6::acs::Door::dap <- esl::acs::Gate::dap

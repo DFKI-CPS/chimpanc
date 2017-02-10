@@ -292,7 +292,7 @@ a {
 
   .proofObligationList {
     font-family: "Roboto", sans-serif;
-    font-size: 80%;
+    font-size: 100%;
   }
 
   .entity i {
@@ -477,6 +477,7 @@ body.overlay #overlay {
 }
 
 #uml {
+  z-index: 10000000;
   position: fixed;
   top: 0;
   left: 0;
@@ -487,24 +488,38 @@ body.overlay #overlay {
   pointer-events: none;
   #realizationMarker path {
     stroke: black;
-    stroke-width: 1px;
-    fill: none;
+    stroke-width: 1.5px;
+    fill: white;
+    stroke-dasharray: none;
   }
-  #associationMarker path {
+  #abstractionMarker path {
     stroke: black;
-    stroke-width: 1px;
+    stroke-width: 3px;
     fill: none;
   }
-  .association {
-    stroke:  gray;
-    stroke-width: 1.25px;
+  .satisfy {
+    stroke:  black;
+    stroke-width: 1.5px;
     fill: none;
-    marker-end: url(#associationMarker);
+    marker-end: url(#abstractionMarker);
+    offset-before: 5px;
+    offset-after: 5px;
+  }
+  .trace {
+    stroke:  black;
+    stroke-width: 1.5px;
+    fill: none;
+    marker-end: url(#abstractionMarker);
+    offset-before: 5px;
+    offset-after: 5px;
   }
   .realization {
     stroke:  black;
+    stroke-width: 1.5pk;
     stroke-dasharray: 5,5;
     marker-end: url(#realizationMarker);
+    offset-before: 5px;
+    offset-after: 5px;
   }
 }
 

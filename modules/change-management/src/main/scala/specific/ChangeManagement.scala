@@ -73,7 +73,8 @@ object ChangeManagement  {
                 case other => other
               }
               val spec = mappedConstraints.get(c).getOrElse(c).getSpecification.asInstanceOf[OpaqueExpression].getBodies.get(0)
-              OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column)
+              val original = c.getSpecification.asInstanceOf[OpaqueExpression].getBodies.get(0)
+              OCLProofObligation(normalizeURI(ctx.eResource().getURI).toString,ctx.eResource().getURIFragment(ctx),spec,false,pos.line,pos.column,original.length)
             }.toSeq
           }
           case other => Nil
@@ -370,7 +371,7 @@ object ChangeManagement  {
                 op.eResource().getURIFragment(op),
                 normalizeURI(s.eResource().getURI).toString,
                 s.eResource().getURIFragment(s),
-                "uses",
+                "satisfy",
                 None
               )
           }
@@ -387,8 +388,7 @@ object ChangeManagement  {
             Option(r.getMapping).map(_.getBodies.asScala.mkString("\n"))
           )
         }
-      case s: requirements.Satisfy =>
-        val abstr = s getBase_Abstraction()
+      case abstr: uml.Abstraction =>
         println(abstr)
         val su = abstr.getSuppliers.get(0) match {
           case r: requirements.Requirement => r.getBase_Class

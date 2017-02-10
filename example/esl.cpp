@@ -91,7 +91,7 @@ SC_MODULE(LED) {
 
 
 
-/* The gate, implementing the class Door */
+/* The gate, implementing the block Door */
 SC_MODULE(Gate)
 {
   

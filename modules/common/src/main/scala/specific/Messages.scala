@@ -17,7 +17,7 @@ case class RemovedModel(layer: String, model: LayerObject, otherLayer: String, i
 case class RemovedImplementation(layer: String, model: LayerObject, otherLayer: String, implementation: LayerObject) extends SemanticIssue
 case class ModifiedImplementation(layer: String, model: LayerObject, otherLayer: String, implementation: LayerObject) extends SemanticIssue
 case class MismatchingBounds(layer: String, model: LayerObject, expected: String, actual: String) extends SemanticIssue
-case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int) extends SemanticIssue
+case class OCLProofObligation(layer: String, owner: String, implication: String, proven: Boolean, cLine: Int, cColumn: Int, cLength: Int) extends SemanticIssue
 
 case class Spec(name: String, uri: String, content: String, mode: String)
 case class Specs(layers: Seq[Spec])

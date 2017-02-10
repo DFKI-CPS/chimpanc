@@ -154,7 +154,7 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
             poMark = Some(
               editor.getDoc().markText(
                 startPos,
-                editor.getDoc().posFromIndex(editor.getDoc().indexFromPos(startPos) + po.implication.trim.length),
+                editor.getDoc().posFromIndex(editor.getDoc().indexFromPos(startPos) + po.cLength),
                 options
               )
             )
@@ -283,7 +283,8 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
 
   object matches {
     def += (layer: Layer, entity: LayerObject, morph: Option[String], stereotype: String) = {
-      tooltip := morph
+      tooltip.modify(morph orElse _)
+      val label = None
       if (!matchedElements.contains((layer,entity))) {
         var assoc = Option.empty[UML.Association]
         setInterval(() => assoc.foreach(_.update()), 10);
@@ -295,7 +296,7 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
               from <- e.elem.elements.headOption
               to <- elem.elements.headOption
             } yield {
-              new UML.Association(from,to,stereotype)
+              new UML.Association(from,to,stereotype,label)
             }
           }
         }
@@ -316,7 +317,7 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
                 from <- e.elem.elements.headOption
                 to <- elem.elements.headOption
               } yield {
-                new UML.Association(from,to,stereotype)
+                new UML.Association(from,to,stereotype,label)
               }
             } else {
               assoc.foreach(_.remove())
