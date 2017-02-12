@@ -2,6 +2,8 @@ import sbt.Project.projectToRef
 
 val scalaV = "2.11.8"
 
+scalaVersion in ThisBuild := scalaV
+
 lazy val server = (project in file("modules/server")).settings(
   scalaVersion := scalaV,
   scalaJSProjects := Seq(client),

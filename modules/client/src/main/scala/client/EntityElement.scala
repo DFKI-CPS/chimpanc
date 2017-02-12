@@ -7,6 +7,7 @@ import org.scalajs.dom.raw.HTMLElement
 import specific._
 import Util._
 
+
 import scala.util.control.NonFatal
 
 class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, editor: CodeMirror, marker: TextMarker) {
@@ -56,61 +57,6 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
     n.foreach { c =>
       editor.addLineClass(marker.find().to.line, "gutter", c)
     }
-  }
-
-  {
-    var expanded = false
-    def expand() = {
-      expanded = true
-      elem.tabIndex = 1
-      elem.focus()
-      val i = Main.layers.indexOf(layer)
-      if (matchedElements.isEmpty) {
-        val ignore = HTML( s"""<a class="inlineOption">&nbsp;ignore</a>""")
-        elem.append(ignore)
-        Main.layers(i + 1).addMapping := true
-        Main.mappingModel = Some((layer.name,entity))
-        elem.on(Event.Blur) { _ =>
-          ignore.remove()
-          expanded = false
-          schedule(250) {
-            Main.mappingModel = None
-          }
-          Main.layers(i + 1).addMapping := false
-          elem.elements.foreach(_.removeAttribute("tabindex"))
-        }
-        ignore.on(Event.Mouse.Click) { _ =>
-          Main.send(IgnoreModel(layer.name, entity, org.scalajs.dom.window.prompt(s"Why should the model '${entity.name}' be ignored?")))
-          ignore.blur()
-        }
-      } else {
-        val remove = HTML( s"""<a class="inlineOption">&nbsp;remove mappings</a>""")
-        elem.append(remove)
-        Main.layers(i + 1).addMapping := true
-        Main.mappingModel = Some((layer.name,entity))
-        elem.on(Event.Blur) { _ =>
-          remove.remove()
-          expanded = false
-          elem.elements.foreach(_.removeAttribute("tabindex"))
-          schedule(250) {
-            Main.mappingModel = None
-          }
-          Main.layers(i + 1).addMapping := false
-          elem.elements.foreach(_.removeAttribute("tabindex"))
-        }
-        remove.on(Event.Mouse.Click) { _ =>
-          Main.send(RemoveMappings(layer.name, entity))
-          remove.blur()
-        }
-      }
-    }
-    elem.query(".name").on(Event.Mouse.Click) { _ =>
-      if (!expanded && Main.mappingModel.isEmpty && error()) expand()
-      else Main.mappingModel.foreach {
-        case (tl,te) => Main.send(AddMapping(layer.name, entity, tl, te))
-      }
-    }
-    elem.query(".name").on(Event.Mouse.DoubleClick) { _ => if (!expanded) expand() }
   }
 
   private var obligationWidget = false
@@ -164,7 +110,12 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
             poMark = None
           }
           e.onclick {
-            Main.send(Proven(po.layer,po.implication))
+            //Main.send(Proven(po.layer,po.implication))
+            poMark.foreach(_.clear())
+            poMark = None
+            proofObligations.modify { pos =>
+              pos - po + po.copy(proven = true)
+            }
           }
         }}
         widget := Some(obls.head.asInstanceOf[HTMLElement])
@@ -208,9 +159,10 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
   }
 
   val showTransitiveHull = RVar(false)
-  elem.on(Event.Mouse.Click) { _ =>
+  elem.query(".name").on(Event.Mouse.Click) { _ =>
     showTransitiveHull.modify(!_)
   }
+
   showTransitiveHull.react {
     case true =>
       elem.classes += "transitiveMatch"
@@ -287,7 +239,7 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
       val label = None
       if (!matchedElements.contains((layer,entity))) {
         var assoc = Option.empty[UML.Association]
-        setInterval(() => assoc.foreach(_.update()), 10);
+        setInterval(() => assoc.foreach(_.update()), 30)
         val e1 = elem.query(".name").take(1).on(Event.Mouse.Enter) { e =>
           layer.entityElements.get(entity.path).foreach { e =>
             e.hover := true
@@ -324,8 +276,8 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
               assoc = None
             }
           }
-          e.showTransitiveHull.react {
-            showTransitiveHull.:=(_)
+          if (stereotype != "satisfy") e.showTransitiveHull.react {
+             showTransitiveHull := _
           }
         }
         val e = e1 + e2

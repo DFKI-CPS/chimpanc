@@ -9,6 +9,7 @@ sealed abstract class Event[T <: raw.Event](val name: String)
 
 object Event {
   object Blur extends Event[FocusEvent]("blur")
+  object Scroll extends Event[FocusEvent]("scroll")
 
   object Mouse {
     object Click extends Event[MouseEvent]("click")

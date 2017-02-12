@@ -43,8 +43,6 @@ object ChangeManagement  {
 
   private var layerObjects = Map.empty[String,Set[LayerObject]]
 
-  private val stools = new STools(new File(getClass.getResource("/ecore.simeq").getFile))
-
   private var nlProblems = Set.empty[RequirementEvaluation]
 
   def getConstraints(model: uml.Model) = {

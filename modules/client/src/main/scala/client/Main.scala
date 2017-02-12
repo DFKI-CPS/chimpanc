@@ -77,6 +77,7 @@ object Main extends SocketApp[Message,Message](s"ws://${window.location.host}/se
           sysmlEditor.setOption("mode", mode)
           sysmlEditor.setOption("readOnly", true)
           sysmlEditor.setOption("autoRefresh",true)
+          sysmlEditor.setOption("viewportMargin",Double.PositiveInfinity)
           sysmlEditor.getDoc().setValue(sysml)
 
           sysmlEditor.setOption("gutters",js.Array("issues"))

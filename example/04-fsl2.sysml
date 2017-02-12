@@ -3,7 +3,7 @@ bdd [package] fsl2::acs [ACS]
 
 block Building
   operations
-    enter(p: Person, p2: Person)
+    enter(p: Person)
       pre:  p.aut->includes(self)
       pre P8:  p.sit.gate->includes(self)
       post: p.sit = self

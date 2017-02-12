@@ -21,7 +21,7 @@ object UML {
     path.classList.add(className)
     path.classList.add("add");
     path.once(Event.Animation.End) { _ =>
-      path.classList.remove("add");
+      path.classList.remove("add")
     }
     val from = path.createSVGPathSegMovetoAbs(0,0)
     val to = path.createSVGPathSegLinetoAbs(0,0)
@@ -49,7 +49,6 @@ object UML {
           to.y = toElem.top + toElem.height
         }
       }
-      console.log(path,from,to)
     }
     svg.appendChild(path)
     update()
@@ -60,11 +59,17 @@ object UML {
       textPath.setAttribute("startOffset","50%")
       textPath.innerHTML = text
       textNode.setAttribute("text-anchor","middle")
+      textNode.classList.add("add")
+      textNode.once(Event.Animation.End) { _ =>
+        path.classList.remove("add")
+      }
       textNode.appendChild(textPath)
       svg.appendChild(textNode)
+      textNode
     }
     def remove() = {
       path.classList.add("remove")
+      labelNode.foreach(_.classList.add("remove"))
       path.once(Event.Animation.End) { _ =>
         svg.removeChild(path)
         labelNode.foreach(svg.removeChild)

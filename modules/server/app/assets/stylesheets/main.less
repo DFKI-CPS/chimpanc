@@ -498,28 +498,40 @@ body.overlay #overlay {
     fill: none;
   }
   .satisfy {
+    opacity: 1;
     stroke:  black;
     stroke-width: 1.5px;
     fill: none;
     marker-end: url(#abstractionMarker);
     offset-before: 5px;
     offset-after: 5px;
+    &.hide {
+      opacity: 0;
+    }
   }
   .trace {
+    opacity: 1;
     stroke:  black;
     stroke-width: 1.5px;
     fill: none;
     marker-end: url(#abstractionMarker);
     offset-before: 5px;
     offset-after: 5px;
+    &.hide {
+      opacity: 0;
+    }
   }
   .realization {
+    opacity: 1;
     stroke:  black;
     stroke-width: 1.5pk;
     stroke-dasharray: 5,5;
     marker-end: url(#realizationMarker);
     offset-before: 5px;
     offset-after: 5px;
+    &.hide {
+      opacity: 0;
+    }
   }
 }
 
