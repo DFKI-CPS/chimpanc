@@ -276,8 +276,20 @@ class EntityElement(val elem: Seq[Node], layer: Layer, val entity: LayerObject, 
               assoc = None
             }
           }
-          if (stereotype != "satisfy") e.showTransitiveHull.react {
+          if (stereotype == "realization") e.showTransitiveHull.react {
              showTransitiveHull := _
+          } else e.showTransitiveHull.react { v =>
+            if (v) {
+              if (assoc.isEmpty) assoc = for {
+                from <- e.elem.elements.headOption
+                to <- elem.elements.headOption
+              } yield {
+                new UML.Association(from,to,stereotype,label)
+              }
+            } else {
+              assoc.foreach(_.remove())
+              assoc = None
+            }
           }
         }
         val e = e1 + e2
